@@ -33,7 +33,8 @@ $args = array(
 
 if ( $category_slugs ) {
 	$args['slug']    = $category_slugs;
-	$args['orderby'] = 'include';
+	$args['orderby'] = 'name';
+	$args['order']   = 'ASC';
 } else {
 	$args['orderby'] = 'count';
 	$args['order']   = 'DESC';
