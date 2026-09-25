@@ -19,6 +19,8 @@ function vaarta_register_blocks(): void {
 		'newsletter',
 		'ad-slot',
 		'review',
+		'progress',
+		'social-share',
 	);
 
 	foreach ( $blocks as $block ) {
