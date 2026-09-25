@@ -115,6 +115,13 @@
 							onChange: function( value ) {
 								setAttributes( { showDate: value } );
 							}
+						} ),
+						el( ToggleControl, {
+							label: __( 'Show reading time', 'vaarta' ),
+							checked: attributes.showReadingTime,
+							onChange: function( value ) {
+								setAttributes( { showReadingTime: value } );
+							}
 						} )
 					)
 				),
