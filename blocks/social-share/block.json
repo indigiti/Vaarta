@@ -4,16 +4,30 @@
   "name": "vaarta/social-share",
   "version": "0.1.0",
   "title": "Social Share",
-  "category": "widgets",
+  "category": "vaarta",
   "icon": "share",
   "description": "Reusable article sharing links.",
-  "keywords": ["share", "social", "facebook", "x", "linkedin"],
+  "keywords": [
+    "share",
+    "social",
+    "facebook",
+    "x",
+    "linkedin"
+  ],
   "textdomain": "vaarta",
-  "usesContext": ["postId", "postType"],
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
   "attributes": {
     "networks": {
       "type": "array",
-      "default": ["facebook", "x", "linkedin", "email"]
+      "default": [
+        "facebook",
+        "x",
+        "linkedin",
+        "email"
+      ]
     },
     "showLabel": {
       "type": "boolean",
