@@ -40,6 +40,13 @@
 							onChange: function( value ) {
 								setAttributes( { showReadingTime: value } );
 							}
+						} ),
+						el( ToggleControl, {
+							label: __( 'Show views', 'vaarta' ),
+							checked: attributes.showViews,
+							onChange: function( value ) {
+								setAttributes( { showViews: value } );
+							}
 						} )
 					)
 				),
