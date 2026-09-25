@@ -122,3 +122,42 @@
 		grid-template-columns: 1fr;
 	}
 }
+
+
+.vaarta-category-card {
+	padding: 0;
+	overflow: hidden;
+	background: var(--wp--preset--color--canvas);
+}
+
+.vaarta-category-card__media {
+	display: block;
+	overflow: hidden;
+	background: var(--wp--preset--color--surface);
+}
+
+.vaarta-category-card__media img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+	transition: transform 220ms ease;
+}
+
+.vaarta-category-card:hover .vaarta-category-card__media img {
+	transform: scale(1.015);
+}
+
+.vaarta-category-card__body {
+	padding: clamp(18px, 2.2vw, 26px);
+}
+
+.vaarta-category-card > .vaarta-category-card__mark {
+	margin: clamp(18px, 2.2vw, 26px) clamp(18px, 2.2vw, 26px) 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.vaarta-category-card__media img {
+		transition: none;
+	}
+}
