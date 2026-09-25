@@ -1,0 +1,98 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	text-rendering: optimizeLegibility;
+}
+
+body {
+	margin: 0;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+.vaarta-shell {
+	width: min(100% - 32px, 1280px);
+	margin-inline: auto;
+}
+
+.vaarta-hero {
+	padding-block: clamp(56px, 9vw, 128px);
+}
+
+.vaarta-hero__title {
+	max-width: 12ch;
+	margin-inline: auto;
+	text-wrap: balance;
+}
+
+.vaarta-chip-row {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+}
+
+.vaarta-chip-row a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 38px;
+	padding: 8px 14px;
+	border: 1px solid var(--wp--preset--color--line);
+	border-radius: 999px;
+	text-decoration: none;
+	font-size: 0.875rem;
+}
+
+.vaarta-story-grid {
+	display: grid;
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	gap: clamp(16px, 2vw, 28px);
+}
+
+.vaarta-story-grid > * {
+	grid-column: span 4;
+	min-width: 0;
+}
+
+.vaarta-story-grid > :first-child {
+	grid-column: span 6;
+	grid-row: span 2;
+}
+
+.vaarta-story-grid > :nth-child(4) {
+	grid-column: span 6;
+}
+
+@media (max-width: 900px) {
+	.vaarta-story-grid {
+		grid-template-columns: repeat(6, minmax(0, 1fr));
+	}
+
+	.vaarta-story-grid > *,
+	.vaarta-story-grid > :first-child,
+	.vaarta-story-grid > :nth-child(4) {
+		grid-column: span 3;
+		grid-row: auto;
+	}
+}
+
+@media (max-width: 640px) {
+	.vaarta-shell {
+		width: min(100% - 24px, 1280px);
+	}
+
+	.vaarta-story-grid {
+		display: block;
+	}
+
+	.vaarta-story-grid > * + * {
+		margin-top: 32px;
+	}
+}
