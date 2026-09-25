@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vaarta/newsletter",
+  "version": "0.1.0",
+  "title": "Newsletter",
+  "category": "widgets",
+  "icon": "email",
+  "description": "Provider-neutral newsletter signup block for Vaarta.",
+  "keywords": ["newsletter", "email", "subscribe", "signup"],
+  "textdomain": "vaarta",
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "Stay informed."
+    },
+    "description": {
+      "type": "string",
+      "default": "Get the most important stories delivered to your inbox."
+    },
+    "buttonLabel": {
+      "type": "string",
+      "default": "Subscribe"
+    },
+    "formAction": {
+      "type": "string",
+      "default": ""
+    },
+    "emailFieldName": {
+      "type": "string",
+      "default": "EMAIL"
+    },
+    "styleVariant": {
+      "type": "string",
+      "default": "light"
+    }
+  },
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true,
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}
