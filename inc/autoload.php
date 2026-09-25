@@ -47,7 +47,7 @@ function vaarta_get_next_reading_post( int $post_id ): ?WP_Post {
 /**
  * Render one article fragment for the continuous-reading stream.
  *
- * @param WP_Post $post Post object.
+ * @param WP_Post $article_post Post object.
  * @return string
  */
 function vaarta_render_autoload_article( WP_Post $article_post ): string {
@@ -108,6 +108,7 @@ function vaarta_render_autoload_article( WP_Post $article_post ): string {
 			echo do_blocks(
 				'<!-- wp:vaarta/social-share {"styleVariant":"light"} /-->' .
 				'<!-- wp:vaarta/author-box /-->' .
+				'<!-- wp:vaarta/contributors {"layout":"compact","showBio":false} /-->' .
 				'<!-- wp:vaarta/related-posts {"postsToShow":3,"layout":"grid"} /-->'
 			); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			?>
