@@ -20,12 +20,12 @@
 			}, [] );
 
 			const categoryOptions = [
-				{ label: __( 'All categories', 'vaarta' ), value: 0 }
+				{ label: __( 'All categories', 'vaarta' ), value: '' }
 			].concat(
 				( categories || [] ).map( function( category ) {
 					return {
 						label: category.name,
-						value: category.id
+						value: category.slug
 					};
 				} )
 			);
@@ -67,10 +67,10 @@
 						} ),
 						el( SelectControl, {
 							label: __( 'Category', 'vaarta' ),
-							value: attributes.categoryId || 0,
+							value: attributes.categorySlug || '',
 							options: categoryOptions,
 							onChange: function( value ) {
-								setAttributes( { categoryId: parseInt( value, 10 ) || 0 } );
+								setAttributes( { categorySlug: value || '', categoryId: 0 } );
 							}
 						} ),
 						el( RangeControl, {
