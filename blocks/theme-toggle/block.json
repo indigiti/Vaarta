@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vaarta/theme-toggle",
+  "version": "0.1.0",
+  "title": "Theme Toggle",
+  "category": "theme",
+  "icon": "lightbulb",
+  "description": "Light/dark appearance toggle that respects system preference.",
+  "keywords": ["dark mode", "theme", "appearance", "toggle"],
+  "textdomain": "vaarta",
+  "attributes": {
+    "showLabel": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "supports": {
+    "html": false,
+    "interactivity": true
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "viewScriptModule": "file:./view.js",
+  "render": "file:./render.php"
+}
