@@ -4,10 +4,16 @@
   "name": "vaarta/social-feed",
   "version": "0.1.0",
   "title": "Social Feed",
-  "category": "widgets",
+  "category": "vaarta",
   "icon": "share",
   "description": "Reusable social-content layout using native Gutenberg embeds.",
-  "keywords": ["instagram", "x", "facebook", "pinterest", "social feed"],
+  "keywords": [
+    "instagram",
+    "x",
+    "facebook",
+    "pinterest",
+    "social feed"
+  ],
   "textdomain": "vaarta",
   "attributes": {
     "heading": {
@@ -32,7 +38,10 @@
     }
   },
   "supports": {
-    "align": ["wide", "full"],
+    "align": [
+      "wide",
+      "full"
+    ],
     "anchor": true,
     "html": false,
     "spacing": {
