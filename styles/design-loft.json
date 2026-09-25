@@ -45,13 +45,14 @@
       "text": "var(--wp--preset--color--ink)"
     },
     "typography": {
-      "fontFamily": "Arial, Helvetica, sans-serif"
+      "fontFamily": "Arial, Helvetica, sans-serif",
+      "lineHeight": "1.58"
     },
     "elements": {
       "heading": {
         "typography": {
           "fontFamily": "Georgia, \"Times New Roman\", serif",
-          "fontWeight": "700",
+          "fontWeight": "600",
           "lineHeight": "1.02",
           "letterSpacing": "-0.025em"
         }
@@ -66,11 +67,38 @@
       "core/button": {
         "border": {
           "radius": "0px"
+        },
+        "typography": {
+          "fontSize": "0.875rem",
+          "fontWeight": "700",
+          "lineHeight": "1"
+        },
+        "spacing": {
+          "padding": {
+            "top": "12px",
+            "right": "18px",
+            "bottom": "12px",
+            "left": "18px"
+          }
         }
       },
       "core/image": {
         "border": {
           "radius": "0px"
+        }
+      },
+      "core/navigation": {
+        "typography": {
+          "fontSize": "0.875rem",
+          "fontWeight": "600",
+          "lineHeight": "1"
+        }
+      },
+      "core/site-title": {
+        "typography": {
+          "fontWeight": "700",
+          "letterSpacing": "-0.045em",
+          "lineHeight": "1"
         }
       }
     }
