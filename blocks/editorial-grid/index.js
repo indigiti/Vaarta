@@ -131,6 +131,14 @@
 							onChange: function( value ) {
 								setAttributes( { showViews: value } );
 							}
+						} ),
+						el( ToggleControl, {
+							label: __( 'Prioritize first story image', 'vaarta' ),
+							help: __( 'Use only when this grid is above the fold and its first image is the likely LCP element.', 'vaarta' ),
+							checked: attributes.priorityFirst,
+							onChange: function( value ) {
+								setAttributes( { priorityFirst: value } );
+							}
 						} )
 					)
 				),
