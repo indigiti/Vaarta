@@ -2,7 +2,7 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "vaarta/editorial-grid",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "title": "Editorial Grid",
   "category": "theme",
   "icon": "grid-view",
@@ -13,6 +13,14 @@
     "layout": {
       "type": "string",
       "default": "bento"
+    },
+    "cardStyle": {
+      "type": "string",
+      "default": "standard"
+    },
+    "categoryId": {
+      "type": "number",
+      "default": 0
     },
     "postsToShow": {
       "type": "number",
