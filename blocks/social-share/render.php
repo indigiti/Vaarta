@@ -15,7 +15,7 @@ $networks      = isset( $attributes['networks'] ) && is_array( $attributes['netw
 $show_label    = ! array_key_exists( 'showLabel', $attributes ) || ! empty( $attributes['showLabel'] );
 $style_variant = isset( $attributes['styleVariant'] ) ? sanitize_key( $attributes['styleVariant'] ) : 'light';
 
-if ( ! in_array( $style_variant, array( 'light', 'bold', 'minimal' ), true ) ) {
+if ( ! in_array( $style_variant, array( 'light', 'bold', 'minimal', 'rail' ), true ) ) {
 	$style_variant = 'light';
 }
 
@@ -75,7 +75,7 @@ $labels = array(
 					rel="noopener noreferrer"
 				<?php endif; ?>
 			>
-				<?php echo esc_html( $labels[ $network ] ); ?>
+				<span class="vaarta-social-share__link-label"><?php echo esc_html( $labels[ $network ] ); ?></span>
 			</a>
 		<?php endforeach; ?>
 	</div>
