@@ -1,6 +1,12 @@
 <!-- wp:group {"className":"vaarta-shell","style":{"spacing":{"padding":{"top":"18px","bottom":"18px"}}},"layout":{"type":"flex","justifyContent":"space-between"}} -->
 <div class="wp-block-group vaarta-shell">
 	<!-- wp:site-title {"level":0,"style":{"typography":{"fontWeight":"700"}}} /-->
-	<!-- wp:navigation {"overlayMenu":"mobile","layout":{"type":"flex","justifyContent":"right"}} /-->
+	<!-- wp:group {"layout":{"type":"flex","justifyContent":"right","flexWrap":"nowrap"}} -->
+	<div class="wp-block-group">
+		<!-- wp:vaarta/search-overlay /-->
+		<!-- wp:navigation {"overlayMenu":"mobile","layout":{"type":"flex","justifyContent":"right"}} /-->
+		<!-- wp:vaarta/theme-toggle /-->
+	</div>
+	<!-- /wp:group -->
 </div>
 <!-- /wp:group -->

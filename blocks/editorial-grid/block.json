@@ -2,7 +2,7 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "vaarta/editorial-grid",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "title": "Editorial Grid",
   "category": "theme",
   "icon": "grid-view",
@@ -55,6 +55,10 @@
     "categorySlug": {
       "type": "string",
       "default": ""
+    },
+    "showViews": {
+      "type": "boolean",
+      "default": true
     }
   },
   "supports": {

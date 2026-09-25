@@ -2,12 +2,17 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "vaarta/story-meta",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "title": "Story Meta",
   "category": "theme",
   "icon": "admin-users",
   "description": "Reusable author, date and reading-time metadata.",
-  "keywords": ["author", "date", "reading time", "metadata"],
+  "keywords": [
+    "author",
+    "date",
+    "reading time",
+    "metadata"
+  ],
   "textdomain": "vaarta",
   "attributes": {
     "showAuthor": {
@@ -19,6 +24,10 @@
       "default": true
     },
     "showReadingTime": {
+      "type": "boolean",
+      "default": true
+    },
+    "showViews": {
       "type": "boolean",
       "default": true
     }

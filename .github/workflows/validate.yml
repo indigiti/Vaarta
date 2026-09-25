@@ -27,6 +27,14 @@ jobs:
       - name: PHP syntax
         run: find . -type f -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
 
+      - name: JavaScript syntax
+        run: |
+          find . -type f -name '*.js' ! -name 'view.js' -not -path './node_modules/*' -print0 | xargs -0 -r -n1 node --check
+          find . -type f -name 'view.js' -not -path './node_modules/*' -print0 | while IFS= read -r -d '' file; do
+            echo "MODULE OK: $file"
+            node --input-type=module --check < "$file"
+          done
+
       - name: JSON syntax
         run: |
           python3 - <<'PY'
@@ -40,6 +48,40 @@ jobs:
               with path.open(encoding='utf-8') as handle:
                   json.load(handle)
               print(f'JSON OK: {path}')
+          PY
+
+      - name: Block asset references
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          asset_fields = (
+              'editorScript',
+              'editorStyle',
+              'style',
+              'viewStyle',
+              'viewScript',
+              'viewScriptModule',
+              'render',
+          )
+
+          for manifest in Path('blocks').glob('*/block.json'):
+              data = json.loads(manifest.read_text(encoding='utf-8'))
+              for field in asset_fields:
+                  value = data.get(field)
+                  if not value:
+                      continue
+
+                  values = value if isinstance(value, list) else [value]
+                  for item in values:
+                      if not isinstance(item, str) or not item.startswith('file:'):
+                          continue
+                      target = manifest.parent / item.removeprefix('file:')
+                      if not target.is_file():
+                          raise SystemExit(f'Missing {field} asset: {target}')
+
+              print(f'BLOCK OK: {manifest}')
           PY
 
       - name: Required block-theme files

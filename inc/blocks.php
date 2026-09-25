@@ -23,6 +23,12 @@ function vaarta_register_blocks(): void {
 		'social-share',
 		'author-box',
 		'related-posts',
+		'contributors',
+		'theme-toggle',
+		'tabs',
+		'tab',
+		'search-overlay',
+		'auto-load-posts',
 	);
 
 	foreach ( $blocks as $block ) {

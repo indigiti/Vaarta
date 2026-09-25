@@ -1,0 +1,117 @@
+html.vaarta-search-open,
+html.vaarta-search-open body {
+	overflow: hidden;
+}
+
+.vaarta-search-overlay__trigger,
+.vaarta-search-overlay__close {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 38px;
+	min-height: 38px;
+	padding: 7px 10px;
+	border: 1px solid var(--wp--preset--color--line);
+	border-radius: 999px;
+	background: transparent;
+	color: var(--wp--preset--color--ink);
+	font: inherit;
+	cursor: pointer;
+}
+
+.vaarta-search-overlay__dialog {
+	position: fixed;
+	z-index: 100000;
+	inset: 0;
+	overflow-y: auto;
+	padding: clamp(18px, 5vw, 64px);
+	background: color-mix(in srgb, var(--wp--preset--color--canvas) 96%, transparent);
+	backdrop-filter: blur(12px);
+}
+
+.vaarta-search-overlay__panel {
+	width: min(100%, 920px);
+	margin-inline: auto;
+}
+
+.vaarta-search-overlay__header {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 12px;
+	align-items: center;
+}
+
+.vaarta-search-overlay__input {
+	width: 100%;
+	min-height: 64px;
+	padding: 12px 18px;
+	border: 0;
+	border-bottom: 2px solid var(--wp--preset--color--ink);
+	background: transparent;
+	color: var(--wp--preset--color--ink);
+	font: inherit;
+	font-size: clamp(1.4rem, 4vw, 2.6rem);
+	font-weight: 700;
+	outline: 0;
+}
+
+.vaarta-search-overlay__status {
+	min-height: 1.5em;
+	color: var(--wp--preset--color--muted);
+	font-size: var(--wp--preset--font-size--sm);
+}
+
+.vaarta-search-overlay__results {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 24px;
+	margin-top: 28px;
+}
+
+.vaarta-search-result {
+	display: grid;
+	grid-template-columns: 120px minmax(0, 1fr);
+	gap: 16px;
+}
+
+.vaarta-search-result__media img {
+	display: block;
+	width: 120px;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+}
+
+.vaarta-search-result__category,
+.vaarta-search-result__meta {
+	color: var(--wp--preset--color--muted);
+	font-size: var(--wp--preset--font-size--xs);
+}
+
+.vaarta-search-result__title {
+	margin: 5px 0 7px;
+	font-size: 1.05rem;
+	line-height: 1.1;
+}
+
+.vaarta-search-result__title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+@media (max-width: 680px) {
+	.vaarta-search-overlay__dialog {
+		padding: 18px;
+	}
+
+	.vaarta-search-overlay__results {
+		grid-template-columns: 1fr;
+	}
+
+	.vaarta-search-result {
+		grid-template-columns: 88px minmax(0, 1fr);
+	}
+
+	.vaarta-search-result__media img {
+		width: 88px;
+	}
+}

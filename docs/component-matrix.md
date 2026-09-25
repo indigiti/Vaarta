@@ -46,20 +46,36 @@ Vaarta is an editorial design system. Pages are compositions of reusable Core Gu
 | Numbered headings | Core Heading + Numbered style | Built |
 | Social links | Core Social Links + Pills style | Built |
 | Galleries | Core Gallery/Image; enhanced styles pending | Core-ready |
-| Tabs & Pills | Interactivity API block | Planned |
+| Tabs & Pills | Nested blocks + Interactivity API | Built |
 
 ## Remaining functional systems
 
-- Multiple-author relationship model and Contributors block.
-- Post views and trending/popular ranking.
-- Auto-load next article with History API and analytics events.
-- Search overlay / instant search.
+- Multiple-author relationship model and Contributors block. **Built**
+- Post views and trending/popular ranking. **Built**
+- Auto-load next article with History API and analytics events. **Built**
+- Search overlay / instant search. **Built**
 - Popup system using the Interactivity API.
-- Full Tabs/Pills block using nested Gutenberg content and the Interactivity API.
+- Full Tabs/Pills block using nested Gutenberg content and the Interactivity API. **Built**
 - Social feed provider adapters.
 - Gallery slider/justified enhancements.
-- Dark-mode preference/toggle system.
+- Dark-mode preference/toggle system. **Built**
 - Advertisement provider integration hooks.
 - Final style packs for Firmware, Datacrunch, Foundr, Artboard, and Design Loft.
 - Visual-regression fixtures and pixel matching against the reference demos.
 - Performance and accessibility regression testing.
+
+
+## Editorial utilities milestone
+
+Built in the editorial-utilities milestone:
+
+- lightweight first-party post views with editor/crawler exclusions
+- Most Viewed and 7-day Trending ordering in Editorial Grid
+- structured contributor user relationships stored as REST-visible post meta
+- Contributors Gutenberg block with compact/profile layouts
+- system-aware dark mode with persistent manual toggle
+- nested Tabs/Pills with arbitrary inner Gutenberg blocks and keyboard navigation
+- instant Search Overlay with public compact REST endpoint
+- continuous article loading with History API URL/title updates
+- `vaarta:autoload` browser event for analytics adapters
+- expanded CI for PHP, JSON, JS modules, and block asset references

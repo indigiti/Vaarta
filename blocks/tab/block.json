@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vaarta/tab",
+  "version": "0.1.0",
+  "title": "Tab",
+  "category": "design",
+  "icon": "excerpt-view",
+  "description": "A single tab panel for the Vaarta Tabs/Pills block.",
+  "textdomain": "vaarta",
+  "parent": ["vaarta/tabs"],
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Tab"
+    }
+  },
+  "supports": {
+    "html": false,
+    "reusable": false
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

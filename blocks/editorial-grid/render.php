@@ -19,6 +19,7 @@ $show_excerpt   = ! empty( $attributes['showExcerpt'] );
 $show_author    = ! array_key_exists( 'showAuthor', $attributes ) || ! empty( $attributes['showAuthor'] );
 $show_date         = ! array_key_exists( 'showDate', $attributes ) || ! empty( $attributes['showDate'] );
 $show_reading_time = ! array_key_exists( 'showReadingTime', $attributes ) || ! empty( $attributes['showReadingTime'] );
+$show_views        = ! array_key_exists( 'showViews', $attributes ) || ! empty( $attributes['showViews'] );
 
 $allowed_layouts = array( 'bento', 'grid', 'list' );
 if ( ! in_array( $layout, $allowed_layouts, true ) ) {
@@ -30,7 +31,7 @@ if ( ! in_array( $card_style, $allowed_card_styles, true ) ) {
 	$card_style = 'standard';
 }
 
-$allowed_order_by = array( 'date', 'modified', 'title', 'rand' );
+$allowed_order_by = array( 'date', 'modified', 'title', 'rand', 'views', 'trending' );
 if ( ! in_array( $order_by, $allowed_order_by, true ) ) {
 	$order_by = 'date';
 }
@@ -39,11 +40,24 @@ $query_args = array(
 	'post_type'           => 'post',
 	'post_status'         => 'publish',
 	'posts_per_page'      => max( 1, min( 16, $posts_to_show ) ),
-	'orderby'             => $order_by,
+	'orderby'             => in_array( $order_by, array( 'views', 'trending' ), true ) ? 'meta_value_num' : $order_by,
 	'order'               => 'DESC',
 	'ignore_sticky_posts' => true,
 	'no_found_rows'       => true,
 );
+
+if ( in_array( $order_by, array( 'views', 'trending' ), true ) ) {
+	$query_args['meta_key'] = VAARTA_VIEWS_META_KEY;
+}
+
+if ( 'trending' === $order_by ) {
+	$query_args['date_query'] = array(
+		array(
+			'after'     => '7 days ago',
+			'inclusive' => true,
+		),
+	);
+}
 
 if ( $category_slug ) {
 	$query_args['category_name'] = $category_slug;
@@ -105,7 +119,7 @@ if ( ! $query->have_posts() ) {
 					<div class="vaarta-story__excerpt"><?php the_excerpt(); ?></div>
 				<?php endif; ?>
 
-				<?php if ( $show_author || $show_date || $show_reading_time ) : ?>
+				<?php if ( $show_author || $show_date || $show_reading_time || $show_views ) : ?>
 					<div class="vaarta-story__meta">
 						<?php if ( $show_author ) : ?>
 							<span class="vaarta-story__author"><?php the_author_posts_link(); ?></span>
@@ -124,6 +138,18 @@ if ( ! $query->have_posts() ) {
 									/* translators: %d: estimated reading time in minutes. */
 									esc_html__( '%d min read', 'vaarta' ),
 									vaarta_get_reading_time( get_the_ID() )
+								);
+								?>
+							</span>
+						<?php endif; ?>
+
+						<?php if ( $show_views ) : ?>
+							<span class="vaarta-story__views">
+								<?php
+								printf(
+									/* translators: %s: formatted post view count. */
+									esc_html__( '%s views', 'vaarta' ),
+									esc_html( number_format_i18n( vaarta_get_post_views( get_the_ID() ) ) )
 								);
 								?>
 							</span>
