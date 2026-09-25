@@ -6,6 +6,10 @@ function getTheme() {
 }
 
 function syncButton( button ) {
+	if ( ! button ) {
+		return;
+	}
+
 	const isDark = getTheme() === 'dark';
 	button.setAttribute( 'aria-pressed', isDark ? 'true' : 'false' );
 	button.dataset.theme = isDark ? 'dark' : 'light';
