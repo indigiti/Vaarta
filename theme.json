@@ -10,24 +10,80 @@
     "color": {
       "defaultPalette": false,
       "palette": [
-        { "slug": "canvas", "name": "Canvas", "color": "#ffffff" },
-        { "slug": "ink", "name": "Ink", "color": "#111111" },
-        { "slug": "muted", "name": "Muted", "color": "#6b6b6b" },
-        { "slug": "line", "name": "Line", "color": "#e8e8e8" },
-        { "slug": "surface", "name": "Surface", "color": "#f6f6f4" }
+        {
+          "slug": "canvas",
+          "name": "Canvas",
+          "color": "#ffffff"
+        },
+        {
+          "slug": "ink",
+          "name": "Ink",
+          "color": "#111111"
+        },
+        {
+          "slug": "muted",
+          "name": "Muted",
+          "color": "#6b6b6b"
+        },
+        {
+          "slug": "line",
+          "name": "Line",
+          "color": "#e8e8e8"
+        },
+        {
+          "slug": "surface",
+          "name": "Surface",
+          "color": "#f6f6f4"
+        }
       ]
     },
     "spacing": {
-      "units": ["px", "rem", "vw"],
+      "units": [
+        "px",
+        "rem",
+        "vw"
+      ],
       "spacingSizes": [
-        { "slug": "2xs", "name": "2XS", "size": "4px" },
-        { "slug": "xs", "name": "XS", "size": "8px" },
-        { "slug": "sm", "name": "Small", "size": "12px" },
-        { "slug": "md", "name": "Medium", "size": "20px" },
-        { "slug": "lg", "name": "Large", "size": "32px" },
-        { "slug": "xl", "name": "XL", "size": "48px" },
-        { "slug": "2xl", "name": "2XL", "size": "72px" },
-        { "slug": "3xl", "name": "3XL", "size": "96px" }
+        {
+          "slug": "2xs",
+          "name": "2XS",
+          "size": "4px"
+        },
+        {
+          "slug": "xs",
+          "name": "XS",
+          "size": "8px"
+        },
+        {
+          "slug": "sm",
+          "name": "Small",
+          "size": "12px"
+        },
+        {
+          "slug": "md",
+          "name": "Medium",
+          "size": "20px"
+        },
+        {
+          "slug": "lg",
+          "name": "Large",
+          "size": "32px"
+        },
+        {
+          "slug": "xl",
+          "name": "XL",
+          "size": "48px"
+        },
+        {
+          "slug": "2xl",
+          "name": "2XL",
+          "size": "72px"
+        },
+        {
+          "slug": "3xl",
+          "name": "3XL",
+          "size": "96px"
+        }
       ]
     },
     "typography": {
@@ -40,12 +96,36 @@
         }
       ],
       "fontSizes": [
-        { "slug": "xs", "name": "XS", "size": "0.75rem" },
-        { "slug": "sm", "name": "Small", "size": "0.875rem" },
-        { "slug": "md", "name": "Medium", "size": "1rem" },
-        { "slug": "lg", "name": "Large", "size": "1.25rem" },
-        { "slug": "xl", "name": "XL", "size": "1.75rem" },
-        { "slug": "2xl", "name": "2XL", "size": "clamp(2.25rem, 5vw, 4.75rem)" }
+        {
+          "slug": "xs",
+          "name": "XS",
+          "size": "0.75rem"
+        },
+        {
+          "slug": "sm",
+          "name": "Small",
+          "size": "0.875rem"
+        },
+        {
+          "slug": "md",
+          "name": "Medium",
+          "size": "1rem"
+        },
+        {
+          "slug": "lg",
+          "name": "Large",
+          "size": "1.25rem"
+        },
+        {
+          "slug": "xl",
+          "name": "XL",
+          "size": "1.75rem"
+        },
+        {
+          "slug": "2xl",
+          "name": "2XL",
+          "size": "clamp(2.25rem, 5vw, 4.75rem)"
+        }
       ]
     }
   },
@@ -71,9 +151,38 @@
         }
       },
       "link": {
-        "color": { "text": "var(--wp--preset--color--ink)" },
-        ":hover": { "color": { "text": "var(--wp--preset--color--muted)" } }
+        "color": {
+          "text": "var(--wp--preset--color--ink)"
+        },
+        ":hover": {
+          "color": {
+            "text": "var(--wp--preset--color--muted)"
+          }
+        }
       }
     }
-  }
+  },
+  "customTemplates": [
+    {
+      "name": "single-article-1",
+      "title": "Article Layout 1 — Centered",
+      "postTypes": [
+        "post"
+      ]
+    },
+    {
+      "name": "single-article-2",
+      "title": "Article Layout 2 — Media Lead",
+      "postTypes": [
+        "post"
+      ]
+    },
+    {
+      "name": "single-article-3",
+      "title": "Article Layout 3 — Split Hero",
+      "postTypes": [
+        "post"
+      ]
+    }
+  ]
 }
