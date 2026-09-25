@@ -21,6 +21,12 @@ function vaarta_register_block_styles(): void {
 		),
 		'core/image' => array(
 			'vaarta-editorial-image' => __( 'Editorial Image', 'vaarta' ),
+			'vaarta-portrait-image'  => __( 'Portrait Image', 'vaarta' ),
+		),
+		'core/gallery' => array(
+			'vaarta-gallery-grid'    => __( 'Editorial Grid', 'vaarta' ),
+			'vaarta-gallery-masonry' => __( 'Editorial Masonry', 'vaarta' ),
+			'vaarta-gallery-strip'   => __( 'Horizontal Strip', 'vaarta' ),
 		),
 		'core/separator' => array(
 			'vaarta-hairline' => __( 'Vaarta Hairline', 'vaarta' ),
