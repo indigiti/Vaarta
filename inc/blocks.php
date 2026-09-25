@@ -34,6 +34,7 @@ function vaarta_register_blocks(): void {
 		'breadcrumbs',
 		'category-cards',
 		'contact-form',
+		'team-grid',
 	);
 
 	foreach ( $blocks as $block ) {
