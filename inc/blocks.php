@@ -29,6 +29,8 @@ function vaarta_register_blocks(): void {
 		'tab',
 		'search-overlay',
 		'auto-load-posts',
+		'popup',
+		'social-feed',
 	);
 
 	foreach ( $blocks as $block ) {

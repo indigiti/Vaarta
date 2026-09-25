@@ -45,7 +45,7 @@ Vaarta is an editorial design system. Pages are compositions of reusable Core Gu
 | Styled lists | Core List + Check List style | Built |
 | Numbered headings | Core Heading + Numbered style | Built |
 | Social links | Core Social Links + Pills style | Built |
-| Galleries | Core Gallery/Image; enhanced styles pending | Core-ready |
+| Galleries | Core Gallery/Image + Grid/Masonry/Strip + native lightbox | Built |
 | Tabs & Pills | Nested blocks + Interactivity API | Built |
 
 ## Remaining functional systems
@@ -54,14 +54,14 @@ Vaarta is an editorial design system. Pages are compositions of reusable Core Gu
 - Post views and trending/popular ranking. **Built**
 - Auto-load next article with History API and analytics events. **Built**
 - Search overlay / instant search. **Built**
-- Popup system using the Interactivity API.
+- Popup system using the Interactivity API. **Built**
 - Full Tabs/Pills block using nested Gutenberg content and the Interactivity API. **Built**
-- Social feed provider adapters.
-- Gallery slider/justified enhancements.
+- Social feed layouts using native Gutenberg embeds. **Built**; authenticated provider APIs remain optional adapters.
+- Gallery Grid/Masonry/Horizontal Strip enhancements. **Built**
 - Dark-mode preference/toggle system. **Built**
 - Advertisement provider integration hooks.
-- Final style packs for Firmware, Datacrunch, Foundr, Artboard, and Design Loft.
-- Visual-regression fixtures and pixel matching against the reference demos.
+- Global Style packs for Tech, Firmware, Datacrunch, Foundr, Artboard, and Design Loft. **Built — first-pass tokens**
+- Visual-regression fixtures for all six demos and article layouts. **Built**; pixel tuning remains iterative.
 - Performance and accessibility regression testing.
 
 
@@ -79,3 +79,20 @@ Built in the editorial-utilities milestone:
 - continuous article loading with History API URL/title updates
 - `vaarta:autoload` browser event for analytics adapters
 - expanded CI for PHP, JSON, JS modules, and block asset references
+
+
+## Editorial experience milestone
+
+Built in the editorial-experience milestone:
+
+- reusable Popup block with button, delayed and scroll-depth triggers
+- once-per-session handling for automatic popups
+- arbitrary nested Gutenberg content inside popups
+- Core Gallery styles: Editorial Grid, Masonry and Horizontal Strip
+- Core Image Portrait treatment
+- native WordPress image lightbox enabled globally while remaining editor-adjustable
+- six Global Style variations sharing the same semantic design tokens
+- Social Feed container for Instagram, X, Facebook, Pinterest or mixed native embeds
+- Playwright visual regression harness for all six demo homepages
+- fixed desktop, tablet and mobile viewport coverage
+- article-layout screenshot regression support

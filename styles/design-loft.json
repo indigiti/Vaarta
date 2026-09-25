@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.wp.org/trunk/theme.json",
   "version": 3,
-  "title": "Vaarta Tech",
+  "title": "Vaarta Design Loft",
   "settings": {
     "color": {
       "defaultPalette": false,
@@ -9,32 +9,32 @@
         {
           "slug": "canvas",
           "name": "Canvas",
-          "color": "#ffffff"
+          "color": "#f7f4ec"
         },
         {
           "slug": "ink",
           "name": "Ink",
-          "color": "#111216"
+          "color": "#20251f"
         },
         {
           "slug": "muted",
           "name": "Muted",
-          "color": "#737780"
+          "color": "#70766e"
         },
         {
           "slug": "line",
           "name": "Line",
-          "color": "#e7e9ee"
+          "color": "#dcdfd7"
         },
         {
           "slug": "surface",
           "name": "Surface",
-          "color": "#f5f6f8"
+          "color": "#ebeee7"
         },
         {
           "slug": "accent",
           "name": "Accent",
-          "color": "#5b5cf0"
+          "color": "#788d72"
         }
       ]
     }
@@ -45,12 +45,12 @@
       "text": "var(--wp--preset--color--ink)"
     },
     "typography": {
-      "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      "fontFamily": "Arial, Helvetica, sans-serif"
     },
     "elements": {
       "heading": {
         "typography": {
-          "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+          "fontFamily": "Georgia, \"Times New Roman\", serif",
           "fontWeight": "700",
           "lineHeight": "1.02",
           "letterSpacing": "-0.025em"
@@ -58,19 +58,19 @@
       },
       "button": {
         "border": {
-          "radius": "6px"
+          "radius": "0px"
         }
       }
     },
     "blocks": {
       "core/button": {
         "border": {
-          "radius": "6px"
+          "radius": "0px"
         }
       },
       "core/image": {
         "border": {
-          "radius": "6px"
+          "radius": "0px"
         }
       }
     }

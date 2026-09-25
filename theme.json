@@ -34,6 +34,11 @@
           "slug": "surface",
           "name": "Surface",
           "color": "#f6f6f4"
+        },
+        {
+          "slug": "accent",
+          "name": "Accent",
+          "color": "#5b5cf0"
         }
       ]
     },
@@ -127,6 +132,14 @@
           "size": "clamp(2.25rem, 5vw, 4.75rem)"
         }
       ]
+    },
+    "blocks": {
+      "core/image": {
+        "lightbox": {
+          "enabled": true,
+          "allowEditing": true
+        }
+      }
     }
   },
   "styles": {

@@ -291,3 +291,88 @@ html[data-vaarta-theme="dark"] select {
 		color-scheme: dark;
 	}
 }
+
+
+/* Editorial media treatments using Core Image and Gallery blocks. */
+.wp-block-image.is-style-vaarta-portrait-image {
+	overflow: hidden;
+}
+
+.wp-block-image.is-style-vaarta-portrait-image img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 4 / 5;
+	object-fit: cover;
+}
+
+.wp-block-gallery.is-style-vaarta-gallery-grid {
+	--wp--style--gallery-gap-default: clamp(10px, 1.4vw, 20px);
+}
+
+.wp-block-gallery.is-style-vaarta-gallery-grid .wp-block-image {
+	overflow: hidden;
+}
+
+.wp-block-gallery.is-style-vaarta-gallery-grid .wp-block-image img {
+	width: 100%;
+	height: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+}
+
+.wp-block-gallery.is-style-vaarta-gallery-grid .wp-block-image:nth-child(5n + 1) img {
+	aspect-ratio: 4 / 5;
+}
+
+.wp-block-gallery.is-style-vaarta-gallery-masonry {
+	display: block;
+	columns: 3 260px;
+	column-gap: clamp(10px, 1.4vw, 20px);
+}
+
+.wp-block-gallery.is-style-vaarta-gallery-masonry .wp-block-image {
+	display: inline-block;
+	width: 100% !important;
+	margin: 0 0 clamp(10px, 1.4vw, 20px) !important;
+	break-inside: avoid;
+}
+
+.wp-block-gallery.is-style-vaarta-gallery-masonry .wp-block-image img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.wp-block-gallery.is-style-vaarta-gallery-strip {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: minmax(240px, 38vw);
+	grid-template-columns: none;
+	gap: clamp(10px, 1.4vw, 20px);
+	overflow-x: auto;
+	overscroll-behavior-inline: contain;
+	scroll-snap-type: inline mandatory;
+	padding-bottom: 8px;
+}
+
+.wp-block-gallery.is-style-vaarta-gallery-strip .wp-block-image {
+	width: auto !important;
+	scroll-snap-align: start;
+}
+
+.wp-block-gallery.is-style-vaarta-gallery-strip .wp-block-image img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+}
+
+@media (max-width: 640px) {
+	.wp-block-gallery.is-style-vaarta-gallery-masonry {
+		columns: 2 140px;
+	}
+
+	.wp-block-gallery.is-style-vaarta-gallery-strip {
+		grid-auto-columns: minmax(240px, 82vw);
+	}
+}
