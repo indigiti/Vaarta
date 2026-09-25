@@ -46,6 +46,18 @@
 	</div>
 	<!-- /wp:group -->
 
+	<!-- wp:group {"className":"vaarta-shell vaarta-section","layout":{"type":"default"}} -->
+	<div class="wp-block-group vaarta-shell vaarta-section">
+		<!-- wp:heading {"level":2,"fontSize":"xl"} -->
+		<h2 class="wp-block-heading has-xl-font-size"><?php echo esc_html__( 'Gear', 'vaarta' ); ?></h2>
+		<!-- /wp:heading -->
+		<!-- wp:paragraph {"textColor":"muted"} -->
+		<p class="has-muted-color has-text-color"><?php echo esc_html__( 'Devices, tools and hardware worth understanding.', 'vaarta' ); ?></p>
+		<!-- /wp:paragraph -->
+		<!-- wp:vaarta/editorial-grid {"layout":"grid","cardStyle":"standard","categorySlug":"gear","postsToShow":6,"showExcerpt":false,"showAuthor":false,"showDate":false,"showReadingTime":true,"showViews":true} /-->
+	</div>
+	<!-- /wp:group -->
+
 	<!-- wp:pattern {"slug":"vaarta/social-feed"} /-->
 
 	<!-- wp:pattern {"slug":"vaarta/newsletter-callout"} /-->
