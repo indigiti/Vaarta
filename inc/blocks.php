@@ -16,6 +16,7 @@ function vaarta_register_blocks(): void {
 	$blocks = array(
 		'editorial-grid',
 		'story-meta',
+		'newsletter',
 	);
 
 	foreach ( $blocks as $block ) {
