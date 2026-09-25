@@ -376,3 +376,42 @@ html[data-vaarta-theme="dark"] select {
 		grid-auto-columns: minmax(240px, 82vw);
 	}
 }
+
+
+/* Accessibility: keyboard focus and skip link. */
+.vaarta-skip-link:focus {
+	position: fixed !important;
+	z-index: 100200;
+	top: 12px;
+	left: 12px;
+	width: auto;
+	height: auto;
+	padding: 10px 14px;
+	clip: auto !important;
+	clip-path: none;
+	border: 2px solid currentColor;
+	background: var(--wp--preset--color--canvas);
+	color: var(--wp--preset--color--ink);
+	font-weight: 700;
+	text-decoration: none;
+}
+
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+	outline: 3px solid var(--wp--preset--color--accent);
+	outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto !important;
+	}
+
+	*,
+	*::before,
+	*::after {
+		scroll-behavior: auto !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
