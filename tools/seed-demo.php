@@ -175,7 +175,7 @@ function vaarta_seed_demo_image( int $index, int $post_id ): int {
 
 	$metadata = wp_generate_attachment_metadata( $attachment_id, $upload['file'] );
 	wp_update_attachment_metadata( $attachment_id, $metadata );
-	update_post_meta( $attachment_id, $seed_key, '1' );
+	update_post_meta( $attachment_id, '_vaarta_demo_seed', '1' );
 
 	return (int) $attachment_id;
 }
