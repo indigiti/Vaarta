@@ -23,6 +23,7 @@ function vaarta_register_blocks(): void {
 		'social-share',
 		'author-box',
 		'related-posts',
+		'contributors',
 	);
 
 	foreach ( $blocks as $block ) {
