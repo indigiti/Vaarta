@@ -142,3 +142,45 @@ Built in the visual-fidelity milestone:
 - documented clean-room visual comparison workflow
 
 The next fidelity passes should be driven by running WordPress screenshots with seeded content and comparing measured geometry against the public references.
+
+
+## Pixel tuning milestone
+
+Built in the pixel-tuning milestone:
+
+- reusable Category Cards block with:
+  - editor-selectable categories
+  - automatic most-used categories fallback
+  - post counts
+  - optional descriptions
+  - latest-post featured image per category
+  - Grid / Strip layouts
+- reusable Popular Stories pattern powered by Most Viewed ordering
+- Popular discovery layer added above Tech and Datacrunch
+- Tech composition expanded with a dedicated Gear section
+- Datacrunch composition expanded with:
+  - Popular
+  - Featured Posts
+  - Social Feed
+  - Top on the Week
+  - Category Cards
+- Artboard composition expanded with media-led resource category cards
+- archive/search/author templates rebuilt around shared editorial hierarchy
+- archive cards now reuse Story Meta for author/date/read-time/views consistency
+- three article layouts rebuilt around shared:
+  - category
+  - title
+  - post excerpt/deck
+  - Story Meta
+  - hero media
+  - article body
+  - article footer
+- Centered, Full-bleed Media Lead and Split Hero layouts now have distinct responsive silhouettes
+- shared CSS added for:
+  - Popular strips
+  - archive headers/cards/pagination
+  - article headers/decks/heroes/body widths
+  - mobile article stacking
+- Top on the Week changed to image-led compact stories
+
+This pass intentionally keeps all fidelity improvements inside reusable Gutenberg modules, patterns and shared component CSS.
