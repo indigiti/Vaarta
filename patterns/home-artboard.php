@@ -27,7 +27,7 @@
 
 	<!-- wp:pattern {"slug":"vaarta/promo-split"} /-->
 
-	<!-- wp:group {"className":"vaarta-shell","style":{"spacing":{"margin":{"top":"72px"}}},"layout":{"type":"default"}} -->
+	<!-- wp:group {"className":"vaarta-shell vaarta-section","style":{"spacing":{"margin":{"top":"72px"}}},"layout":{"type":"default"}} -->
 	<div class="wp-block-group vaarta-shell">
 		<!-- wp:heading {"level":2,"fontSize":"xl"} -->
 		<h2 class="wp-block-heading has-xl-font-size"><?php echo esc_html__( 'Inspiration', 'vaarta' ); ?></h2>
