@@ -5,7 +5,8 @@
   "description": "Gutenberg-native editorial design system.",
   "scripts": {
     "test:visual": "playwright test tests/visual",
-    "test:visual:update": "playwright test tests/visual --update-snapshots"
+    "test:visual:update": "playwright test tests/visual --update-snapshots",
+    "capture:references": "playwright test tests/reference-capture"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.0"
