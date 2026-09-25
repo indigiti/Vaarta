@@ -11,6 +11,7 @@ Use this checklist before creating a tagged release.
 
 ## Package
 
+- [ ] **WordPress Integration Smoke** is green for every configured WordPress version.
 - [ ] Run `npm run package`.
 - [ ] Install the generated ZIP on a clean WordPress site.
 - [ ] Activate without PHP warnings or fatal errors.
