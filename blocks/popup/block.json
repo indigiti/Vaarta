@@ -4,10 +4,15 @@
   "name": "vaarta/popup",
   "version": "0.1.0",
   "title": "Popup",
-  "category": "design",
+  "category": "vaarta",
   "icon": "welcome-view-site",
   "description": "Reusable popup with arbitrary Gutenberg content and configurable triggers.",
-  "keywords": ["popup", "modal", "newsletter", "promotion"],
+  "keywords": [
+    "popup",
+    "modal",
+    "newsletter",
+    "promotion"
+  ],
   "textdomain": "vaarta",
   "attributes": {
     "trigger": {
