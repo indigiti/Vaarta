@@ -5,7 +5,7 @@
     "appearanceTools": true,
     "layout": {
       "contentSize": "760px",
-      "wideSize": "1280px"
+      "wideSize": "1320px"
     },
     "color": {
       "defaultPalette": false,
@@ -130,6 +130,11 @@
           "slug": "2xl",
           "name": "2XL",
           "size": "clamp(2.25rem, 5vw, 4.75rem)"
+        },
+        {
+          "slug": "3xl",
+          "name": "3XL",
+          "size": "clamp(3.5rem, 7vw, 7rem)"
         }
       ]
     },
