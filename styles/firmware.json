@@ -45,13 +45,14 @@
       "text": "var(--wp--preset--color--ink)"
     },
     "typography": {
-      "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "lineHeight": "1.58"
     },
     "elements": {
       "heading": {
         "typography": {
           "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
-          "fontWeight": "700",
+          "fontWeight": "760",
           "lineHeight": "1.02",
           "letterSpacing": "-0.025em"
         }
@@ -65,12 +66,39 @@
     "blocks": {
       "core/button": {
         "border": {
-          "radius": "14px"
+          "radius": "999px"
+        },
+        "typography": {
+          "fontSize": "0.875rem",
+          "fontWeight": "700",
+          "lineHeight": "1"
+        },
+        "spacing": {
+          "padding": {
+            "top": "12px",
+            "right": "20px",
+            "bottom": "12px",
+            "left": "20px"
+          }
         }
       },
       "core/image": {
         "border": {
           "radius": "14px"
+        }
+      },
+      "core/navigation": {
+        "typography": {
+          "fontSize": "0.875rem",
+          "fontWeight": "700",
+          "lineHeight": "1"
+        }
+      },
+      "core/site-title": {
+        "typography": {
+          "fontWeight": "820",
+          "letterSpacing": "-0.045em",
+          "lineHeight": "1"
         }
       }
     }

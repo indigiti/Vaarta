@@ -1,11 +1,15 @@
-<!-- wp:group {"className":"vaarta-shell","style":{"spacing":{"padding":{"top":"18px","bottom":"18px"}}},"layout":{"type":"flex","justifyContent":"space-between"}} -->
-<div class="wp-block-group vaarta-shell">
-	<!-- wp:site-title {"level":0,"style":{"typography":{"fontWeight":"700"}}} /-->
-	<!-- wp:group {"layout":{"type":"flex","justifyContent":"right","flexWrap":"nowrap"}} -->
-	<div class="wp-block-group">
-		<!-- wp:vaarta/search-overlay /-->
-		<!-- wp:navigation {"overlayMenu":"mobile","layout":{"type":"flex","justifyContent":"right"}} /-->
-		<!-- wp:vaarta/theme-toggle /-->
+<!-- wp:group {"tagName":"div","className":"vaarta-site-header","layout":{"type":"default"}} -->
+<div class="wp-block-group vaarta-site-header">
+	<!-- wp:group {"className":"vaarta-shell vaarta-header__inner","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"nowrap"}} -->
+	<div class="wp-block-group vaarta-shell vaarta-header__inner">
+		<!-- wp:site-title {"level":0,"className":"vaarta-header__brand","style":{"typography":{"fontWeight":"800"}}} /-->
+		<!-- wp:group {"className":"vaarta-header__actions","layout":{"type":"flex","justifyContent":"right","flexWrap":"nowrap"}} -->
+		<div class="wp-block-group vaarta-header__actions">
+			<!-- wp:navigation {"overlayMenu":"mobile","className":"vaarta-header__nav","layout":{"type":"flex","justifyContent":"right","flexWrap":"nowrap"}} /-->
+			<!-- wp:vaarta/search-overlay /-->
+			<!-- wp:vaarta/theme-toggle /-->
+		</div>
+		<!-- /wp:group -->
 	</div>
 	<!-- /wp:group -->
 </div>

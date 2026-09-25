@@ -244,3 +244,209 @@
 		min-height: 300px;
 	}
 }
+
+
+/* Fidelity geometry: asymmetric editorial composition rather than equal cards. */
+.vaarta-editorial-grid {
+	--vaarta-grid-gap: clamp(16px, 1.8vw, 26px);
+}
+
+.vaarta-editorial-grid--bento .vaarta-story:first-child {
+	grid-column: span 7;
+	grid-row: span 2;
+}
+
+.vaarta-editorial-grid--bento .vaarta-story:nth-child(2),
+.vaarta-editorial-grid--bento .vaarta-story:nth-child(3) {
+	grid-column: span 5;
+}
+
+.vaarta-editorial-grid--bento .vaarta-story:nth-child(4),
+.vaarta-editorial-grid--bento .vaarta-story:nth-child(5),
+.vaarta-editorial-grid--bento .vaarta-story:nth-child(6) {
+	grid-column: span 4;
+}
+
+.vaarta-editorial-grid--bento .vaarta-story:nth-child(7),
+.vaarta-editorial-grid--bento .vaarta-story:nth-child(8) {
+	grid-column: span 6;
+}
+
+.vaarta-editorial-grid--bento .vaarta-story:first-child .vaarta-story__media img {
+	aspect-ratio: 16 / 10;
+}
+
+.vaarta-editorial-grid--bento .vaarta-story:first-child .vaarta-story__title {
+	max-width: 15ch;
+	font-size: clamp(2rem, 3.2vw, 3.75rem);
+	line-height: .98;
+	letter-spacing: -.045em;
+}
+
+.vaarta-editorial-grid--bento .vaarta-story:nth-child(2) .vaarta-story__title,
+.vaarta-editorial-grid--bento .vaarta-story:nth-child(3) .vaarta-story__title {
+	font-size: clamp(1.35rem, 2.2vw, 2.15rem);
+}
+
+.vaarta-story__media {
+	margin-bottom: 14px;
+}
+
+.vaarta-story__terms {
+	font-weight: 700;
+	line-height: 1.35;
+}
+
+.vaarta-story__terms a {
+	text-decoration: none;
+}
+
+.vaarta-story__title {
+	margin: 7px 0;
+	font-weight: 760;
+}
+
+.vaarta-story__excerpt {
+	max-width: 58ch;
+	font-size: .95rem;
+	line-height: 1.55;
+}
+
+.vaarta-story__meta {
+	gap: 5px 11px;
+	margin-top: 12px;
+	font-size: .72rem;
+	line-height: 1.35;
+}
+
+.vaarta-editorial-grid--list {
+	border-top: 1px solid var(--wp--preset--color--line);
+}
+
+.vaarta-editorial-grid--list .vaarta-story {
+	grid-template-columns: minmax(160px, 27%) minmax(0, 1fr);
+	gap: clamp(18px, 3vw, 38px);
+	padding-block: clamp(20px, 3vw, 34px);
+	border-bottom: 1px solid var(--wp--preset--color--line);
+}
+
+.vaarta-editorial-grid--list .vaarta-story__media {
+	margin: 0;
+}
+
+.vaarta-editorial-grid--list .vaarta-story__media img {
+	aspect-ratio: 4 / 3;
+}
+
+.vaarta-editorial-grid--list .vaarta-story__title {
+	max-width: 26ch;
+	font-size: clamp(1.35rem, 2.3vw, 2.35rem);
+}
+
+.vaarta-story--minimal {
+	padding-block: clamp(16px, 2.2vw, 26px);
+}
+
+.vaarta-story--minimal .vaarta-story__title {
+	max-width: 26ch;
+	font-size: clamp(1.25rem, 2.1vw, 2.05rem);
+}
+
+.vaarta-story--compact {
+	grid-template-columns: minmax(96px, 128px) minmax(0, 1fr);
+	gap: 14px;
+}
+
+.vaarta-story--compact .vaarta-story__title {
+	font-size: clamp(1rem, 1.4vw, 1.28rem);
+	line-height: 1.08;
+}
+
+.vaarta-story--overlay {
+	min-height: clamp(320px, 36vw, 520px);
+}
+
+.vaarta-story--overlay .vaarta-story__body {
+	min-height: inherit;
+	padding: clamp(22px, 3.2vw, 42px);
+}
+
+.vaarta-story--overlay .vaarta-story__title {
+	max-width: 17ch;
+	font-size: clamp(1.75rem, 3vw, 3.4rem);
+	line-height: .98;
+	letter-spacing: -.04em;
+}
+
+@media (max-width: 900px) {
+	.vaarta-editorial-grid--bento .vaarta-story:first-child {
+		grid-column: span 6;
+	}
+
+	.vaarta-editorial-grid--bento .vaarta-story:nth-child(n+2) {
+		grid-column: span 3;
+	}
+}
+
+@media (max-width: 640px) {
+	.vaarta-editorial-grid--bento,
+	.vaarta-editorial-grid--grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0;
+	}
+
+	.vaarta-editorial-grid--bento .vaarta-story,
+	.vaarta-editorial-grid--bento .vaarta-story:first-child,
+	.vaarta-editorial-grid--bento .vaarta-story:nth-child(n+2),
+	.vaarta-editorial-grid--grid .vaarta-story {
+		grid-column: 1;
+	}
+
+	.vaarta-editorial-grid .vaarta-story + .vaarta-story {
+		margin-top: 0;
+		padding-top: 24px;
+		border-top: 1px solid var(--wp--preset--color--line);
+	}
+
+	.vaarta-editorial-grid--bento .vaarta-story:first-child {
+		padding-bottom: 30px;
+	}
+
+	.vaarta-editorial-grid--bento .vaarta-story:first-child .vaarta-story__title {
+		font-size: clamp(2rem, 10vw, 3.15rem);
+	}
+
+	.vaarta-editorial-grid--bento .vaarta-story:not(:first-child) {
+		display: grid;
+		grid-template-columns: 116px minmax(0, 1fr);
+		gap: 14px;
+		align-items: start;
+	}
+
+	.vaarta-editorial-grid--bento .vaarta-story:not(:first-child) .vaarta-story__media {
+		margin: 0;
+	}
+
+	.vaarta-editorial-grid--bento .vaarta-story:not(:first-child) .vaarta-story__media img {
+		aspect-ratio: 1 / 1;
+	}
+
+	.vaarta-editorial-grid--bento .vaarta-story:not(:first-child) .vaarta-story__title {
+		margin-top: 4px;
+		font-size: 1.08rem;
+	}
+
+	.vaarta-editorial-grid--bento .vaarta-story:not(:first-child) .vaarta-story__excerpt {
+		display: none;
+	}
+
+	.vaarta-editorial-grid--list .vaarta-story {
+		grid-template-columns: 112px minmax(0, 1fr);
+		gap: 14px;
+	}
+
+	.vaarta-editorial-grid--list .vaarta-story__title {
+		font-size: 1.08rem;
+	}
+}

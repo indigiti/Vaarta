@@ -118,3 +118,27 @@ Built in the quality-fidelity milestone:
 - stricter CI validation for Gutenberg block-comment JSON and custom block categories
 
 Quality targets are documented in `docs/performance-budgets.md`.
+
+
+## Visual fidelity milestone
+
+Built in the visual-fidelity milestone:
+
+- widened 1320px editorial canvas
+- refined full-width low-chrome site header
+- larger balanced homepage hero typography and deck
+- asymmetric 7/5-column Bento geometry
+- stronger first-story hierarchy and image ratio
+- denser read-time/views metadata rhythm
+- compact mobile story composition after the lead story
+- expanded Tech homepage with Future Tech, Social, Newsletter and Latest Stories layers
+- Foundr homepage aligned with Strategies, trending Top on the Week, Entrepreneurship and News
+- tuned Firmware, Datacrunch, Artboard and Design Loft lead/section rhythm
+- refined Newsletter and Social Feed presentation
+- expanded editorial footer
+- six Global Style packs refined beyond color into navigation, button and brand typography behavior
+- deterministic WP-CLI demo-content seeder with locally generated abstract featured images
+- visual/reference screenshot matrix expanded through 1024px and 360px breakpoints
+- documented clean-room visual comparison workflow
+
+The next fidelity passes should be driven by running WordPress screenshots with seeded content and comparing measured geometry against the public references.
