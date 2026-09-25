@@ -195,6 +195,18 @@ jobs:
             fi
           done
 
+          curl -fsS http://127.0.0.1:8080/ \
+            | grep -q 'wp-block-vaarta-editorial-grid'
+
+          curl -fsS http://127.0.0.1:8080/contact/ \
+            | grep -q 'wp-block-vaarta-contact-form'
+
+          curl -fsS http://127.0.0.1:8080/team/ \
+            | grep -q 'wp-block-vaarta-team-grid'
+
+          curl -fsS http://127.0.0.1:8080/coming-soon/ \
+            | grep -q 'wp-block-vaarta-newsletter'
+
       - name: Verify Vaarta REST routes
         run: |
           curl -fsS 'http://127.0.0.1:8080/wp-json/vaarta/v1/search?q=AI&limit=3' \
