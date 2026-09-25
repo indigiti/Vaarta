@@ -2,6 +2,7 @@
 	const { registerBlockType } = wp.blocks;
 	const { InspectorControls, useBlockProps } = wp.blockEditor;
 	const { PanelBody, SelectControl, RangeControl, ToggleControl } = wp.components;
+	const { useSelect } = wp.data;
 	const { createElement: el, Fragment } = wp.element;
 	const { __ } = wp.i18n;
 	const ServerSideRender = wp.serverSideRender;
@@ -10,6 +11,24 @@
 		edit: function( props ) {
 			const { attributes, setAttributes } = props;
 			const blockProps = useBlockProps( { className: 'vaarta-editorial-grid-editor' } );
+
+			const categories = useSelect( function( select ) {
+				return select( 'core' ).getEntityRecords( 'taxonomy', 'category', {
+					per_page: 100,
+					hide_empty: false
+				} );
+			}, [] );
+
+			const categoryOptions = [
+				{ label: __( 'All categories', 'vaarta' ), value: 0 }
+			].concat(
+				( categories || [] ).map( function( category ) {
+					return {
+						label: category.name,
+						value: category.id
+					};
+				} )
+			);
 
 			return el(
 				Fragment,
@@ -30,6 +49,28 @@
 							],
 							onChange: function( value ) {
 								setAttributes( { layout: value } );
+							}
+						} ),
+						el( SelectControl, {
+							label: __( 'Card style', 'vaarta' ),
+							value: attributes.cardStyle,
+							options: [
+								{ label: __( 'Standard', 'vaarta' ), value: 'standard' },
+								{ label: __( 'Minimal', 'vaarta' ), value: 'minimal' },
+								{ label: __( 'Overlay', 'vaarta' ), value: 'overlay' },
+								{ label: __( 'Dark', 'vaarta' ), value: 'dark' },
+								{ label: __( 'Compact', 'vaarta' ), value: 'compact' }
+							],
+							onChange: function( value ) {
+								setAttributes( { cardStyle: value } );
+							}
+						} ),
+						el( SelectControl, {
+							label: __( 'Category', 'vaarta' ),
+							value: attributes.categoryId || 0,
+							options: categoryOptions,
+							onChange: function( value ) {
+								setAttributes( { categoryId: parseInt( value, 10 ) || 0 } );
 							}
 						} ),
 						el( RangeControl, {
