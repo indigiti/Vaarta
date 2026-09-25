@@ -16,7 +16,8 @@ $posts_to_show  = isset( $attributes['postsToShow'] ) ? absint( $attributes['pos
 $order_by       = isset( $attributes['orderBy'] ) ? sanitize_key( $attributes['orderBy'] ) : 'date';
 $show_excerpt   = ! empty( $attributes['showExcerpt'] );
 $show_author    = ! array_key_exists( 'showAuthor', $attributes ) || ! empty( $attributes['showAuthor'] );
-$show_date      = ! array_key_exists( 'showDate', $attributes ) || ! empty( $attributes['showDate'] );
+$show_date         = ! array_key_exists( 'showDate', $attributes ) || ! empty( $attributes['showDate'] );
+$show_reading_time = ! array_key_exists( 'showReadingTime', $attributes ) || ! empty( $attributes['showReadingTime'] );
 
 $allowed_layouts = array( 'bento', 'grid', 'list' );
 if ( ! in_array( $layout, $allowed_layouts, true ) ) {
@@ -101,7 +102,7 @@ if ( ! $query->have_posts() ) {
 					<div class="vaarta-story__excerpt"><?php the_excerpt(); ?></div>
 				<?php endif; ?>
 
-				<?php if ( $show_author || $show_date ) : ?>
+				<?php if ( $show_author || $show_date || $show_reading_time ) : ?>
 					<div class="vaarta-story__meta">
 						<?php if ( $show_author ) : ?>
 							<span class="vaarta-story__author"><?php the_author_posts_link(); ?></span>
@@ -111,6 +112,18 @@ if ( ! $query->have_posts() ) {
 							<time datetime="<?php echo esc_attr( get_the_date( DATE_W3C ) ); ?>">
 								<?php echo esc_html( get_the_date() ); ?>
 							</time>
+						<?php endif; ?>
+
+						<?php if ( $show_reading_time ) : ?>
+							<span class="vaarta-story__reading-time">
+								<?php
+								printf(
+									/* translators: %d: estimated reading time in minutes. */
+									esc_html__( '%d min read', 'vaarta' ),
+									vaarta_get_reading_time( get_the_ID() )
+								);
+								?>
+							</span>
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>
