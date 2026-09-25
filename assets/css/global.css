@@ -701,3 +701,62 @@ main > .vaarta-shell:not(.vaarta-hero) > .wp-block-heading:first-child + p {
 		margin-bottom: 64px;
 	}
 }
+
+
+.vaarta-hero__deck {
+	max-width: 48ch;
+	margin: 22px auto 0;
+	font-size: clamp(.95rem, 1.4vw, 1.08rem);
+	line-height: 1.55;
+}
+
+.vaarta-site-footer {
+	margin-top: clamp(88px, 10vw, 150px);
+	border-top: 1px solid var(--wp--preset--color--line);
+}
+
+.vaarta-footer__inner {
+	padding-block: clamp(46px, 7vw, 84px) 34px;
+}
+
+.vaarta-footer__brand {
+	margin: 0;
+	font-size: clamp(1.7rem, 3vw, 2.7rem);
+	font-weight: 800;
+	line-height: .95;
+	letter-spacing: -.045em;
+}
+
+.vaarta-footer__brand a {
+	text-decoration: none;
+}
+
+.vaarta-footer__tagline {
+	max-width: 34ch;
+	margin-top: 12px;
+	font-size: .875rem;
+	line-height: 1.55;
+}
+
+.vaarta-footer__nav {
+	font-size: .875rem;
+}
+
+.vaarta-footer__nav .wp-block-navigation-item__content {
+	padding-block: 4px;
+	text-decoration: none;
+}
+
+.vaarta-footer__inner > .wp-block-separator {
+	margin-block: clamp(32px, 5vw, 54px) 22px;
+}
+
+@media (max-width: 720px) {
+	.vaarta-footer__inner .wp-block-columns {
+		gap: 30px !important;
+	}
+
+	.vaarta-footer__inner .wp-block-social-links {
+		justify-content: flex-start;
+	}
+}
