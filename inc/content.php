@@ -23,9 +23,14 @@ function vaarta_get_reading_time( int $post_id = 0 ): int {
 		return 1;
 	}
 
-	$text       = wp_strip_all_tags( strip_shortcodes( $content ) );
-	$word_count = str_word_count( $text );
+	$text  = trim( wp_strip_all_tags( strip_shortcodes( $content ) ) );
+	$words = preg_split( '/\s+/u', $text, -1, PREG_SPLIT_NO_EMPTY );
+
+	if ( ! is_array( $words ) ) {
+		return 1;
+	}
+
 	$words_per_minute = 225;
 
-	return max( 1, (int) ceil( $word_count / $words_per_minute ) );
+	return max( 1, (int) ceil( count( $words ) / $words_per_minute ) );
 }
