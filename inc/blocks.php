@@ -33,6 +33,7 @@ function vaarta_register_blocks(): void {
 		'social-feed',
 		'breadcrumbs',
 		'category-cards',
+		'contact-form',
 	);
 
 	foreach ( $blocks as $block ) {
