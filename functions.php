@@ -16,6 +16,7 @@ require_once get_theme_file_path( 'inc/query-variations.php' );
 require_once get_theme_file_path( 'inc/content.php' );
 require_once get_theme_file_path( 'inc/views.php' );
 require_once get_theme_file_path( 'inc/contributors.php' );
+require_once get_theme_file_path( 'inc/search.php' );
 require_once get_theme_file_path( 'inc/block-styles.php' );
 require_once get_theme_file_path( 'inc/dark-mode.php' );
 require_once get_theme_file_path( 'inc/blocks.php' );
