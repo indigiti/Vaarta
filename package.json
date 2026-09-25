@@ -1,14 +1,15 @@
 {
   "name": "vaarta-theme",
   "private": true,
-  "version": "0.3.0",
+  "version": "0.9.0",
   "description": "Gutenberg-native editorial design system.",
   "scripts": {
     "test:visual": "playwright test tests/visual",
     "test:visual:update": "playwright test tests/visual --update-snapshots",
     "capture:references": "playwright test tests/reference-capture",
     "test:a11y": "playwright test tests/accessibility",
-    "audit:lighthouse": "lhci autorun"
+    "audit:lighthouse": "lhci autorun",
+    "package": "bash tools/package-theme.sh"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
