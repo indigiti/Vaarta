@@ -1,0 +1,265 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	text-rendering: optimizeLegibility;
+}
+
+body {
+	margin: 0;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+.vaarta-shell {
+	width: min(100% - 32px, 1280px);
+	margin-inline: auto;
+}
+
+.vaarta-hero {
+	padding-block: clamp(56px, 9vw, 128px);
+}
+
+.vaarta-hero__title {
+	max-width: 12ch;
+	margin-inline: auto;
+	text-wrap: balance;
+}
+
+.vaarta-chip-row {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+}
+
+.vaarta-chip-row a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 38px;
+	padding: 8px 14px;
+	border: 1px solid var(--wp--preset--color--line);
+	border-radius: 999px;
+	text-decoration: none;
+	font-size: 0.875rem;
+}
+
+.vaarta-story-card {
+	min-width: 0;
+}
+
+.vaarta-story-card .wp-block-post-title {
+	margin-block: 10px 8px;
+	text-wrap: balance;
+}
+
+.vaarta-story-card .wp-block-post-featured-image {
+	margin-bottom: 16px;
+	overflow: hidden;
+}
+
+.vaarta-story-card .wp-block-post-featured-image img {
+	transition: transform 240ms ease;
+}
+
+.vaarta-story-card:hover .wp-block-post-featured-image img {
+	transform: scale(1.015);
+}
+
+.vaarta-story-grid {
+	display: grid;
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	gap: clamp(16px, 2vw, 28px);
+}
+
+.vaarta-story-grid > * {
+	grid-column: span 4;
+	min-width: 0;
+}
+
+.vaarta-story-grid > :first-child {
+	grid-column: span 6;
+	grid-row: span 2;
+}
+
+.vaarta-story-grid > :nth-child(4) {
+	grid-column: span 6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.vaarta-story-card .wp-block-post-featured-image img {
+		transition: none;
+	}
+}
+
+@media (max-width: 900px) {
+	.vaarta-story-grid {
+		grid-template-columns: repeat(6, minmax(0, 1fr));
+	}
+
+	.vaarta-story-grid > *,
+	.vaarta-story-grid > :first-child,
+	.vaarta-story-grid > :nth-child(4) {
+		grid-column: span 3;
+		grid-row: auto;
+	}
+}
+
+@media (max-width: 640px) {
+	.vaarta-shell {
+		width: min(100% - 24px, 1280px);
+	}
+
+	.vaarta-story-grid {
+		display: block;
+	}
+
+	.vaarta-story-grid > * + * {
+		margin-top: 32px;
+	}
+}
+
+
+/* Gutenberg Core block style variations. */
+.wp-block-group.is-style-vaarta-card {
+	padding: clamp(18px, 2vw, 28px);
+	border: 1px solid var(--wp--preset--color--line);
+	background: var(--wp--preset--color--canvas);
+}
+
+.wp-block-group.is-style-vaarta-dark-card {
+	padding: clamp(18px, 2vw, 28px);
+	background: var(--wp--preset--color--ink);
+	color: var(--wp--preset--color--canvas);
+}
+
+.wp-block-group.is-style-vaarta-dark-card a {
+	color: inherit;
+}
+
+.wp-block-image.is-style-vaarta-editorial-image {
+	overflow: hidden;
+}
+
+.wp-block-image.is-style-vaarta-editorial-image img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+}
+
+.wp-block-separator.is-style-vaarta-hairline {
+	width: 100%;
+	border: 0;
+	border-top: 1px solid var(--wp--preset--color--line);
+	opacity: 1;
+}
+
+
+/* More reusable Gutenberg formatting styles. */
+.wp-block-group.is-style-vaarta-alert {
+	padding: 18px 20px;
+	border-left: 4px solid currentColor;
+	background: var(--wp--preset--color--surface);
+}
+
+.wp-block-details.is-style-vaarta-accordion {
+	padding: 0;
+	border-top: 1px solid var(--wp--preset--color--line);
+	border-bottom: 1px solid var(--wp--preset--color--line);
+}
+
+.wp-block-details.is-style-vaarta-accordion summary {
+	padding-block: 18px;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.wp-block-details.is-style-vaarta-accordion > :not(summary) {
+	margin-inline: 0;
+	padding-bottom: 18px;
+}
+
+.wp-block-paragraph.is-style-vaarta-badge,
+p.is-style-vaarta-badge {
+	display: inline-flex;
+	align-items: center;
+	width: fit-content;
+	min-height: 28px;
+	margin: 0;
+	padding: 4px 10px;
+	border: 1px solid var(--wp--preset--color--line);
+	border-radius: 999px;
+	font-size: var(--wp--preset--font-size--xs);
+	font-weight: 700;
+	line-height: 1;
+}
+
+.wp-block-paragraph.is-style-vaarta-drop-cap::first-letter,
+p.is-style-vaarta-drop-cap::first-letter {
+	float: left;
+	margin: .06em .12em 0 0;
+	font-size: 4.6em;
+	font-weight: 800;
+	line-height: .78;
+	letter-spacing: -.06em;
+}
+
+.wp-block-list.is-style-vaarta-check-list {
+	padding-left: 0;
+	list-style: none;
+}
+
+.wp-block-list.is-style-vaarta-check-list li {
+	position: relative;
+	padding-left: 1.7em;
+}
+
+.wp-block-list.is-style-vaarta-check-list li + li {
+	margin-top: .55em;
+}
+
+.wp-block-list.is-style-vaarta-check-list li::before {
+	content: "✓";
+	position: absolute;
+	left: 0;
+	font-weight: 800;
+}
+
+main {
+	counter-reset: vaarta-numbered-heading;
+}
+
+.wp-block-heading.is-style-vaarta-numbered {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: .65em;
+	align-items: baseline;
+}
+
+.wp-block-heading.is-style-vaarta-numbered::before {
+	counter-increment: vaarta-numbered-heading;
+	content: counter(vaarta-numbered-heading, decimal-leading-zero);
+	color: var(--wp--preset--color--muted);
+	font-size: .45em;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0;
+}
+
+.wp-block-social-links.is-style-vaarta-pills .wp-social-link {
+	border: 1px solid var(--wp--preset--color--line);
+	border-radius: 999px;
+	background: transparent;
+	color: var(--wp--preset--color--ink);
+}
+
+.wp-block-social-links.is-style-vaarta-pills .wp-social-link:hover {
+	transform: none;
+	background: var(--wp--preset--color--surface);
+}

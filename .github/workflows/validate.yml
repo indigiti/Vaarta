@@ -1,0 +1,49 @@
+name: Validate Vaarta
+
+on:
+  push:
+    branches:
+      - main
+      - feature/**
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: PHP syntax
+        run: find . -type f -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
+
+      - name: JSON syntax
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          ignored = {'.git', 'node_modules', 'vendor'}
+          for path in Path('.').rglob('*.json'):
+              if any(part in ignored for part in path.parts):
+                  continue
+              with path.open(encoding='utf-8') as handle:
+                  json.load(handle)
+              print(f'JSON OK: {path}')
+          PY
+
+      - name: Required block-theme files
+        run: |
+          test -f style.css
+          test -f theme.json
+          test -f templates/index.html
