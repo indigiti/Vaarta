@@ -13,7 +13,7 @@ function getSessionKey( root ) {
 }
 
 function wasShown( root ) {
-	if ( root?.dataset.oncePerSession !== 'true' ) {
+	if ( root?.dataset.trigger === 'button' || root?.dataset.oncePerSession !== 'true' ) {
 		return false;
 	}
 
@@ -25,7 +25,7 @@ function wasShown( root ) {
 }
 
 function markShown( root ) {
-	if ( root?.dataset.oncePerSession !== 'true' ) {
+	if ( root?.dataset.trigger === 'button' || root?.dataset.oncePerSession !== 'true' ) {
 		return;
 	}
 
