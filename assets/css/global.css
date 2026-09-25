@@ -124,3 +124,39 @@ img {
 		margin-top: 32px;
 	}
 }
+
+
+/* Gutenberg Core block style variations. */
+.wp-block-group.is-style-vaarta-card {
+	padding: clamp(18px, 2vw, 28px);
+	border: 1px solid var(--wp--preset--color--line);
+	background: var(--wp--preset--color--canvas);
+}
+
+.wp-block-group.is-style-vaarta-dark-card {
+	padding: clamp(18px, 2vw, 28px);
+	background: var(--wp--preset--color--ink);
+	color: var(--wp--preset--color--canvas);
+}
+
+.wp-block-group.is-style-vaarta-dark-card a {
+	color: inherit;
+}
+
+.wp-block-image.is-style-vaarta-editorial-image {
+	overflow: hidden;
+}
+
+.wp-block-image.is-style-vaarta-editorial-image img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+}
+
+.wp-block-separator.is-style-vaarta-hairline {
+	width: 100%;
+	border: 0;
+	border-top: 1px solid var(--wp--preset--color--line);
+	opacity: 1;
+}
