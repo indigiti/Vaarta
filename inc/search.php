@@ -47,7 +47,9 @@ function vaarta_rest_search( WP_REST_Request $request ): WP_REST_Response {
 	$query = trim( (string) $request->get_param( 'q' ) );
 	$limit = max( 1, min( 10, (int) $request->get_param( 'limit' ) ) );
 
-	if ( mb_strlen( $query ) < 2 ) {
+	$query_length = function_exists( 'mb_strlen' ) ? mb_strlen( $query ) : strlen( $query );
+
+	if ( $query_length < 2 ) {
 		return rest_ensure_response(
 			array(
 				'results' => array(),
