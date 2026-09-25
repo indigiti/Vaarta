@@ -33,6 +33,7 @@ items=(
 	theme.json
 	README.md
 	CHANGELOG.md
+	LICENSE.md
 )
 
 for item in "${items[@]}"; do
