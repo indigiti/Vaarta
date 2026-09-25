@@ -4,12 +4,20 @@
   "name": "vaarta/contributors",
   "version": "0.1.0",
   "title": "Contributors",
-  "category": "theme",
+  "category": "vaarta",
   "icon": "groups",
   "description": "Select and display additional article contributors.",
-  "keywords": ["contributors", "authors", "byline", "multiple authors"],
+  "keywords": [
+    "contributors",
+    "authors",
+    "byline",
+    "multiple authors"
+  ],
   "textdomain": "vaarta",
-  "usesContext": ["postId", "postType"],
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
   "attributes": {
     "heading": {
       "type": "string",
