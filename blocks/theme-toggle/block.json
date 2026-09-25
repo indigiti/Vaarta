@@ -4,10 +4,15 @@
   "name": "vaarta/theme-toggle",
   "version": "0.1.0",
   "title": "Theme Toggle",
-  "category": "theme",
+  "category": "vaarta",
   "icon": "lightbulb",
   "description": "Light/dark appearance toggle that respects system preference.",
-  "keywords": ["dark mode", "theme", "appearance", "toggle"],
+  "keywords": [
+    "dark mode",
+    "theme",
+    "appearance",
+    "toggle"
+  ],
   "textdomain": "vaarta",
   "attributes": {
     "showLabel": {
