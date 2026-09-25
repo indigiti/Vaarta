@@ -1,29 +1,14 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
-<!-- wp:group {"tagName":"main","className":"vaarta-shell","layout":{"type":"constrained"}} -->
-<main class="wp-block-group vaarta-shell">
-	
+<!-- wp:group {"tagName":"main","className":"vaarta-shell vaarta-archive","layout":{"type":"default"}} -->
+<main class="wp-block-group vaarta-shell vaarta-archive">
 	<!-- wp:vaarta/breadcrumbs /-->
-<!-- wp:query-title {"type":"archive","showPrefix":false} /-->
-	<!-- wp:term-description /-->
-	<!-- wp:query {"query":{"perPage":12,"postType":"post","inherit":true}} -->
-	<div class="wp-block-query">
-		<!-- wp:post-template {"className":"vaarta-story-grid","layout":{"type":"default"}} -->
-			<!-- wp:group {"tagName":"article","className":"vaarta-story-card","layout":{"type":"constrained"}} -->
-			<article class="wp-block-group vaarta-story-card">
-				<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->
-				<!-- wp:post-terms {"term":"category","fontSize":"xs"} /-->
-				<!-- wp:post-title {"isLink":true,"fontSize":"xl"} /-->
-				<!-- wp:post-date {"fontSize":"xs","textColor":"muted"} /-->
-			</article>
-			<!-- /wp:group -->
-		<!-- /wp:post-template -->
-		<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"space-between"}} -->
-			<!-- wp:query-pagination-previous /-->
-			<!-- wp:query-pagination-numbers /-->
-			<!-- wp:query-pagination-next /-->
-		<!-- /wp:query-pagination -->
+	<!-- wp:group {"className":"vaarta-archive__header","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group vaarta-archive__header">
+		<!-- wp:query-title {"type":"archive","showPrefix":false} /-->
+		<!-- wp:term-description /-->
 	</div>
-	<!-- /wp:query -->
+	<!-- /wp:group -->
+	<!-- wp:pattern {"slug":"vaarta/archive-grid"} /-->
 </main>
 <!-- /wp:group -->
 <!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
