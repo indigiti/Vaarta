@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vaarta/team-grid",
+  "version": "0.1.0",
+  "title": "Team Grid",
+  "category": "vaarta",
+  "icon": "groups",
+  "description": "Reusable editorial team grid powered by WordPress users.",
+  "keywords": ["team", "authors", "people", "staff"],
+  "textdomain": "vaarta",
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "Meet the Team"
+    },
+    "description": {
+      "type": "string",
+      "default": "The people behind the stories."
+    },
+    "userIds": {
+      "type": "array",
+      "default": []
+    },
+    "maxMembers": {
+      "type": "number",
+      "default": 8
+    },
+    "columns": {
+      "type": "number",
+      "default": 4
+    },
+    "showBio": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPostCount": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true,
+    "html": false,
+    "spacing": {
+      "margin": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

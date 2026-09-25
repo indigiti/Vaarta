@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vaarta/contact-form",
+  "version": "0.1.0",
+  "title": "Contact Form",
+  "category": "vaarta",
+  "icon": "email-alt",
+  "description": "Accessible theme-native contact form with server-side delivery.",
+  "keywords": ["contact", "form", "email", "message"],
+  "textdomain": "vaarta",
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "Send a message"
+    },
+    "description": {
+      "type": "string",
+      "default": "Have a question, idea, or story tip? We’d like to hear from you."
+    },
+    "buttonLabel": {
+      "type": "string",
+      "default": "Send message"
+    },
+    "showSubject": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "html": false,
+    "interactivity": true,
+    "spacing": {
+      "margin": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "viewScriptModule": "file:./view.js",
+  "render": "file:./render.php"
+}
