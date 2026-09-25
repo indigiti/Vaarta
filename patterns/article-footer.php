@@ -12,5 +12,6 @@
 	<!-- wp:vaarta/author-box /-->
 	<!-- wp:vaarta/contributors {"layout":"compact","showBio":false} /-->
 	<!-- wp:vaarta/related-posts {"postsToShow":3,"layout":"grid"} /-->
+	<!-- wp:pattern {"slug":"vaarta/article-comments"} /-->
 </div>
 <!-- /wp:group -->
