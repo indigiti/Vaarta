@@ -1,0 +1,80 @@
+.vaarta-newsletter {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(340px, 0.8fr);
+	gap: clamp(28px, 6vw, 80px);
+	align-items: center;
+	padding: clamp(28px, 5vw, 64px);
+	background: var(--wp--preset--color--surface);
+}
+
+.vaarta-newsletter--dark {
+	background: var(--wp--preset--color--ink);
+	color: var(--wp--preset--color--canvas);
+}
+
+.vaarta-newsletter--minimal {
+	padding-inline: 0;
+	border-top: 1px solid var(--wp--preset--color--line);
+	border-bottom: 1px solid var(--wp--preset--color--line);
+	background: transparent;
+}
+
+.vaarta-newsletter__heading {
+	margin: 0;
+	font-size: clamp(1.8rem, 3vw, 3rem);
+	line-height: 1;
+	letter-spacing: -0.03em;
+}
+
+.vaarta-newsletter__description {
+	max-width: 52ch;
+	margin: 14px 0 0;
+	color: var(--wp--preset--color--muted);
+}
+
+.vaarta-newsletter--dark .vaarta-newsletter__description {
+	color: rgba(255,255,255,.7);
+}
+
+.vaarta-newsletter__form {
+	display: flex;
+	gap: 10px;
+}
+
+.vaarta-newsletter__email {
+	min-width: 0;
+	flex: 1;
+	min-height: 48px;
+	padding: 0 14px;
+	border: 1px solid var(--wp--preset--color--line);
+	background: var(--wp--preset--color--canvas);
+	color: var(--wp--preset--color--ink);
+	font: inherit;
+}
+
+.vaarta-newsletter__button {
+	min-height: 48px;
+	padding: 0 20px;
+	border: 1px solid var(--wp--preset--color--ink);
+	background: var(--wp--preset--color--ink);
+	color: var(--wp--preset--color--canvas);
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.vaarta-newsletter--dark .vaarta-newsletter__button {
+	border-color: var(--wp--preset--color--canvas);
+	background: var(--wp--preset--color--canvas);
+	color: var(--wp--preset--color--ink);
+}
+
+@media (max-width: 760px) {
+	.vaarta-newsletter {
+		grid-template-columns: 1fr;
+	}
+
+	.vaarta-newsletter__form {
+		flex-direction: column;
+	}
+}
