@@ -50,11 +50,11 @@ function vaarta_get_next_reading_post( int $post_id ): ?WP_Post {
  * @param WP_Post $post Post object.
  * @return string
  */
-function vaarta_render_autoload_article( WP_Post $post ): string {
-	global $post as $global_post;
+function vaarta_render_autoload_article( WP_Post $article_post ): string {
+	global $post;
 
-	$previous_global = $global_post;
-	$global_post     = $post;
+	$previous_global = $post;
+	$post            = $article_post;
 	setup_postdata( $post );
 
 	ob_start();
@@ -117,7 +117,7 @@ function vaarta_render_autoload_article( WP_Post $post ): string {
 	$html = (string) ob_get_clean();
 
 	wp_reset_postdata();
-	$global_post = $previous_global;
+	$post = $previous_global;
 
 	if ( $previous_global instanceof WP_Post ) {
 		setup_postdata( $previous_global );
