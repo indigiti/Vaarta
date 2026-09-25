@@ -89,7 +89,9 @@
 								{ label: __( 'Date', 'vaarta' ), value: 'date' },
 								{ label: __( 'Modified', 'vaarta' ), value: 'modified' },
 								{ label: __( 'Title', 'vaarta' ), value: 'title' },
-								{ label: __( 'Random', 'vaarta' ), value: 'rand' }
+								{ label: __( 'Random', 'vaarta' ), value: 'rand' },
+								{ label: __( 'Most Viewed', 'vaarta' ), value: 'views' },
+								{ label: __( 'Trending (7 days)', 'vaarta' ), value: 'trending' }
 							],
 							onChange: function( value ) {
 								setAttributes( { orderBy: value } );
@@ -121,6 +123,13 @@
 							checked: attributes.showReadingTime,
 							onChange: function( value ) {
 								setAttributes( { showReadingTime: value } );
+							}
+						} ),
+						el( ToggleControl, {
+							label: __( 'Show views', 'vaarta' ),
+							checked: attributes.showViews,
+							onChange: function( value ) {
+								setAttributes( { showViews: value } );
 							}
 						} )
 					)
