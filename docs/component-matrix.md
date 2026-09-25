@@ -184,3 +184,24 @@ Built in the pixel-tuning milestone:
 - Top on the Week changed to image-led compact stories
 
 This pass intentionally keeps all fidelity improvements inside reusable Gutenberg modules, patterns and shared component CSS.
+
+
+## Editorial pages milestone
+
+Built in the editorial-pages milestone:
+
+- reusable Contact Form Gutenberg block
+- public server-validated contact REST endpoint
+- honeypot and per-client rate limiting
+- WordPress `wp_mail()` delivery with recipient filter
+- reusable Team Grid powered by WordPress users
+- explicit or automatic author selection
+- optional biographies and story counts
+- selectable page templates:
+  - Page — Contact
+  - Page — Meet the Team
+  - Page — Coming Soon
+- matching inserter patterns for all three page types
+- viewport-height Coming Soon presentation using existing Newsletter and Theme Toggle modules
+
+This closes the Contact Form, Meet the Team and Coming Soon page types from the original reference feature set.
