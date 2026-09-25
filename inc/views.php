@@ -50,6 +50,18 @@ function vaarta_track_post_view(): void {
 		return;
 	}
 
+	if ( is_user_logged_in() && current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+
+	$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] )
+		? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) )
+		: '';
+
+	if ( $user_agent && preg_match( '/bot|crawl|spider|slurp|bingpreview|facebookexternalhit/i', $user_agent ) ) {
+		return;
+	}
+
 	$cookie_name = 'vaarta_viewed_' . $post_id;
 
 	if ( isset( $_COOKIE[ $cookie_name ] ) ) {
