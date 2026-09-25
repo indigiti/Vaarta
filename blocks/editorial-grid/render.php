@@ -97,9 +97,18 @@ if ( ! $query->have_posts() ) {
 			<?php if ( has_post_thumbnail() && 'minimal' !== $card_style ) : ?>
 				<a class="vaarta-story__media" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
 					<?php
-						$image_attributes = array(
+						$image_sizes = '(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw';
+
+					if ( 'list' === $layout || 'compact' === $card_style ) {
+						$image_sizes = '(max-width: 640px) 112px, (max-width: 900px) 34vw, 30vw';
+					} elseif ( 'bento' === $layout && 0 === $story_index ) {
+						$image_sizes = '(max-width: 640px) 100vw, (max-width: 900px) 50vw, 50vw';
+					}
+
+					$image_attributes = array(
 						'loading'  => ( $priority_first && 0 === $story_index ) ? 'eager' : 'lazy',
 						'decoding' => 'async',
+						'sizes'    => $image_sizes,
 					);
 
 					if ( $priority_first && 0 === $story_index ) {
