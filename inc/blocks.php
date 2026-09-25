@@ -30,6 +30,7 @@ function vaarta_register_blocks(): void {
 		'search-overlay',
 		'auto-load-posts',
 		'popup',
+		'social-feed',
 	);
 
 	foreach ( $blocks as $block ) {
