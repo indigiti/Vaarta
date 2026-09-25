@@ -15,6 +15,6 @@
 		<!-- /wp:heading -->
 	</div>
 	<!-- /wp:group -->
-	<!-- wp:vaarta/editorial-grid {"layout":"grid","cardStyle":"minimal","postsToShow":4,"orderBy":"views","showExcerpt":false,"showAuthor":false,"showDate":true,"showReadingTime":true,"showViews":true} /-->
+	<!-- wp:vaarta/editorial-grid {"layout":"grid","cardStyle":"compact","postsToShow":4,"orderBy":"views","showExcerpt":false,"showAuthor":false,"showDate":true,"showReadingTime":true,"showViews":true} /-->
 </div>
 <!-- /wp:group -->
