@@ -33,9 +33,11 @@ Homepage snapshots cover:
 
 - 1440 × 1200
 - 1280 × 1000
+- 1024 × 1366
 - 768 × 1024
 - 430 × 932
 - 390 × 844
+- 360 × 800
 
 The intended workflow is:
 
