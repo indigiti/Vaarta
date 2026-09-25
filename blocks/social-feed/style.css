@@ -1,0 +1,73 @@
+.vaarta-social-feed {
+	width: 100%;
+}
+
+.vaarta-social-feed__header {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 12px 24px;
+	align-items: baseline;
+	margin-bottom: 24px;
+	padding-bottom: 14px;
+	border-bottom: 1px solid var(--wp--preset--color--line);
+}
+
+.vaarta-social-feed__heading {
+	margin: 0;
+	font-size: clamp(1.6rem, 3vw, 2.6rem);
+}
+
+.vaarta-social-feed__profile {
+	color: inherit;
+	font-size: var(--wp--preset--font-size--sm);
+	font-weight: 700;
+	text-underline-offset: .2em;
+}
+
+.vaarta-social-feed__items {
+	gap: clamp(14px, 2vw, 24px);
+}
+
+.vaarta-social-feed--grid .vaarta-social-feed__items {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.vaarta-social-feed--strip .vaarta-social-feed__items {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: minmax(280px, 34vw);
+	overflow-x: auto;
+	overscroll-behavior-inline: contain;
+	scroll-snap-type: inline mandatory;
+	padding-bottom: 10px;
+}
+
+.vaarta-social-feed--strip .vaarta-social-feed__items > * {
+	scroll-snap-align: start;
+}
+
+.vaarta-social-feed--list .vaarta-social-feed__items {
+	display: grid;
+	grid-template-columns: 1fr;
+}
+
+.vaarta-social-feed__items > * {
+	min-width: 0;
+	margin-block: 0;
+}
+
+.vaarta-social-feed__items .wp-block-embed {
+	width: 100%;
+}
+
+@media (max-width: 760px) {
+	.vaarta-social-feed--grid .vaarta-social-feed__items {
+		grid-template-columns: 1fr;
+	}
+
+	.vaarta-social-feed--strip .vaarta-social-feed__items {
+		grid-auto-columns: minmax(260px, 84vw);
+	}
+}
