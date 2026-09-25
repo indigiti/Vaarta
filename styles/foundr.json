@@ -1,0 +1,78 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Vaarta Foundr",
+  "settings": {
+    "color": {
+      "defaultPalette": false,
+      "palette": [
+        {
+          "slug": "canvas",
+          "name": "Canvas",
+          "color": "#fcf8f1"
+        },
+        {
+          "slug": "ink",
+          "name": "Ink",
+          "color": "#211d18"
+        },
+        {
+          "slug": "muted",
+          "name": "Muted",
+          "color": "#766c60"
+        },
+        {
+          "slug": "line",
+          "name": "Line",
+          "color": "#e7ddd0"
+        },
+        {
+          "slug": "surface",
+          "name": "Surface",
+          "color": "#f1e8dc"
+        },
+        {
+          "slug": "accent",
+          "name": "Accent",
+          "color": "#ce5638"
+        }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--canvas)",
+      "text": "var(--wp--preset--color--ink)"
+    },
+    "typography": {
+      "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+    },
+    "elements": {
+      "heading": {
+        "typography": {
+          "fontFamily": "Georgia, \"Times New Roman\", serif",
+          "fontWeight": "700",
+          "lineHeight": "1.02",
+          "letterSpacing": "-0.025em"
+        }
+      },
+      "button": {
+        "border": {
+          "radius": "2px"
+        }
+      }
+    },
+    "blocks": {
+      "core/button": {
+        "border": {
+          "radius": "2px"
+        }
+      },
+      "core/image": {
+        "border": {
+          "radius": "2px"
+        }
+      }
+    }
+  }
+}
