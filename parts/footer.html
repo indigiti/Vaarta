@@ -1,8 +1,40 @@
-<!-- wp:group {"className":"vaarta-shell","style":{"spacing":{"padding":{"top":"64px","bottom":"40px"},"margin":{"top":"72px"}},"border":{"top":{"color":"var:preset|color|line","width":"1px"}}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group vaarta-shell">
-	<!-- wp:site-title {"level":0} /-->
-	<!-- wp:paragraph {"fontSize":"sm","textColor":"muted"} -->
-	<p class="has-muted-color has-text-color has-sm-font-size">Independent publishing, built with native Gutenberg.</p>
-	<!-- /wp:paragraph -->
+<!-- wp:group {"tagName":"div","className":"vaarta-site-footer","layout":{"type":"default"}} -->
+<div class="wp-block-group vaarta-site-footer">
+	<!-- wp:group {"className":"vaarta-shell vaarta-footer__inner","layout":{"type":"default"}} -->
+	<div class="wp-block-group vaarta-shell vaarta-footer__inner">
+		<!-- wp:columns {"verticalAlignment":"top","style":{"spacing":{"blockGap":{"left":"48px"}}}} -->
+		<div class="wp-block-columns are-vertically-aligned-top">
+			<!-- wp:column {"verticalAlignment":"top","width":"42%"} -->
+			<div class="wp-block-column is-vertically-aligned-top" style="flex-basis:42%">
+				<!-- wp:site-title {"level":0,"className":"vaarta-footer__brand"} /-->
+				<!-- wp:site-tagline {"className":"vaarta-footer__tagline","textColor":"muted"} /-->
+			</div>
+			<!-- /wp:column -->
+
+			<!-- wp:column {"verticalAlignment":"top","width":"38%"} -->
+			<div class="wp-block-column is-vertically-aligned-top" style="flex-basis:38%">
+				<!-- wp:navigation {"overlayMenu":"never","className":"vaarta-footer__nav","layout":{"type":"flex","orientation":"vertical"}} /-->
+			</div>
+			<!-- /wp:column -->
+
+			<!-- wp:column {"verticalAlignment":"top","width":"20%"} -->
+			<div class="wp-block-column is-vertically-aligned-top" style="flex-basis:20%">
+				<!-- wp:social-links {"iconColor":"ink","iconColorValue":"#111111","openInNewTab":true,"size":"has-small-icon-size","className":"is-style-vaarta-pills","layout":{"type":"flex","justifyContent":"right"}} -->
+				<ul class="wp-block-social-links has-small-icon-size has-icon-color is-style-vaarta-pills"></ul>
+				<!-- /wp:social-links -->
+			</div>
+			<!-- /wp:column -->
+		</div>
+		<!-- /wp:columns -->
+
+		<!-- wp:separator {"className":"is-style-vaarta-hairline"} -->
+		<hr class="wp-block-separator has-alpha-channel-opacity is-style-vaarta-hairline"/>
+		<!-- /wp:separator -->
+
+		<!-- wp:paragraph {"fontSize":"xs","textColor":"muted"} -->
+		<p class="has-muted-color has-text-color has-xs-font-size"><?php echo esc_html__( 'Independent publishing with native Gutenberg.', 'vaarta' ); ?></p>
+		<!-- /wp:paragraph -->
+	</div>
+	<!-- /wp:group -->
 </div>
 <!-- /wp:group -->
