@@ -4,12 +4,20 @@
   "name": "vaarta/auto-load-posts",
   "version": "0.1.0",
   "title": "Auto-load Next Articles",
-  "category": "theme",
+  "category": "vaarta",
   "icon": "update",
   "description": "Continuously append older articles as the reader reaches the end of a story.",
-  "keywords": ["autoload", "infinite", "article", "continuous reading"],
+  "keywords": [
+    "autoload",
+    "infinite",
+    "article",
+    "continuous reading"
+  ],
   "textdomain": "vaarta",
-  "usesContext": ["postId", "postType"],
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
   "attributes": {
     "maxPosts": {
       "type": "number",
