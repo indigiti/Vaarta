@@ -1,0 +1,76 @@
+html.vaarta-popup-open,
+html.vaarta-popup-open body {
+	overflow: hidden;
+}
+
+.vaarta-popup__trigger {
+	min-height: 42px;
+	padding: 9px 16px;
+	border: 1px solid var(--wp--preset--color--ink);
+	background: var(--wp--preset--color--ink);
+	color: var(--wp--preset--color--canvas);
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.vaarta-popup__dialog {
+	position: fixed;
+	z-index: 100100;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	overflow-y: auto;
+	padding: clamp(18px, 4vw, 48px);
+	background: rgba(0, 0, 0, .58);
+	backdrop-filter: blur(6px);
+}
+
+.vaarta-popup__dialog[hidden] {
+	display: none;
+}
+
+.vaarta-popup__panel {
+	position: relative;
+	width: min(100%, 680px);
+	max-height: min(88vh, 900px);
+	overflow-y: auto;
+	padding: clamp(28px, 5vw, 56px);
+	background: var(--wp--preset--color--canvas);
+	color: var(--wp--preset--color--ink);
+	box-shadow: 0 24px 80px rgba(0, 0, 0, .22);
+}
+
+.vaarta-popup--small .vaarta-popup__panel {
+	width: min(100%, 460px);
+}
+
+.vaarta-popup--large .vaarta-popup__panel {
+	width: min(100%, 980px);
+}
+
+.vaarta-popup__close {
+	position: absolute;
+	top: 14px;
+	right: 14px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 38px;
+	height: 38px;
+	border: 1px solid var(--wp--preset--color--line);
+	border-radius: 50%;
+	background: var(--wp--preset--color--canvas);
+	color: var(--wp--preset--color--ink);
+	font: inherit;
+	font-size: 1.4rem;
+	cursor: pointer;
+}
+
+.vaarta-popup__content > :first-child {
+	margin-top: 0;
+}
+
+.vaarta-popup__content > :last-child {
+	margin-bottom: 0;
+}
