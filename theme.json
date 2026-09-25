@@ -201,6 +201,27 @@
       "postTypes": [
         "post"
       ]
+    },
+    {
+      "name": "page-contact",
+      "title": "Page — Contact",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "page-team",
+      "title": "Page — Meet the Team",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "page-coming-soon",
+      "title": "Page — Coming Soon",
+      "postTypes": [
+        "page"
+      ]
     }
   ]
 }
