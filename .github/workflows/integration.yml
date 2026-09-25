@@ -28,6 +28,8 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: wordpress
+          MYSQL_USER: wordpress
+          MYSQL_PASSWORD: wordpress
         ports:
           - 3306:3306
         options: >-
@@ -63,8 +65,8 @@ jobs:
           wp config create \
             --path=wp \
             --dbname=wordpress \
-            --dbuser=root \
-            --dbpass=root \
+            --dbuser=wordpress \
+            --dbpass=wordpress \
             --dbhost=127.0.0.1:3306 \
             --skip-check
 
