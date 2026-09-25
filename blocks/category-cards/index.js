@@ -69,6 +69,14 @@
 							}
 						} ),
 						el( ToggleControl, {
+							label: __( 'Show category image', 'vaarta' ),
+							help: __( 'Uses the latest featured image from each category.', 'vaarta' ),
+							checked: attributes.showImage,
+							onChange: function( value ) {
+								setAttributes( { showImage: value } );
+							}
+						} ),
+						el( ToggleControl, {
 							label: __( 'Show post count', 'vaarta' ),
 							checked: attributes.showCount,
 							onChange: function( value ) {
