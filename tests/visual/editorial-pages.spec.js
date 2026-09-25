@@ -1,10 +1,10 @@
 const { test, expect } = require( '@playwright/test' );
 
 const pages = [
-	{ name: 'contact', path: process.env.VAARTA_CONTACT_PATH || '' },
-	{ name: 'team', path: process.env.VAARTA_TEAM_PATH || '' },
-	{ name: 'coming-soon', path: process.env.VAARTA_COMING_SOON_PATH || '' }
-].filter( ( item ) => item.path );
+	{ name: 'contact', path: process.env.VAARTA_CONTACT_PATH || '/contact/' },
+	{ name: 'team', path: process.env.VAARTA_TEAM_PATH || '/team/' },
+	{ name: 'coming-soon', path: process.env.VAARTA_COMING_SOON_PATH || '/coming-soon/' }
+];
 
 const viewports = [
 	{ name: 'desktop', width: 1440, height: 1100 },
