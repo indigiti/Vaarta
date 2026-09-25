@@ -4,10 +4,15 @@
   "name": "vaarta/newsletter",
   "version": "0.1.0",
   "title": "Newsletter",
-  "category": "widgets",
+  "category": "vaarta",
   "icon": "email",
   "description": "Provider-neutral newsletter signup block for Vaarta.",
-  "keywords": ["newsletter", "email", "subscribe", "signup"],
+  "keywords": [
+    "newsletter",
+    "email",
+    "subscribe",
+    "signup"
+  ],
   "textdomain": "vaarta",
   "attributes": {
     "heading": {
@@ -36,7 +41,10 @@
     }
   },
   "supports": {
-    "align": ["wide", "full"],
+    "align": [
+      "wide",
+      "full"
+    ],
     "anchor": true,
     "html": false,
     "spacing": {
