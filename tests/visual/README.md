@@ -44,3 +44,16 @@ The intended workflow is:
 3. tune design tokens, card geometry, typography and media crops
 4. update Vaarta baselines only after the visual change is accepted
 5. keep future changes within the screenshot-diff budget
+
+
+## Reference captures
+
+The public reference pages can be captured separately:
+
+```bash
+npm run capture:references
+```
+
+Reference images are written under `test-results/references/` and are intentionally not committed. They are inspection inputs, not redistributable theme assets.
+
+Use them to compare layout geometry and design-system behavior only; Vaarta remains a clean-room implementation.
