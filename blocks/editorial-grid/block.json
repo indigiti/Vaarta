@@ -2,12 +2,18 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "vaarta/editorial-grid",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "title": "Editorial Grid",
   "category": "theme",
   "icon": "grid-view",
   "description": "Reusable server-rendered editorial story grid for Vaarta.",
-  "keywords": ["news", "posts", "bento", "magazine", "editorial"],
+  "keywords": [
+    "news",
+    "posts",
+    "bento",
+    "magazine",
+    "editorial"
+  ],
   "textdomain": "vaarta",
   "attributes": {
     "layout": {
@@ -41,10 +47,17 @@
     "showDate": {
       "type": "boolean",
       "default": true
+    },
+    "showReadingTime": {
+      "type": "boolean",
+      "default": true
     }
   },
   "supports": {
-    "align": ["wide", "full"],
+    "align": [
+      "wide",
+      "full"
+    ],
     "anchor": true,
     "html": false,
     "spacing": {
