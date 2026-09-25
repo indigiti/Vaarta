@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vaarta/story-meta",
+  "version": "0.1.0",
+  "title": "Story Meta",
+  "category": "theme",
+  "icon": "admin-users",
+  "description": "Reusable author, date and reading-time metadata.",
+  "keywords": ["author", "date", "reading time", "metadata"],
+  "textdomain": "vaarta",
+  "attributes": {
+    "showAuthor": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDate": {
+      "type": "boolean",
+      "default": true
+    },
+    "showReadingTime": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "supports": {
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}
