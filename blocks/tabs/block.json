@@ -4,10 +4,15 @@
   "name": "vaarta/tabs",
   "version": "0.1.0",
   "title": "Tabs / Pills",
-  "category": "design",
+  "category": "vaarta",
   "icon": "index-card",
   "description": "Accessible interactive tabs with arbitrary nested Gutenberg content.",
-  "keywords": ["tabs", "pills", "interactive", "content"],
+  "keywords": [
+    "tabs",
+    "pills",
+    "interactive",
+    "content"
+  ],
   "textdomain": "vaarta",
   "attributes": {
     "styleVariant": {
