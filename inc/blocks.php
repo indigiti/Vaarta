@@ -24,6 +24,9 @@ function vaarta_register_blocks(): void {
 		'author-box',
 		'related-posts',
 		'contributors',
+		'theme-toggle',
+		'tabs',
+		'tab',
 	);
 
 	foreach ( $blocks as $block ) {
