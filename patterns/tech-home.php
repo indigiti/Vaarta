@@ -8,6 +8,8 @@
 ?>
 <!-- wp:group {"tagName":"main","layout":{"type":"default"}} -->
 <main class="wp-block-group">
+	<!-- wp:pattern {"slug":"vaarta/popular-strip"} /-->
+
 	<!-- wp:group {"className":"vaarta-shell vaarta-hero","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group vaarta-shell vaarta-hero">
 		<!-- wp:paragraph {"align":"center","fontSize":"sm","textColor":"muted"} -->
