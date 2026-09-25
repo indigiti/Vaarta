@@ -27,6 +27,7 @@ function vaarta_register_blocks(): void {
 		'theme-toggle',
 		'tabs',
 		'tab',
+		'search-overlay',
 	);
 
 	foreach ( $blocks as $block ) {
