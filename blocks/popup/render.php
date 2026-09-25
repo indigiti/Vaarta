@@ -26,7 +26,11 @@ if ( ! in_array( $size, array( 'small', 'medium', 'large' ), true ) ) {
 
 $delay_ms       = max( 1000, min( 30000, $delay_ms ) );
 $scroll_percent = max( 10, min( 90, $scroll_percent ) );
-$popup_key      = wp_unique_id( 'popup-' );
+$popup_key      = 'popup-' . substr(
+	md5( wp_json_encode( $attributes ) . '|' . wp_strip_all_tags( $content ) ),
+	0,
+	12
+);
 
 $wrapper_attributes = get_block_wrapper_attributes(
 	array(
