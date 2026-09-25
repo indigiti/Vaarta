@@ -51,6 +51,21 @@ $pages = array(
 		'pattern'  => 'vaarta/home-design-loft',
 		'template' => 'page-demo',
 	),
+	'contact' => array(
+		'title'    => 'Contact',
+		'content'  => '<p>Questions, pitches, partnerships, corrections and ideas are welcome. Use the form to reach the editorial team.</p>',
+		'template' => 'page-contact',
+	),
+	'team' => array(
+		'title'    => 'About Our Team',
+		'content'  => '<p>Meet the editors, writers and contributors behind Vaarta.</p>',
+		'template' => 'page-team',
+	),
+	'coming-soon' => array(
+		'title'    => 'Something new is coming.',
+		'content'  => '<p>We are preparing a new editorial experience. Join the list and we will let you know when it launches.</p>',
+		'template' => 'page-coming-soon',
+	),
 );
 
 $page_ids = array();
@@ -67,15 +82,19 @@ foreach ( $pages as $slug => $config ) {
 		)
 	);
 
+	$page_content = isset( $config['pattern'] )
+		? sprintf(
+			'<!-- wp:pattern {"slug":"%s"} /-->',
+			esc_attr( $config['pattern'] )
+		)
+		: ( $config['content'] ?? '' );
+
 	$postarr = array(
 		'post_type'    => 'page',
 		'post_status'  => 'publish',
 		'post_title'   => $config['title'],
 		'post_name'    => $slug,
-		'post_content' => sprintf(
-			'<!-- wp:pattern {"slug":"%s"} /-->',
-			esc_attr( $config['pattern'] )
-		),
+		'post_content' => $page_content,
 		'meta_input'   => array(
 			$demo_page_key => $slug,
 		),
