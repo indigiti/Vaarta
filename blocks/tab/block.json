@@ -4,11 +4,13 @@
   "name": "vaarta/tab",
   "version": "0.1.0",
   "title": "Tab",
-  "category": "design",
+  "category": "vaarta",
   "icon": "excerpt-view",
   "description": "A single tab panel for the Vaarta Tabs/Pills block.",
   "textdomain": "vaarta",
-  "parent": ["vaarta/tabs"],
+  "parent": [
+    "vaarta/tabs"
+  ],
   "attributes": {
     "title": {
       "type": "string",

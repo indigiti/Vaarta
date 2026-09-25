@@ -8,6 +8,43 @@ function getDialog( root ) {
 	return root && root.querySelector( '.vaarta-popup__dialog' );
 }
 
+function getFocusable( container ) {
+	return Array.from(
+		container.querySelectorAll(
+			'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+		)
+	).filter( ( element ) => ! element.hidden && element.offsetParent !== null );
+}
+
+function trapFocus( event, dialog ) {
+	if ( event.key !== 'Tab' || ! dialog ) {
+		return false;
+	}
+
+	const focusable = getFocusable( dialog );
+	if ( ! focusable.length ) {
+		event.preventDefault();
+		return true;
+	}
+
+	const first = focusable[ 0 ];
+	const last = focusable[ focusable.length - 1 ];
+
+	if ( event.shiftKey && document.activeElement === first ) {
+		event.preventDefault();
+		last.focus();
+		return true;
+	}
+
+	if ( ! event.shiftKey && document.activeElement === last ) {
+		event.preventDefault();
+		first.focus();
+		return true;
+	}
+
+	return false;
+}
+
 function getSessionKey( root ) {
 	return 'vaarta-popup:' + ( root?.dataset.popupKey || 'default' );
 }
@@ -42,6 +79,7 @@ function openPopup( root ) {
 		return;
 	}
 
+	root._vaartaPreviousFocus = document.activeElement;
 	dialog.hidden = false;
 	root.classList.add( 'is-open' );
 	document.documentElement.classList.add( 'vaarta-popup-open' );
@@ -66,7 +104,12 @@ function closePopup( root ) {
 		document.documentElement.classList.remove( 'vaarta-popup-open' );
 	}
 
-	root.querySelector( '.vaarta-popup__trigger' )?.focus();
+	const trigger = root.querySelector( '.vaarta-popup__trigger' );
+	const returnTarget = trigger || root._vaartaPreviousFocus;
+
+	if ( returnTarget && typeof returnTarget.focus === 'function' ) {
+		returnTarget.focus();
+	}
 }
 
 store( 'vaarta/popup', {
@@ -83,12 +126,16 @@ store( 'vaarta/popup', {
 			}
 		} ),
 		keydown: withSyncEvent( ( event ) => {
-			if ( event.key !== 'Escape' ) {
+			const root = getRoot( getElement().ref );
+			if ( ! root?.classList.contains( 'is-open' ) ) {
 				return;
 			}
 
-			const root = getRoot( getElement().ref );
-			if ( root?.classList.contains( 'is-open' ) ) {
+			if ( trapFocus( event, getDialog( root ) ) ) {
+				return;
+			}
+
+			if ( event.key === 'Escape' ) {
 				closePopup( root );
 			}
 		} )

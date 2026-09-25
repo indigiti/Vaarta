@@ -20,6 +20,8 @@ $show_author    = ! array_key_exists( 'showAuthor', $attributes ) || ! empty( $a
 $show_date         = ! array_key_exists( 'showDate', $attributes ) || ! empty( $attributes['showDate'] );
 $show_reading_time = ! array_key_exists( 'showReadingTime', $attributes ) || ! empty( $attributes['showReadingTime'] );
 $show_views        = ! array_key_exists( 'showViews', $attributes ) || ! empty( $attributes['showViews'] );
+$priority_first    = ! empty( $attributes['priorityFirst'] );
+$story_index       = 0;
 
 $allowed_layouts = array( 'bento', 'grid', 'list' );
 if ( ! in_array( $layout, $allowed_layouts, true ) ) {
@@ -95,13 +97,25 @@ if ( ! $query->have_posts() ) {
 			<?php if ( has_post_thumbnail() && 'minimal' !== $card_style ) : ?>
 				<a class="vaarta-story__media" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
 					<?php
-					the_post_thumbnail(
-						'large',
-						array(
-							'loading'  => 'lazy',
-							'decoding' => 'async',
-						)
+						$image_sizes = '(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw';
+
+					if ( 'list' === $layout || 'compact' === $card_style ) {
+						$image_sizes = '(max-width: 640px) 112px, (max-width: 900px) 34vw, 30vw';
+					} elseif ( 'bento' === $layout && 0 === $story_index ) {
+						$image_sizes = '(max-width: 640px) 100vw, (max-width: 900px) 50vw, 50vw';
+					}
+
+					$image_attributes = array(
+						'loading'  => ( $priority_first && 0 === $story_index ) ? 'eager' : 'lazy',
+						'decoding' => 'async',
+						'sizes'    => $image_sizes,
 					);
+
+					if ( $priority_first && 0 === $story_index ) {
+						$image_attributes['fetchpriority'] = 'high';
+					}
+
+					the_post_thumbnail( 'large', $image_attributes );
 					?>
 				</a>
 			<?php endif; ?>
@@ -158,6 +172,7 @@ if ( ! $query->have_posts() ) {
 				<?php endif; ?>
 			</div>
 		</article>
+		<?php ++$story_index; ?>
 	<?php endwhile; ?>
 </div>
 <?php

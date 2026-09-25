@@ -4,7 +4,7 @@
   "name": "vaarta/story-meta",
   "version": "0.2.0",
   "title": "Story Meta",
-  "category": "theme",
+  "category": "vaarta",
   "icon": "admin-users",
   "description": "Reusable author, date and reading-time metadata.",
   "keywords": [

@@ -4,12 +4,20 @@
   "name": "vaarta/related-posts",
   "version": "0.1.0",
   "title": "Related Stories",
-  "category": "theme",
+  "category": "vaarta",
   "icon": "networking",
   "description": "Related stories based on the current article categories.",
-  "keywords": ["related", "posts", "stories", "articles"],
+  "keywords": [
+    "related",
+    "posts",
+    "stories",
+    "articles"
+  ],
   "textdomain": "vaarta",
-  "usesContext": ["postId", "postType"],
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
   "attributes": {
     "heading": {
       "type": "string",
@@ -25,7 +33,9 @@
     }
   },
   "supports": {
-    "align": ["wide"],
+    "align": [
+      "wide"
+    ],
     "anchor": true,
     "html": false,
     "spacing": {

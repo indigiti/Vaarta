@@ -2,9 +2,9 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "vaarta/editorial-grid",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "title": "Editorial Grid",
-  "category": "theme",
+  "category": "vaarta",
   "icon": "grid-view",
   "description": "Reusable server-rendered editorial story grid for Vaarta.",
   "keywords": [
@@ -59,6 +59,10 @@
     "showViews": {
       "type": "boolean",
       "default": true
+    },
+    "priorityFirst": {
+      "type": "boolean",
+      "default": false
     }
   },
   "supports": {

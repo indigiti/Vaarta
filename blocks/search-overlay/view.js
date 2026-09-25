@@ -11,6 +11,44 @@ function setStatus( root, message ) {
 	}
 }
 
+function getFocusable( container ) {
+	return Array.from(
+		container.querySelectorAll(
+			'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+		)
+	).filter( ( element ) => ! element.hidden && element.offsetParent !== null );
+}
+
+function trapFocus( event, dialog ) {
+	if ( event.key !== 'Tab' || ! dialog ) {
+		return false;
+	}
+
+	const focusable = getFocusable( dialog );
+	if ( ! focusable.length ) {
+		event.preventDefault();
+		dialog.focus?.();
+		return true;
+	}
+
+	const first = focusable[ 0 ];
+	const last = focusable[ focusable.length - 1 ];
+
+	if ( event.shiftKey && document.activeElement === first ) {
+		event.preventDefault();
+		last.focus();
+		return true;
+	}
+
+	if ( ! event.shiftKey && document.activeElement === last ) {
+		event.preventDefault();
+		first.focus();
+		return true;
+	}
+
+	return false;
+}
+
 function clearResults( root ) {
 	const results = root.querySelector( '.vaarta-search-overlay__results' );
 	if ( results ) {
@@ -103,15 +141,19 @@ store( 'vaarta/search-overlay', {
 			}
 		},
 		keydown( event ) {
-			if ( event.key !== 'Escape' ) {
-				return;
-			}
-
 			const { ref } = getElement();
 			const root = getRoot( ref );
 			const dialog = root && root.querySelector( '.vaarta-search-overlay__dialog' );
 
-			if ( dialog && ! dialog.hidden ) {
+			if ( ! dialog || dialog.hidden ) {
+				return;
+			}
+
+			if ( trapFocus( event, dialog ) ) {
+				return;
+			}
+
+			if ( event.key === 'Escape' ) {
 				dialog.hidden = true;
 				document.documentElement.classList.remove( 'vaarta-search-open' );
 				const trigger = root.querySelector( '.vaarta-search-overlay__trigger' );

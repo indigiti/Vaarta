@@ -4,10 +4,15 @@
   "name": "vaarta/ad-slot",
   "version": "0.1.0",
   "title": "Ad Slot",
-  "category": "widgets",
+  "category": "vaarta",
   "icon": "megaphone",
   "description": "Reserved advertising placement with stable dimensions.",
-  "keywords": ["advertisement", "ad", "monetization", "banner"],
+  "keywords": [
+    "advertisement",
+    "ad",
+    "monetization",
+    "banner"
+  ],
   "textdomain": "vaarta",
   "attributes": {
     "slotName": {
@@ -24,7 +29,10 @@
     }
   },
   "supports": {
-    "align": ["wide", "full"],
+    "align": [
+      "wide",
+      "full"
+    ],
     "anchor": true,
     "html": false,
     "spacing": {

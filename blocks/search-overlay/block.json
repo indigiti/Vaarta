@@ -4,10 +4,14 @@
   "name": "vaarta/search-overlay",
   "version": "0.1.0",
   "title": "Search Overlay",
-  "category": "theme",
+  "category": "vaarta",
   "icon": "search",
   "description": "Instant editorial search overlay.",
-  "keywords": ["search", "overlay", "instant search"],
+  "keywords": [
+    "search",
+    "overlay",
+    "instant search"
+  ],
   "textdomain": "vaarta",
   "attributes": {
     "buttonLabel": {

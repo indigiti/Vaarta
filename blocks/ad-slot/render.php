@@ -11,7 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $slot_name  = isset( $attributes['slotName'] ) ? sanitize_key( $attributes['slotName'] ) : 'content-inline';
 $min_height = isset( $attributes['minHeight'] ) ? absint( $attributes['minHeight'] ) : 250;
-$show_label = ! array_key_exists( 'showLabel', $attributes ) || ! empty( $attributes['showLabel'] );
+$show_label   = ! array_key_exists( 'showLabel', $attributes ) || ! empty( $attributes['showLabel'] );
+$provider_html = vaarta_get_ad_slot_html( $slot_name, $attributes );
 
 $min_height = max( 50, min( 600, $min_height ) );
 
@@ -27,5 +28,11 @@ $wrapper_attributes = get_block_wrapper_attributes(
 	<?php if ( $show_label ) : ?>
 		<span class="vaarta-ad-slot__label"><?php esc_html_e( 'Advertisement', 'vaarta' ); ?></span>
 	<?php endif; ?>
-	<div class="vaarta-ad-slot__mount" data-vaarta-ad-mount="<?php echo esc_attr( $slot_name ); ?>"></div>
+	<div class="vaarta-ad-slot__mount" data-vaarta-ad-mount="<?php echo esc_attr( $slot_name ); ?>">
+		<?php
+		if ( $provider_html ) {
+			echo wp_kses_post( $provider_html );
+		}
+		?>
+	</div>
 </aside>

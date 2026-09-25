@@ -6,9 +6,13 @@
   "scripts": {
     "test:visual": "playwright test tests/visual",
     "test:visual:update": "playwright test tests/visual --update-snapshots",
-    "capture:references": "playwright test tests/reference-capture"
+    "capture:references": "playwright test tests/reference-capture",
+    "test:a11y": "playwright test tests/accessibility",
+    "audit:lighthouse": "lhci autorun"
   },
   "devDependencies": {
-    "@playwright/test": "^1.56.0"
+    "@playwright/test": "^1.63.0",
+    "@axe-core/playwright": "^4.13.0",
+    "@lhci/cli": "^0.15.1"
   }
 }
