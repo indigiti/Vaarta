@@ -123,3 +123,22 @@ jobs:
           test -f style.css
           test -f theme.json
           test -f templates/index.html
+
+
+      - name: Release version consistency
+        run: |
+          THEME_VERSION="$(awk -F ': ' '/^Version:/ { print $2; exit }' style.css)"
+          PACKAGE_VERSION="$(python3 -c 'import json; print(json.load(open("package.json"))["version"])')"
+          echo "Theme version:   $THEME_VERSION"
+          echo "Package version: $PACKAGE_VERSION"
+          test "$THEME_VERSION" = "$PACKAGE_VERSION"
+
+      - name: Package smoke test
+        run: |
+          bash tools/package-theme.sh
+          ZIP_FILE="$(find build -maxdepth 1 -name 'vaarta-*.zip' -print -quit)"
+          test -n "$ZIP_FILE"
+          unzip -t "$ZIP_FILE"
+          unzip -l "$ZIP_FILE" | grep 'vaarta/theme.json'
+          unzip -l "$ZIP_FILE" | grep 'vaarta/templates/index.html'
+          unzip -l "$ZIP_FILE" | grep 'vaarta/blocks/editorial-grid/block.json'

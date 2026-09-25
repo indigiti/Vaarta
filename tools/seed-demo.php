@@ -35,6 +35,21 @@ foreach ( $existing as $post_id ) {
 	wp_delete_post( $post_id, true );
 }
 
+$existing_attachments = get_posts(
+	array(
+		'post_type'      => 'attachment',
+		'post_status'    => 'any',
+		'posts_per_page' => -1,
+		'meta_key'       => $seed_key,
+		'meta_value'     => '1',
+		'fields'         => 'ids',
+	)
+);
+
+foreach ( $existing_attachments as $attachment_id ) {
+	wp_delete_attachment( $attachment_id, true );
+}
+
 $categories = array(
 	'artificial-intelligence' => 'Artificial Intelligence',
 	'business-tech'           => 'Business & Tech',

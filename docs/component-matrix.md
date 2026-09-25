@@ -229,3 +229,36 @@ Built in the monetization-discussion milestone:
 - article comments styled to match the Vaarta editorial system
 
 This closes the main article-level monetization and discussion placements from the original reference feature set while keeping provider integrations optional.
+
+
+## Release readiness milestone
+
+Built in the release-readiness milestone:
+
+- synchronized theme/package version at 0.9.0 pre-release
+- Page — Demo Canvas template for pattern-driven demo homepages
+- one-command WP-CLI demo bootstrap for:
+  - Tech front page
+  - Firmware
+  - Datacrunch
+  - Foundr
+  - Artboard
+  - Design Loft
+  - Blog
+  - Contact
+  - Team
+  - Coming Soon
+- deterministic reseeding now removes prior fixture posts and fixture media
+- curated installable theme ZIP builder
+- ZIP package smoke test in normal CI
+- version consistency enforcement between `style.css` and `package.json`
+- manual/tagged Package Vaarta workflow
+- tag version validation
+- GitHub release artifact upload with safe re-run/clobber behavior
+- refreshed repository README matching the actual single-theme architecture
+- 0.9.0 changelog
+- GPL-2.0-or-later package notice
+- release checklist
+- editorial-page visual tests wired to default demo-bootstrap routes
+
+A tagged release should only be cut after installing the generated ZIP on a clean WordPress site and completing `docs/release-checklist.md`.
