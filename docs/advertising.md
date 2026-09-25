@@ -31,3 +31,25 @@ add_filter(
 The block continues to reserve its configured minimum height even before provider JavaScript fills the slot. This avoids avoidable layout shift.
 
 Provider-specific scripts, consent handling, auction logic and targeting should remain outside the block markup.
+
+
+## Template-level positions
+
+All four Vaarta article templates now include dormant positions:
+
+- `before-header`
+- `after-header`
+- `before-post-content`
+- `after-post-content`
+- `before-footer`
+
+These blocks use **Collapse when empty**, so they render no frontend space until `vaarta_ad_slot_html` supplies provider markup.
+
+The editor still shows the slot placeholder so the placement remains visible in the Site Editor.
+
+For manually inserted ads, Vaarta also provides:
+
+- **Ad — Leaderboard**
+- **Ad — Inline**
+
+Those inserter patterns intentionally do not collapse while empty, making them useful as visible layout placeholders during page composition.

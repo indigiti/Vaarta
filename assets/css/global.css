@@ -1201,3 +1201,99 @@ main > .vaarta-shell:not(.vaarta-hero) > .wp-block-heading:first-child + p {
 		font-size: clamp(3rem, 14vw, 5.2rem);
 	}
 }
+
+
+/* Native Gutenberg article comments. */
+.vaarta-comments {
+	margin-top: clamp(64px, 9vw, 120px);
+	padding-top: clamp(36px, 6vw, 64px);
+	border-top: 1px solid var(--wp--preset--color--line);
+}
+
+.vaarta-comments > .wp-block-comments-title {
+	margin: 0 0 clamp(32px, 5vw, 52px);
+	font-size: clamp(2rem, 4vw, 3.8rem);
+	line-height: .98;
+	letter-spacing: -.045em;
+}
+
+.vaarta-comments .wp-block-comment-template {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.vaarta-comments .vaarta-comment {
+	gap: 16px;
+	margin: 0;
+	padding-block: 24px;
+	border-bottom: 1px solid var(--wp--preset--color--line);
+}
+
+.vaarta-comments .wp-block-comment-author-name {
+	font-weight: 750;
+}
+
+.vaarta-comments .vaarta-comment__meta {
+	gap: 8px 14px;
+	margin-top: 4px;
+	color: var(--wp--preset--color--muted);
+}
+
+.vaarta-comments .wp-block-comment-content {
+	margin-top: 14px;
+	line-height: 1.65;
+}
+
+.vaarta-comments .wp-block-comment-reply-link {
+	margin-top: 10px;
+	font-weight: 700;
+}
+
+.vaarta-comments .wp-block-comments-pagination {
+	margin-block: 32px;
+	padding-top: 18px;
+	border-top: 1px solid var(--wp--preset--color--line);
+	font-size: .8rem;
+	font-weight: 700;
+}
+
+.vaarta-comments .comment-respond {
+	margin-top: clamp(42px, 7vw, 72px);
+}
+
+.vaarta-comments .comment-reply-title {
+	font-size: clamp(1.7rem, 3vw, 2.6rem);
+	line-height: 1;
+	letter-spacing: -.035em;
+}
+
+.vaarta-comments :where(input:not([type="submit"]), textarea) {
+	width: 100%;
+	border: 1px solid var(--wp--preset--color--line);
+	border-radius: 0;
+	background: var(--wp--preset--color--canvas);
+	color: var(--wp--preset--color--ink);
+	font: inherit;
+}
+
+.vaarta-comments input:not([type="submit"]) {
+	min-height: 48px;
+	padding: 10px 12px;
+}
+
+.vaarta-comments textarea {
+	padding: 12px;
+}
+
+.vaarta-comments input[type="submit"] {
+	min-height: 46px;
+	padding: 10px 20px;
+	border: 1px solid var(--wp--preset--color--ink);
+	border-radius: 0;
+	background: var(--wp--preset--color--ink);
+	color: var(--wp--preset--color--canvas);
+	font: inherit;
+	font-weight: 750;
+	cursor: pointer;
+}

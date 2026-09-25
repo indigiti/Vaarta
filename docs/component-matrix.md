@@ -59,10 +59,10 @@ Vaarta is an editorial design system. Pages are compositions of reusable Core Gu
 - Social feed layouts using native Gutenberg embeds. **Built**; authenticated provider APIs remain optional adapters.
 - Gallery Grid/Masonry/Horizontal Strip enhancements. **Built**
 - Dark-mode preference/toggle system. **Built**
-- Advertisement provider integration hooks.
+- Advertisement provider integration hooks. **Built**
 - Global Style packs for Tech, Firmware, Datacrunch, Foundr, Artboard, and Design Loft. **Built — first-pass tokens**
 - Visual-regression fixtures for all six demos and article layouts. **Built**; pixel tuning remains iterative.
-- Performance and accessibility regression testing.
+- Performance and accessibility regression testing. **Built**
 
 
 ## Editorial utilities milestone
@@ -205,3 +205,27 @@ Built in the editorial-pages milestone:
 - viewport-height Coming Soon presentation using existing Newsletter and Theme Toggle modules
 
 This closes the Contact Form, Meet the Team and Coming Soon page types from the original reference feature set.
+
+
+## Monetization and discussion milestone
+
+Built in the monetization-discussion milestone:
+
+- Ad Slot `Collapse when empty` behavior
+- dormant template-level ad positions that consume no frontend space until a provider is connected
+- article ad positions:
+  - before header
+  - after header
+  - before post content
+  - after post content
+  - before footer
+- insertable Leaderboard and Inline ad patterns
+- provider-neutral ad markup through `vaarta_ad_slot_html`
+- Social Share Side Rail style
+- side + bottom sharing in all article layouts
+- sticky wide-screen share rail that collapses on narrower screens
+- native Gutenberg Comments pattern using Core Comments / Comment Template / Comments Form blocks
+- native comments included in the shared article footer
+- article comments styled to match the Vaarta editorial system
+
+This closes the main article-level monetization and discussion placements from the original reference feature set while keeping provider integrations optional.

@@ -1,4 +1,6 @@
+<!-- wp:vaarta/ad-slot {"slotName":"before-header","minHeight":90,"showLabel":true,"collapseWhenEmpty":true,"align":"full"} /-->
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- wp:vaarta/ad-slot {"slotName":"after-header","minHeight":90,"showLabel":true,"collapseWhenEmpty":true,"align":"full"} /-->
 <!-- wp:group {"tagName":"main","className":"vaarta-shell vaarta-article vaarta-article--split","layout":{"type":"default"}} -->
 <main class="wp-block-group vaarta-shell vaarta-article vaarta-article--split">
 	<!-- wp:vaarta/breadcrumbs /-->
@@ -25,11 +27,15 @@
 	<!-- /wp:columns -->
 	<!-- wp:group {"className":"vaarta-article__body","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group vaarta-article__body">
+		<!-- wp:vaarta/ad-slot {"slotName":"before-post-content","minHeight":250,"showLabel":true,"collapseWhenEmpty":true,"align":"wide"} /-->
+		<!-- wp:vaarta/social-share {"styleVariant":"rail","showLabel":false} /-->
 		<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
+		<!-- wp:vaarta/ad-slot {"slotName":"after-post-content","minHeight":250,"showLabel":true,"collapseWhenEmpty":true,"align":"wide"} /-->
 		<!-- wp:pattern {"slug":"vaarta/article-footer"} /-->
 	</div>
 	<!-- /wp:group -->
 	<!-- wp:vaarta/auto-load-posts {"maxPosts":3} /-->
+	<!-- wp:vaarta/ad-slot {"slotName":"before-footer","minHeight":90,"showLabel":true,"collapseWhenEmpty":true,"align":"wide"} /-->
 </main>
 <!-- /wp:group -->
 <!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

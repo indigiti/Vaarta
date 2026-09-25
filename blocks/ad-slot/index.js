@@ -43,6 +43,14 @@
 							onChange: function( value ) {
 								setAttributes( { showLabel: value } );
 							}
+						} ),
+						el( ToggleControl, {
+							label: __( 'Collapse when empty', 'vaarta' ),
+							help: __( 'Recommended for template-level ad positions before a provider is connected.', 'vaarta' ),
+							checked: attributes.collapseWhenEmpty,
+							onChange: function( value ) {
+								setAttributes( { collapseWhenEmpty: value } );
+							}
 						} )
 					)
 				),

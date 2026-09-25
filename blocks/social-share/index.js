@@ -62,7 +62,8 @@
 							options: [
 								{ label: __( 'Light', 'vaarta' ), value: 'light' },
 								{ label: __( 'Bold', 'vaarta' ), value: 'bold' },
-								{ label: __( 'Minimal', 'vaarta' ), value: 'minimal' }
+								{ label: __( 'Minimal', 'vaarta' ), value: 'minimal' },
+								{ label: __( 'Side rail', 'vaarta' ), value: 'rail' }
 							],
 							onChange: function( value ) {
 								setAttributes( { styleVariant: value } );
