@@ -15,6 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function vaarta_register_blocks(): void {
 	$blocks = array(
 		'editorial-grid',
+		'story-meta',
 	);
 
 	foreach ( $blocks as $block ) {
