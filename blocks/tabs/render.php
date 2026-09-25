@@ -56,6 +56,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 				tabindex="<?php echo 0 === $index ? '0' : '-1'; ?>"
 				data-vaarta-tab-index="<?php echo esc_attr( (string) $index ); ?>"
 				data-wp-on--click="actions.activate"
+				data-wp-on--keydown="actions.keyboard"
 			>
 				<?php echo esc_html( $title ); ?>
 			</button>
