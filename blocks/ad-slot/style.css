@@ -1,0 +1,26 @@
+.vaarta-ad-slot {
+	display: grid;
+	place-items: center;
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	border: 1px solid var(--wp--preset--color--line);
+	background: var(--wp--preset--color--surface);
+}
+
+.vaarta-ad-slot__label {
+	position: absolute;
+	top: 8px;
+	left: 50%;
+	transform: translateX(-50%);
+	color: var(--wp--preset--color--muted);
+	font-size: 0.6875rem;
+	line-height: 1;
+	text-transform: uppercase;
+	letter-spacing: .08em;
+}
+
+.vaarta-ad-slot__mount {
+	width: 100%;
+	min-height: inherit;
+}
