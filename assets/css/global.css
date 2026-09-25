@@ -263,3 +263,31 @@ main {
 	transform: none;
 	background: var(--wp--preset--color--surface);
 }
+
+
+/* Global light/dark color tokens. */
+html[data-vaarta-theme="dark"] {
+	--wp--preset--color--canvas: #111214;
+	--wp--preset--color--ink: #f5f5f3;
+	--wp--preset--color--muted: #a6a7aa;
+	--wp--preset--color--line: #2d2f33;
+	--wp--preset--color--surface: #1a1c1f;
+	color-scheme: dark;
+}
+
+html[data-vaarta-theme="dark"] body {
+	background: var(--wp--preset--color--canvas);
+	color: var(--wp--preset--color--ink);
+}
+
+html[data-vaarta-theme="dark"] input,
+html[data-vaarta-theme="dark"] textarea,
+html[data-vaarta-theme="dark"] select {
+	color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+	html:not([data-vaarta-theme]) {
+		color-scheme: dark;
+	}
+}
