@@ -1,0 +1,78 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Vaarta Design Loft",
+  "settings": {
+    "color": {
+      "defaultPalette": false,
+      "palette": [
+        {
+          "slug": "canvas",
+          "name": "Canvas",
+          "color": "#f7f4ec"
+        },
+        {
+          "slug": "ink",
+          "name": "Ink",
+          "color": "#20251f"
+        },
+        {
+          "slug": "muted",
+          "name": "Muted",
+          "color": "#70766e"
+        },
+        {
+          "slug": "line",
+          "name": "Line",
+          "color": "#dcdfd7"
+        },
+        {
+          "slug": "surface",
+          "name": "Surface",
+          "color": "#ebeee7"
+        },
+        {
+          "slug": "accent",
+          "name": "Accent",
+          "color": "#788d72"
+        }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--canvas)",
+      "text": "var(--wp--preset--color--ink)"
+    },
+    "typography": {
+      "fontFamily": "Arial, Helvetica, sans-serif"
+    },
+    "elements": {
+      "heading": {
+        "typography": {
+          "fontFamily": "Georgia, \"Times New Roman\", serif",
+          "fontWeight": "700",
+          "lineHeight": "1.02",
+          "letterSpacing": "-0.025em"
+        }
+      },
+      "button": {
+        "border": {
+          "radius": "0px"
+        }
+      }
+    },
+    "blocks": {
+      "core/button": {
+        "border": {
+          "radius": "0px"
+        }
+      },
+      "core/image": {
+        "border": {
+          "radius": "0px"
+        }
+      }
+    }
+  }
+}
