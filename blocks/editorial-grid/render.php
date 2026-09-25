@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $layout         = isset( $attributes['layout'] ) ? sanitize_key( $attributes['layout'] ) : 'bento';
 $card_style     = isset( $attributes['cardStyle'] ) ? sanitize_key( $attributes['cardStyle'] ) : 'standard';
 $category_id    = isset( $attributes['categoryId'] ) ? absint( $attributes['categoryId'] ) : 0;
+$category_slug  = isset( $attributes['categorySlug'] ) ? sanitize_title( $attributes['categorySlug'] ) : '';
 $posts_to_show  = isset( $attributes['postsToShow'] ) ? absint( $attributes['postsToShow'] ) : 8;
 $order_by       = isset( $attributes['orderBy'] ) ? sanitize_key( $attributes['orderBy'] ) : 'date';
 $show_excerpt   = ! empty( $attributes['showExcerpt'] );
@@ -44,7 +45,9 @@ $query_args = array(
 	'no_found_rows'       => true,
 );
 
-if ( $category_id > 0 ) {
+if ( $category_slug ) {
+	$query_args['category_name'] = $category_slug;
+} elseif ( $category_id > 0 ) {
 	$query_args['cat'] = $category_id;
 }
 
