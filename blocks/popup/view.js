@@ -79,6 +79,7 @@ function openPopup( root ) {
 		return;
 	}
 
+	root._vaartaPreviousFocus = document.activeElement;
 	dialog.hidden = false;
 	root.classList.add( 'is-open' );
 	document.documentElement.classList.add( 'vaarta-popup-open' );
@@ -103,7 +104,12 @@ function closePopup( root ) {
 		document.documentElement.classList.remove( 'vaarta-popup-open' );
 	}
 
-	root.querySelector( '.vaarta-popup__trigger' )?.focus();
+	const trigger = root.querySelector( '.vaarta-popup__trigger' );
+	const returnTarget = trigger || root._vaartaPreviousFocus;
+
+	if ( returnTarget && typeof returnTarget.focus === 'function' ) {
+		returnTarget.focus();
+	}
 }
 
 store( 'vaarta/popup', {
