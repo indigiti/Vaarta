@@ -4,10 +4,15 @@
   "name": "vaarta/progress",
   "version": "0.1.0",
   "title": "Progress",
-  "category": "widgets",
+  "category": "vaarta",
   "icon": "chart-bar",
   "description": "Reusable editorial progress or metric bar.",
-  "keywords": ["progress", "metric", "percentage", "score"],
+  "keywords": [
+    "progress",
+    "metric",
+    "percentage",
+    "score"
+  ],
   "textdomain": "vaarta",
   "attributes": {
     "label": {
