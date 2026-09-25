@@ -1,9 +1,12 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
-<!-- wp:group {"tagName":"main","className":"vaarta-shell","layout":{"type":"constrained"}} -->
-<main class="wp-block-group vaarta-shell">
-	
+<!-- wp:group {"tagName":"main","className":"vaarta-shell vaarta-archive vaarta-archive--search","layout":{"type":"default"}} -->
+<main class="wp-block-group vaarta-shell vaarta-archive vaarta-archive--search">
 	<!-- wp:vaarta/breadcrumbs /-->
-<!-- wp:query-title {"type":"search"} /-->
+	<!-- wp:group {"className":"vaarta-archive__header","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group vaarta-archive__header">
+		<!-- wp:query-title {"type":"search"} /-->
+	</div>
+	<!-- /wp:group -->
 	<!-- wp:pattern {"slug":"vaarta/archive-grid"} /-->
 </main>
 <!-- /wp:group -->

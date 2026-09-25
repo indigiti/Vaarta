@@ -1,20 +1,27 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
-<!-- wp:group {"tagName":"main","className":"vaarta-shell","style":{"spacing":{"padding":{"top":"48px"}}},"layout":{"type":"constrained"}} -->
-<main class="wp-block-group vaarta-shell">
-	
+<!-- wp:group {"tagName":"main","className":"vaarta-shell vaarta-article vaarta-article--centered","layout":{"type":"default"}} -->
+<main class="wp-block-group vaarta-shell vaarta-article vaarta-article--centered">
 	<!-- wp:vaarta/breadcrumbs /-->
-<!-- wp:post-terms {"term":"category","textAlign":"center","fontSize":"xs"} /-->
-	<!-- wp:post-title {"textAlign":"center","level":1} /-->
-	<!-- wp:group {"layout":{"type":"flex","justifyContent":"center"}} -->
-	<div class="wp-block-group">
-		<!-- wp:vaarta/story-meta /-->
+	<!-- wp:group {"className":"vaarta-article__header","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group vaarta-article__header">
+		<!-- wp:post-terms {"term":"category","textAlign":"center","fontSize":"xs"} /-->
+		<!-- wp:post-title {"textAlign":"center","level":1} /-->
+		<!-- wp:post-excerpt {"className":"vaarta-article__deck","textAlign":"center","moreText":""} /-->
+		<!-- wp:group {"layout":{"type":"flex","justifyContent":"center"}} -->
+		<div class="wp-block-group">
+			<!-- wp:vaarta/story-meta /-->
+		</div>
+		<!-- /wp:group -->
 	</div>
 	<!-- /wp:group -->
-	<!-- wp:post-featured-image {"align":"wide"} /-->
-	<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
-	<!-- wp:pattern {"slug":"vaarta/article-footer"} /-->
+	<!-- wp:post-featured-image {"align":"wide","className":"vaarta-article__hero-media"} /-->
+	<!-- wp:group {"className":"vaarta-article__body","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group vaarta-article__body">
+		<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
+		<!-- wp:pattern {"slug":"vaarta/article-footer"} /-->
+	</div>
+	<!-- /wp:group -->
 	<!-- wp:vaarta/auto-load-posts {"maxPosts":3} /-->
-
 </main>
 <!-- /wp:group -->
 <!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

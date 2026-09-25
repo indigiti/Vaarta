@@ -1,32 +1,35 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
-<!-- wp:group {"tagName":"main","className":"vaarta-shell","style":{"spacing":{"padding":{"top":"48px"}}},"layout":{"type":"default"}} -->
-<main class="wp-block-group vaarta-shell">
-	
+<!-- wp:group {"tagName":"main","className":"vaarta-shell vaarta-article vaarta-article--split","layout":{"type":"default"}} -->
+<main class="wp-block-group vaarta-shell vaarta-article vaarta-article--split">
 	<!-- wp:vaarta/breadcrumbs /-->
-<!-- wp:columns {"verticalAlignment":"center","style":{"spacing":{"blockGap":{"left":"48px"}}}} -->
-	<div class="wp-block-columns are-vertically-aligned-center">
-		<!-- wp:column {"verticalAlignment":"center","width":"45%"} -->
-		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:45%">
-			<!-- wp:post-terms {"term":"category","fontSize":"xs"} /-->
-			<!-- wp:post-title {"level":1} /-->
-			<!-- wp:vaarta/story-meta /-->
+	<!-- wp:columns {"verticalAlignment":"center","className":"vaarta-article__split-hero","style":{"spacing":{"blockGap":{"left":"56px"}}}} -->
+	<div class="wp-block-columns are-vertically-aligned-center vaarta-article__split-hero">
+		<!-- wp:column {"verticalAlignment":"center","width":"44%"} -->
+		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:44%">
+			<!-- wp:group {"className":"vaarta-article__header","layout":{"type":"default"}} -->
+			<div class="wp-block-group vaarta-article__header">
+				<!-- wp:post-terms {"term":"category","fontSize":"xs"} /-->
+				<!-- wp:post-title {"level":1} /-->
+				<!-- wp:post-excerpt {"className":"vaarta-article__deck","moreText":""} /-->
+				<!-- wp:vaarta/story-meta /-->
+			</div>
+			<!-- /wp:group -->
 		</div>
 		<!-- /wp:column -->
-		<!-- wp:column {"verticalAlignment":"center","width":"55%"} -->
-		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:55%">
-			<!-- wp:post-featured-image {"aspectRatio":"4/3"} /-->
+		<!-- wp:column {"verticalAlignment":"center","width":"56%"} -->
+		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:56%">
+			<!-- wp:post-featured-image {"aspectRatio":"4/3","className":"vaarta-article__hero-media"} /-->
 		</div>
 		<!-- /wp:column -->
 	</div>
 	<!-- /wp:columns -->
-	<!-- wp:group {"style":{"spacing":{"margin":{"top":"64px"}}},"layout":{"type":"constrained"}} -->
-	<div class="wp-block-group" style="margin-top:64px">
+	<!-- wp:group {"className":"vaarta-article__body","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group vaarta-article__body">
 		<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
 		<!-- wp:pattern {"slug":"vaarta/article-footer"} /-->
 	</div>
 	<!-- /wp:group -->
 	<!-- wp:vaarta/auto-load-posts {"maxPosts":3} /-->
-
 </main>
 <!-- /wp:group -->
 <!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

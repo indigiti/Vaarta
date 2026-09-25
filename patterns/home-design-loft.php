@@ -21,12 +21,12 @@
 
 	<!-- wp:group {"className":"vaarta-shell","layout":{"type":"default"}} -->
 	<div class="wp-block-group vaarta-shell">
-		<!-- wp:vaarta/editorial-grid {"layout":"bento","cardStyle":"standard","postsToShow":7,"showExcerpt":false,"showReadingTime":true} /-->
+		<!-- wp:vaarta/editorial-grid {"layout":"bento","cardStyle":"standard","postsToShow":7,"showExcerpt":false,"showReadingTime":true,"showViews":true,"priorityFirst":true} /-->
 	</div>
 	<!-- /wp:group -->
 
 	<!-- wp:group {"className":"vaarta-shell vaarta-section","style":{"spacing":{"margin":{"top":"72px"}}},"layout":{"type":"default"}} -->
-	<div class="wp-block-group vaarta-shell">
+	<div class="wp-block-group vaarta-shell vaarta-section">
 		<!-- wp:heading {"level":2,"fontSize":"xl"} -->
 		<h2 class="wp-block-heading has-xl-font-size"><?php echo esc_html__( 'Featured Design', 'vaarta' ); ?></h2>
 		<!-- /wp:heading -->
@@ -37,7 +37,7 @@
 	<!-- wp:pattern {"slug":"vaarta/newsletter-callout"} /-->
 
 	<!-- wp:group {"className":"vaarta-shell vaarta-section","style":{"spacing":{"margin":{"top":"72px"}}},"layout":{"type":"default"}} -->
-	<div class="wp-block-group vaarta-shell">
+	<div class="wp-block-group vaarta-shell vaarta-section">
 		<!-- wp:heading {"level":2,"fontSize":"xl"} -->
 		<h2 class="wp-block-heading has-xl-font-size"><?php echo esc_html__( 'Latest Stories', 'vaarta' ); ?></h2>
 		<!-- /wp:heading -->

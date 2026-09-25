@@ -11,6 +11,6 @@
 	<!-- wp:heading {"level":2,"fontSize":"xl"} -->
 	<h2 class="wp-block-heading has-xl-font-size"><?php echo esc_html__( 'Top on the Week', 'vaarta' ); ?></h2>
 	<!-- /wp:heading -->
-	<!-- wp:vaarta/editorial-grid {"layout":"list","cardStyle":"minimal","postsToShow":5,"orderBy":"trending","showViews":true,"showReadingTime":true} /-->
+	<!-- wp:vaarta/editorial-grid {"layout":"list","cardStyle":"compact","postsToShow":5,"orderBy":"trending","showAuthor":false,"showDate":false,"showViews":true,"showReadingTime":true} /-->
 </div>
 <!-- /wp:group -->

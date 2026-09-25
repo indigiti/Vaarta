@@ -760,3 +760,310 @@ main > .vaarta-shell:not(.vaarta-hero) > .wp-block-heading:first-child + p {
 		justify-content: flex-start;
 	}
 }
+
+
+/* Popular strip. */
+.vaarta-popular-strip {
+	margin-block: clamp(24px, 4vw, 52px) clamp(70px, 8vw, 120px);
+	padding-block: 18px 24px;
+	border-top: 1px solid var(--wp--preset--color--line);
+	border-bottom: 1px solid var(--wp--preset--color--line);
+}
+
+.vaarta-popular-strip__header {
+	margin-bottom: 16px;
+}
+
+.vaarta-popular-strip__header .wp-block-heading {
+	margin: 0;
+	font-size: .72rem !important;
+	font-weight: 800;
+	line-height: 1;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+}
+
+.vaarta-popular-strip .vaarta-editorial-grid--grid {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: clamp(18px, 2vw, 28px);
+}
+
+.vaarta-popular-strip .vaarta-editorial-grid--grid .vaarta-story {
+	grid-column: auto;
+}
+
+.vaarta-popular-strip .vaarta-story--compact {
+	grid-template-columns: 84px minmax(0, 1fr);
+	gap: 12px;
+}
+
+.vaarta-popular-strip .vaarta-story--compact .vaarta-story__title {
+	font-size: .98rem;
+	line-height: 1.08;
+}
+
+.vaarta-popular-strip .vaarta-story__meta {
+	margin-top: 7px;
+	font-size: .66rem;
+}
+
+/* Archive/search hierarchy. */
+.vaarta-archive {
+	padding-top: clamp(28px, 5vw, 64px);
+}
+
+.vaarta-archive__header {
+	max-width: 920px;
+	margin: clamp(34px, 6vw, 72px) auto clamp(46px, 7vw, 86px);
+	text-align: center;
+}
+
+.vaarta-archive__header .wp-block-query-title {
+	max-width: 15ch;
+	margin: 0 auto;
+	font-size: clamp(3rem, 7vw, 6.5rem);
+	line-height: .92;
+	letter-spacing: -.06em;
+	text-wrap: balance;
+}
+
+.vaarta-archive__header .taxonomy-description,
+.vaarta-archive__header .wp-block-term-description {
+	max-width: 58ch;
+	margin: 20px auto 0;
+	color: var(--wp--preset--color--muted);
+	font-size: clamp(.95rem, 1.5vw, 1.08rem);
+	line-height: 1.6;
+}
+
+.vaarta-archive-grid__stories {
+	row-gap: clamp(38px, 6vw, 74px);
+}
+
+.vaarta-archive-card .wp-block-post-featured-image {
+	margin-bottom: 16px;
+}
+
+.vaarta-archive-card .wp-block-post-terms {
+	font-size: .7rem !important;
+	font-weight: 700;
+}
+
+.vaarta-archive-card .wp-block-post-title {
+	margin-block: 8px 10px;
+	font-size: clamp(1.35rem, 2vw, 2rem) !important;
+	line-height: 1.04;
+	letter-spacing: -.035em;
+}
+
+.vaarta-archive-card .vaarta-story-meta {
+	color: var(--wp--preset--color--muted);
+	font-size: .7rem;
+}
+
+.vaarta-archive-pagination {
+	margin-top: clamp(56px, 8vw, 100px);
+	padding-top: 22px;
+	border-top: 1px solid var(--wp--preset--color--line);
+	font-size: .8rem;
+	font-weight: 700;
+}
+
+.vaarta-archive-pagination a {
+	text-decoration: none;
+}
+
+/* Article hierarchy shared across all layouts. */
+.vaarta-article {
+	padding-top: clamp(28px, 5vw, 64px);
+}
+
+.vaarta-article__header {
+	max-width: 900px;
+	margin-block: clamp(34px, 6vw, 72px) clamp(36px, 6vw, 64px);
+}
+
+.vaarta-article__header > .wp-block-post-terms {
+	margin-bottom: 14px;
+	font-size: .7rem !important;
+	font-weight: 750;
+	letter-spacing: .02em;
+}
+
+.vaarta-article__header > .wp-block-post-title {
+	max-width: 15ch;
+	margin: 0;
+	font-size: clamp(3.25rem, 7vw, 7rem);
+	line-height: .91;
+	letter-spacing: -.06em;
+	text-wrap: balance;
+}
+
+.vaarta-article__deck {
+	max-width: 56ch;
+	margin-top: 22px;
+	color: var(--wp--preset--color--muted);
+	font-size: clamp(1.05rem, 1.8vw, 1.32rem);
+	line-height: 1.55;
+}
+
+.vaarta-article__deck .wp-block-post-excerpt__excerpt {
+	margin: 0;
+}
+
+.vaarta-article__header .vaarta-story-meta {
+	margin-top: 20px;
+	font-size: .72rem;
+}
+
+.vaarta-article__hero-media {
+	margin-block: 0 clamp(48px, 8vw, 96px);
+	overflow: hidden;
+}
+
+.vaarta-article__hero-media img {
+	width: 100%;
+	max-height: min(72vh, 900px);
+	object-fit: cover;
+}
+
+.vaarta-article__body {
+	margin-top: 0;
+}
+
+.vaarta-article__body > .wp-block-post-content {
+	font-size: clamp(1rem, 1.15vw, 1.12rem);
+}
+
+.vaarta-article--centered .vaarta-article__header {
+	max-width: 1040px;
+	margin-inline: auto;
+	text-align: center;
+}
+
+.vaarta-article--centered .vaarta-article__header > .wp-block-post-title,
+.vaarta-article--centered .vaarta-article__deck {
+	margin-inline: auto;
+}
+
+.vaarta-article--centered .vaarta-story-meta {
+	justify-content: center;
+}
+
+.vaarta-article--media-lead {
+	padding-top: 0;
+}
+
+.vaarta-article--media-lead .vaarta-article__header-wrap {
+	padding-top: clamp(28px, 5vw, 64px);
+}
+
+.vaarta-article--media-lead .vaarta-article__header {
+	max-width: 1080px;
+}
+
+.vaarta-article--media-lead .vaarta-article__header > .wp-block-post-title {
+	max-width: 13ch;
+	font-size: clamp(3.5rem, 7.4vw, 7.6rem);
+}
+
+.vaarta-article__hero-media--full {
+	width: 100%;
+	margin-bottom: clamp(56px, 9vw, 112px);
+}
+
+.vaarta-article__hero-media--full img {
+	width: 100%;
+	max-height: 82vh;
+	object-fit: cover;
+}
+
+.vaarta-article--split .vaarta-article__split-hero {
+	margin-block: clamp(38px, 6vw, 72px) clamp(58px, 9vw, 110px);
+}
+
+.vaarta-article--split .vaarta-article__header {
+	max-width: none;
+	margin: 0;
+}
+
+.vaarta-article--split .vaarta-article__header > .wp-block-post-title {
+	max-width: 10ch;
+	font-size: clamp(3rem, 5.2vw, 5.9rem);
+}
+
+.vaarta-article--split .vaarta-article__hero-media {
+	margin: 0;
+}
+
+@media (max-width: 900px) {
+	.vaarta-popular-strip .vaarta-editorial-grid--grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.vaarta-archive__header .wp-block-query-title {
+		font-size: clamp(3rem, 9vw, 5.6rem);
+	}
+
+	.vaarta-article--split .vaarta-article__split-hero {
+		gap: 34px !important;
+	}
+
+	.vaarta-article__header > .wp-block-post-title,
+	.vaarta-article--media-lead .vaarta-article__header > .wp-block-post-title {
+		font-size: clamp(3rem, 9vw, 5.8rem);
+	}
+}
+
+@media (max-width: 700px) {
+	.vaarta-popular-strip {
+		margin-bottom: 64px;
+	}
+
+	.vaarta-popular-strip .vaarta-editorial-grid--grid {
+		grid-template-columns: 1fr;
+	}
+
+	.vaarta-popular-strip .vaarta-story--compact {
+		grid-template-columns: 96px minmax(0, 1fr);
+	}
+
+	.vaarta-archive__header {
+		margin-block: 34px 48px;
+	}
+
+	.vaarta-archive__header .wp-block-query-title {
+		font-size: clamp(2.7rem, 13vw, 4.4rem);
+	}
+
+	.vaarta-article__header {
+		margin-block: 30px 34px;
+	}
+
+	.vaarta-article__header > .wp-block-post-title,
+	.vaarta-article--media-lead .vaarta-article__header > .wp-block-post-title,
+	.vaarta-article--split .vaarta-article__header > .wp-block-post-title {
+		font-size: clamp(2.65rem, 13vw, 4.5rem);
+		line-height: .94;
+	}
+
+	.vaarta-article__deck {
+		font-size: 1rem;
+	}
+
+	.vaarta-article--split .vaarta-article__split-hero {
+		display: flex;
+		flex-direction: column;
+		margin-block: 34px 58px;
+	}
+
+	.vaarta-article--split .vaarta-article__split-hero > .wp-block-column {
+		flex-basis: auto !important;
+		width: 100%;
+	}
+
+	.vaarta-article__hero-media,
+	.vaarta-article__hero-media--full {
+		margin-bottom: 48px;
+	}
+}
