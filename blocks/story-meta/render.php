@@ -13,8 +13,9 @@ $post_id           = get_the_ID();
 $show_author       = ! array_key_exists( 'showAuthor', $attributes ) || ! empty( $attributes['showAuthor'] );
 $show_date         = ! array_key_exists( 'showDate', $attributes ) || ! empty( $attributes['showDate'] );
 $show_reading_time = ! array_key_exists( 'showReadingTime', $attributes ) || ! empty( $attributes['showReadingTime'] );
+$show_views        = ! array_key_exists( 'showViews', $attributes ) || ! empty( $attributes['showViews'] );
 
-if ( ! $post_id || ( ! $show_author && ! $show_date && ! $show_reading_time ) ) {
+if ( ! $post_id || ( ! $show_author && ! $show_date && ! $show_reading_time && ! $show_views ) ) {
 	return;
 }
 
@@ -46,6 +47,18 @@ $wrapper_attributes = get_block_wrapper_attributes( array( 'class' => 'vaarta-st
 				/* translators: %d: estimated reading time in minutes. */
 				esc_html__( '%d min read', 'vaarta' ),
 				vaarta_get_reading_time( $post_id )
+			);
+			?>
+		</span>
+	<?php endif; ?>
+
+	<?php if ( $show_views ) : ?>
+		<span class="vaarta-story-meta__views">
+			<?php
+			printf(
+				/* translators: %s: formatted post view count. */
+				esc_html__( '%s views', 'vaarta' ),
+				esc_html( number_format_i18n( vaarta_get_post_views( $post_id ) ) )
 			);
 			?>
 		</span>
