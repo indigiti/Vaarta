@@ -2,7 +2,7 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "vaarta/ad-slot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "title": "Ad Slot",
   "category": "vaarta",
   "icon": "megaphone",
@@ -24,6 +24,10 @@
       "default": 250
     },
     "showLabel": {
+      "type": "boolean",
+      "default": true
+    },
+    "collapseWhenEmpty": {
       "type": "boolean",
       "default": true
     }
