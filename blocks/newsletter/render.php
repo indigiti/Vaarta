@@ -13,7 +13,13 @@ $heading          = isset( $attributes['heading'] ) ? sanitize_text_field( $attr
 $description      = isset( $attributes['description'] ) ? sanitize_textarea_field( $attributes['description'] ) : __( 'Get the most important stories delivered to your inbox.', 'vaarta' );
 $button_label     = isset( $attributes['buttonLabel'] ) ? sanitize_text_field( $attributes['buttonLabel'] ) : __( 'Subscribe', 'vaarta' );
 $form_action      = isset( $attributes['formAction'] ) ? esc_url( $attributes['formAction'] ) : '';
-$email_field_name = isset( $attributes['emailFieldName'] ) ? sanitize_key( $attributes['emailFieldName'] ) : 'EMAIL';
+$email_field_name = isset( $attributes['emailFieldName'] )
+	? preg_replace( '/[^A-Za-z0-9_\-\[\]]/', '', (string) $attributes['emailFieldName'] )
+	: 'EMAIL';
+
+if ( '' === $email_field_name ) {
+	$email_field_name = 'EMAIL';
+}
 $style_variant    = isset( $attributes['styleVariant'] ) ? sanitize_key( $attributes['styleVariant'] ) : 'light';
 $field_id         = wp_unique_id( 'vaarta-newsletter-email-' );
 
