@@ -21,6 +21,8 @@ function vaarta_register_blocks(): void {
 		'review',
 		'progress',
 		'social-share',
+		'author-box',
+		'related-posts',
 	);
 
 	foreach ( $blocks as $block ) {
