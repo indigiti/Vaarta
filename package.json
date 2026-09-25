@@ -11,8 +11,8 @@
     "audit:lighthouse": "lhci autorun"
   },
   "devDependencies": {
-    "@playwright/test": "^1.56.0",
-    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.63.0",
+    "@axe-core/playwright": "^4.13.0",
     "@lhci/cli": "^0.15.1"
   }
 }
