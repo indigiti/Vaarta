@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vaarta/social-share",
+  "version": "0.1.0",
+  "title": "Social Share",
+  "category": "widgets",
+  "icon": "share",
+  "description": "Reusable article sharing links.",
+  "keywords": ["share", "social", "facebook", "x", "linkedin"],
+  "textdomain": "vaarta",
+  "usesContext": ["postId", "postType"],
+  "attributes": {
+    "networks": {
+      "type": "array",
+      "default": ["facebook", "x", "linkedin", "email"]
+    },
+    "showLabel": {
+      "type": "boolean",
+      "default": true
+    },
+    "styleVariant": {
+      "type": "string",
+      "default": "light"
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "html": false,
+    "spacing": {
+      "margin": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}
