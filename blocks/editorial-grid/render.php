@@ -10,7 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $layout         = isset( $attributes['layout'] ) ? sanitize_key( $attributes['layout'] ) : 'bento';
-$posts_to_show = isset( $attributes['postsToShow'] ) ? absint( $attributes['postsToShow'] ) : 8;
+$card_style     = isset( $attributes['cardStyle'] ) ? sanitize_key( $attributes['cardStyle'] ) : 'standard';
+$category_id    = isset( $attributes['categoryId'] ) ? absint( $attributes['categoryId'] ) : 0;
+$posts_to_show  = isset( $attributes['postsToShow'] ) ? absint( $attributes['postsToShow'] ) : 8;
 $order_by       = isset( $attributes['orderBy'] ) ? sanitize_key( $attributes['orderBy'] ) : 'date';
 $show_excerpt   = ! empty( $attributes['showExcerpt'] );
 $show_author    = ! array_key_exists( 'showAuthor', $attributes ) || ! empty( $attributes['showAuthor'] );
@@ -21,26 +23,39 @@ if ( ! in_array( $layout, $allowed_layouts, true ) ) {
 	$layout = 'bento';
 }
 
+$allowed_card_styles = array( 'standard', 'minimal', 'overlay', 'dark', 'compact' );
+if ( ! in_array( $card_style, $allowed_card_styles, true ) ) {
+	$card_style = 'standard';
+}
+
 $allowed_order_by = array( 'date', 'modified', 'title', 'rand' );
 if ( ! in_array( $order_by, $allowed_order_by, true ) ) {
 	$order_by = 'date';
 }
 
-$query = new WP_Query(
-	array(
-		'post_type'           => 'post',
-		'post_status'         => 'publish',
-		'posts_per_page'      => max( 1, min( 16, $posts_to_show ) ),
-		'orderby'             => $order_by,
-		'order'               => 'DESC',
-		'ignore_sticky_posts' => true,
-		'no_found_rows'       => true,
-	)
+$query_args = array(
+	'post_type'           => 'post',
+	'post_status'         => 'publish',
+	'posts_per_page'      => max( 1, min( 16, $posts_to_show ) ),
+	'orderby'             => $order_by,
+	'order'               => 'DESC',
+	'ignore_sticky_posts' => true,
+	'no_found_rows'       => true,
 );
+
+if ( $category_id > 0 ) {
+	$query_args['cat'] = $category_id;
+}
+
+$query = new WP_Query( $query_args );
 
 $wrapper_attributes = get_block_wrapper_attributes(
 	array(
-		'class' => 'vaarta-editorial-grid vaarta-editorial-grid--' . $layout,
+		'class' => sprintf(
+			'vaarta-editorial-grid vaarta-editorial-grid--%1$s vaarta-editorial-grid--cards-%2$s',
+			$layout,
+			$card_style
+		),
 	)
 );
 
@@ -58,8 +73,8 @@ if ( ! $query->have_posts() ) {
 	while ( $query->have_posts() ) :
 		$query->the_post();
 		?>
-		<article <?php post_class( 'vaarta-story' ); ?>>
-			<?php if ( has_post_thumbnail() ) : ?>
+		<article <?php post_class( 'vaarta-story vaarta-story--' . $card_style ); ?>>
+			<?php if ( has_post_thumbnail() && 'minimal' !== $card_style ) : ?>
 				<a class="vaarta-story__media" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
 					<?php
 					the_post_thumbnail(
@@ -91,6 +106,7 @@ if ( ! $query->have_posts() ) {
 						<?php if ( $show_author ) : ?>
 							<span class="vaarta-story__author"><?php the_author_posts_link(); ?></span>
 						<?php endif; ?>
+
 						<?php if ( $show_date ) : ?>
 							<time datetime="<?php echo esc_attr( get_the_date( DATE_W3C ) ); ?>">
 								<?php echo esc_html( get_the_date() ); ?>
