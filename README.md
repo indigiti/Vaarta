@@ -149,6 +149,12 @@ GitHub Actions validates:
 - release version consistency
 - distributable ZIP packaging
 
+### Clean-install integration
+
+The **WordPress Integration Smoke** workflow installs the generated theme ZIP into clean WordPress sites from the maintained 6.8 line and the current WordPress release, activates Vaarta, runs the demo bootstrap, requests frontend routes and exercises Vaarta REST endpoints.
+
+See `docs/integration-testing.md`.
+
 ### Visual regression
 
 ```bash
