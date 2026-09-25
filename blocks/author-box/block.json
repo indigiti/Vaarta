@@ -4,12 +4,19 @@
   "name": "vaarta/author-box",
   "version": "0.1.0",
   "title": "Author Box",
-  "category": "theme",
+  "category": "vaarta",
   "icon": "admin-users",
   "description": "Reusable article author profile.",
-  "keywords": ["author", "profile", "bio"],
+  "keywords": [
+    "author",
+    "profile",
+    "bio"
+  ],
   "textdomain": "vaarta",
-  "usesContext": ["postId", "postType"],
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
   "attributes": {
     "showAvatar": {
       "type": "boolean",
