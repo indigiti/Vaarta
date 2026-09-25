@@ -4,10 +4,15 @@
   "name": "vaarta/review",
   "version": "0.1.0",
   "title": "Review Rating",
-  "category": "widgets",
+  "category": "vaarta",
   "icon": "star-filled",
   "description": "Editorial review score supporting percentage, points, and stars.",
-  "keywords": ["review", "rating", "stars", "score"],
+  "keywords": [
+    "review",
+    "rating",
+    "stars",
+    "score"
+  ],
   "textdomain": "vaarta",
   "attributes": {
     "title": {
