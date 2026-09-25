@@ -39,3 +39,20 @@
 	font-weight: 700;
 	letter-spacing: .04em;
 }
+
+
+.vaarta-ad-slot[data-vaarta-ad-slot="before-header"],
+.vaarta-ad-slot[data-vaarta-ad-slot="after-header"],
+.vaarta-ad-slot[data-vaarta-ad-slot="before-footer"] {
+	border-right: 0;
+	border-left: 0;
+}
+
+.vaarta-ad-slot[data-vaarta-ad-slot="before-post-content"],
+.vaarta-ad-slot[data-vaarta-ad-slot="after-post-content"] {
+	margin-block: clamp(36px, 6vw, 72px);
+}
+
+.vaarta-ad-slot[data-vaarta-ad-slot="before-footer"] {
+	margin-top: clamp(48px, 8vw, 96px);
+}
