@@ -96,3 +96,25 @@ Built in the editorial-experience milestone:
 - Playwright visual regression harness for all six demo homepages
 - fixed desktop, tablet and mobile viewport coverage
 - article-layout screenshot regression support
+
+
+## Quality and fidelity milestone
+
+Built in the quality-fidelity milestone:
+
+- keyboard-visible skip link and automatic main-content target
+- consistent focus-visible treatment across interactive controls
+- reduced-motion hardening
+- focus trapping for Search Overlay and Popup
+- focus restoration after automatic popups close
+- dedicated Vaarta Editorial block inserter category
+- selective first-story LCP image priority
+- responsive image sizes hints for editorial grids
+- provider-neutral advertising integration hook
+- shared long-form article typography for standard and auto-loaded stories
+- semantic Breadcrumbs block for articles and archive/search/author templates
+- accessibility smoke tests using axe
+- manual Lighthouse quality workflow with performance budgets
+- stricter CI validation for Gutenberg block-comment JSON and custom block categories
+
+Quality targets are documented in `docs/performance-budgets.md`.
