@@ -26,3 +26,4 @@ require_once get_theme_file_path( 'inc/contact.php' );
 require_once get_theme_file_path( 'inc/block-styles.php' );
 require_once get_theme_file_path( 'inc/dark-mode.php' );
 require_once get_theme_file_path( 'inc/blocks.php' );
+require_once get_theme_file_path( 'tools/seed-editorial-fixtures.php' );
