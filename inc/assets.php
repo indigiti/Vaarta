@@ -42,6 +42,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		wp_register_script( 'vaarta-search', get_template_directory_uri() . '/assets/js/modules/search.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-navigation', get_template_directory_uri() . '/assets/js/modules/navigation.js', array( 'vaarta-runtime', 'vaarta-search' ), $version, true );
 		wp_register_script( 'vaarta-carousel', get_template_directory_uri() . '/assets/js/modules/carousel.js', array( 'vaarta-runtime', 'flickity', 'imagesloaded' ), $version, true );
+		wp_register_script( 'vaarta-mega-menu', get_template_directory_uri() . '/assets/js/modules/mega-menu.js', array( 'vaarta-runtime', 'vaarta-navigation' ), $version, true );
 		wp_register_script( 'vaarta-offcanvas', get_template_directory_uri() . '/assets/js/modules/offcanvas.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-fullscreen-nav', get_template_directory_uri() . '/assets/js/modules/fullscreen-nav.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-fullscreen', get_template_directory_uri() . '/assets/js/modules/fullscreen.js', array( 'vaarta-runtime', 'vaarta-search', 'vaarta-fullscreen-nav' ), $version, true );
@@ -66,6 +67,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 			'vaarta-search',
 			'vaarta-navigation',
 			'vaarta-carousel',
+			'vaarta-mega-menu',
 			'vaarta-offcanvas',
 			'vaarta-fullscreen-nav',
 			'vaarta-fullscreen',
@@ -100,6 +102,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 
 		wp_enqueue_script( 'vaarta-navigation' );
 		wp_enqueue_script( 'vaarta-carousel' );
+		wp_enqueue_script( 'vaarta-mega-menu' );
 		wp_enqueue_script( 'vaarta-load-more' );
 		wp_enqueue_script( 'vaarta-continuous-reading' );
 		wp_enqueue_script( 'vaarta-chrome' );
