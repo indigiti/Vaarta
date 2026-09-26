@@ -170,6 +170,12 @@ require_once get_theme_file_path( '/inc/vaarta-patterns.php' );
 require_once get_theme_file_path( '/inc/vaarta-chrome-markup.php' );
 
 /**
+ * Vaarta-owned header/footer shell components and csco_* compatibility wrappers.
+ * Loaded before legacy theme-tags so adopted component definitions stay dormant.
+ */
+require_once get_theme_file_path( '/inc/vaarta-shell-components.php' );
+
+/**
  * Actions.
  */
 require_once get_theme_file_path( '/inc/actions.php' );
@@ -186,6 +192,7 @@ require_once get_theme_file_path( '/inc/metabox.php' );
 
 /**
  * Custom template tags for this theme.
+ * Remaining post/article helpers still live here during the compatibility phase.
  */
 require_once get_theme_file_path( '/inc/theme-tags.php' );
 
