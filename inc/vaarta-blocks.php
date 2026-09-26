@@ -41,6 +41,7 @@ function vaarta_register_native_blocks() {
 	$blocks = array(
 		'story-meta',
 		'editorial-query',
+		'story-carousel',
 	);
 
 	foreach ( $blocks as $block ) {
