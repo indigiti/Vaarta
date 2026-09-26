@@ -54,6 +54,10 @@ test( 'native video background owns player lifecycle and controls', async ( { pa
 		const shell = document.createElement( 'div' );
 		shell.id = 'vaarta-video-fixture';
 		shell.className = 'cs-video-wrap';
+		shell.style.position = 'fixed';
+		shell.style.top = '20px';
+		shell.style.left = '20px';
+		shell.style.zIndex = '99999';
 		shell.style.width = '640px';
 		shell.style.height = '360px';
 		shell.innerHTML = `
