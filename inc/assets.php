@@ -29,16 +29,43 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 			? vaarta_get_foundation_version()
 			: csco_get_theme_data( 'Version' );
 
-		// Keep the existing dependency graph while allowing WordPress to defer it.
+		// Keep the remaining legacy dependency graph while Vaarta replaces
+		// individual behaviors with small native modules.
 		wp_register_script( 'flickity', get_template_directory_uri() . '/assets/vendor/flickity.pkgd.min.js', array( 'jquery' ), $version, true );
 		wp_register_script( 'colcade', get_template_directory_uri() . '/assets/vendor/colcade.js', array( 'jquery' ), $version, true );
 		wp_register_script( 'csco-scripts', get_template_directory_uri() . '/assets/js/scripts.js', array( 'jquery', 'imagesloaded', 'flickity', 'colcade' ), $version, true );
-		wp_register_script( 'vaarta-chrome', get_template_directory_uri() . '/assets/js/vaarta-chrome.js', array( 'csco-scripts' ), $version, true );
 
-		wp_script_add_data( 'flickity', 'strategy', 'defer' );
-		wp_script_add_data( 'colcade', 'strategy', 'defer' );
-		wp_script_add_data( 'csco-scripts', 'strategy', 'defer' );
-		wp_script_add_data( 'vaarta-chrome', 'strategy', 'defer' );
+		// Modular Vaarta site chrome. The runtime compatibility shim executes after
+		// the compiled bundle so it can detach only the legacy handlers now owned by
+		// these vanilla-JS modules.
+		wp_register_script( 'vaarta-runtime', get_template_directory_uri() . '/assets/js/modules/runtime.js', array( 'csco-scripts' ), $version, true );
+		wp_register_script( 'vaarta-search', get_template_directory_uri() . '/assets/js/modules/search.js', array( 'vaarta-runtime' ), $version, true );
+		wp_register_script( 'vaarta-offcanvas', get_template_directory_uri() . '/assets/js/modules/offcanvas.js', array( 'vaarta-runtime' ), $version, true );
+		wp_register_script( 'vaarta-fullscreen', get_template_directory_uri() . '/assets/js/modules/fullscreen.js', array( 'vaarta-runtime', 'vaarta-search' ), $version, true );
+		wp_register_script( 'vaarta-scheme', get_template_directory_uri() . '/assets/js/modules/scheme.js', array( 'vaarta-runtime' ), $version, true );
+		wp_register_script(
+			'vaarta-chrome',
+			get_template_directory_uri() . '/assets/js/vaarta-chrome.js',
+			array( 'vaarta-search', 'vaarta-offcanvas', 'vaarta-fullscreen', 'vaarta-scheme' ),
+			$version,
+			true
+		);
+
+		$deferred_scripts = array(
+			'flickity',
+			'colcade',
+			'csco-scripts',
+			'vaarta-runtime',
+			'vaarta-search',
+			'vaarta-offcanvas',
+			'vaarta-fullscreen',
+			'vaarta-scheme',
+			'vaarta-chrome',
+		);
+
+		foreach ( $deferred_scripts as $handle ) {
+			wp_script_add_data( $handle, 'strategy', 'defer' );
+		}
 
 		$localize = array(
 			'siteSchemeMode'   => get_theme_mod( 'color_scheme', 'system' ),
@@ -46,7 +73,6 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		);
 
 		wp_localize_script( 'csco-scripts', 'csLocalize', $localize );
-		wp_enqueue_script( 'csco-scripts' );
 		wp_enqueue_script( 'vaarta-chrome' );
 
 		if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
