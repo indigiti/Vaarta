@@ -33,10 +33,12 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		wp_register_script( 'flickity', get_template_directory_uri() . '/assets/vendor/flickity.pkgd.min.js', array( 'jquery' ), $version, true );
 		wp_register_script( 'colcade', get_template_directory_uri() . '/assets/vendor/colcade.js', array( 'jquery' ), $version, true );
 		wp_register_script( 'csco-scripts', get_template_directory_uri() . '/assets/js/scripts.js', array( 'jquery', 'imagesloaded', 'flickity', 'colcade' ), $version, true );
+		wp_register_script( 'vaarta-chrome', get_template_directory_uri() . '/assets/js/vaarta-chrome.js', array( 'csco-scripts' ), $version, true );
 
 		wp_script_add_data( 'flickity', 'strategy', 'defer' );
 		wp_script_add_data( 'colcade', 'strategy', 'defer' );
 		wp_script_add_data( 'csco-scripts', 'strategy', 'defer' );
+		wp_script_add_data( 'vaarta-chrome', 'strategy', 'defer' );
 
 		$localize = array(
 			'siteSchemeMode'   => get_theme_mod( 'color_scheme', 'system' ),
@@ -45,6 +47,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 
 		wp_localize_script( 'csco-scripts', 'csLocalize', $localize );
 		wp_enqueue_script( 'csco-scripts' );
+		wp_enqueue_script( 'vaarta-chrome' );
 
 		if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 			wp_enqueue_script( 'comment-reply' );
@@ -62,6 +65,15 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 			$version
 		);
 		wp_enqueue_style( 'vaarta-design-system' );
+
+		// Add keyboard/focus affordances without altering legacy component visuals.
+		wp_register_style(
+			'vaarta-chrome',
+			get_template_directory_uri() . '/assets/css/vaarta-chrome.css',
+			array( 'vaarta-design-system' ),
+			$version
+		);
+		wp_enqueue_style( 'vaarta-chrome' );
 
 		wp_add_inline_style( 'csco-styles', sprintf( ':root { --social-links-label: "%s"; }', esc_html__( 'CONNECT', 'caards' ) ) );
 
