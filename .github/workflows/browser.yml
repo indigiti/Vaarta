@@ -43,6 +43,7 @@ jobs:
           npm run wp-env -- run cli wp theme activate "$THEME_SLUG"
           npm run wp-env -- run cli wp eval-file "wp-content/themes/${THEME_SLUG}/tests/e2e/fixtures.php"
           npm run wp-env -- run cli wp eval-file "wp-content/themes/${THEME_SLUG}/tests/e2e/settings-contract.php"
+          npm run wp-env -- run cli wp eval-file "wp-content/themes/${THEME_SLUG}/tests/e2e/site-shell-contract.php"
 
       - name: Run browser smoke tests
         run: npm run test:e2e
