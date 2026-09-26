@@ -1,0 +1,53 @@
+name: Gate legacy chrome modules
+
+on:
+  push:
+    paths:
+      - '.github/workflows/gate-legacy-chrome.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  gate-generated-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Gate migrated Webpack chrome modules
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('assets/js/scripts.js')
+          source = path.read_text(encoding='utf-8')
+          replacements = {
+              '__webpack_require__(3);': '/* Vaarta native article interactions owns legacy Webpack module 3. */',
+              '__webpack_require__(4);': '/* Vaarta native article interactions owns legacy Webpack module 4. */',
+              '__webpack_require__(6);': '/* Vaarta native fullscreen navigation owns legacy Webpack module 6. */',
+              '__webpack_require__(7);': '/* Vaarta native fullscreen shell owns legacy Webpack module 7. */',
+              '__webpack_require__(12);': '/* Vaarta native mega-menu owns legacy Webpack module 12. */',
+              '__webpack_require__(14);': '/* Vaarta native offcanvas owns legacy Webpack module 14. */',
+              '__webpack_require__(16);': '/* Vaarta native scheme owns legacy Webpack module 16. */',
+              '__webpack_require__(17);': '/* Vaarta native search owns legacy Webpack module 17. */',
+          }
+
+          for old, new in replacements.items():
+              count = source.count(old)
+              if count != 1:
+                  raise SystemExit(f'Expected exactly one {old!r}, found {count}')
+              source = source.replace(old, new, 1)
+
+          path.write_text(source, encoding='utf-8')
+          Path('.github/workflows/gate-legacy-chrome.yml').unlink()
+          PY
+
+      - name: Commit runtime gates
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/js/scripts.js .github/workflows/gate-legacy-chrome.yml
+          git commit -m 'Runtime: gate migrated legacy chrome modules'
+          git push
