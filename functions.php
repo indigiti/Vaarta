@@ -182,9 +182,14 @@ require_once get_theme_file_path( '/inc/vaarta-post-meta.php' );
 require_once get_theme_file_path( '/inc/vaarta-card-renderers.php' );
 
 /**
- * Legacy inc/theme-tags.php and inc/post-meta.php remain in the repository as
- * migration reference/fallback source but are no longer part of the active
- * bootstrap. Their public runtime APIs are owned by the Vaarta modules above.
+ * Vaarta-owned category presentation metadata and admin controls.
+ */
+require_once get_theme_file_path( '/inc/vaarta-category-meta.php' );
+
+/**
+ * Legacy inc/theme-tags.php, inc/post-meta.php, and inc/metabox.php remain in the
+ * repository as migration reference/fallback source but are no longer part of
+ * the active bootstrap. Their runtime APIs are owned by Vaarta modules above.
  */
 
 /**
@@ -196,11 +201,6 @@ require_once get_theme_file_path( '/inc/actions.php' );
  * Partials.
  */
 require_once get_theme_file_path( '/inc/partials.php' );
-
-/**
- * Meta Boxes.
- */
-require_once get_theme_file_path( '/inc/metabox.php' );
 
 /**
  * Nav Menu.
