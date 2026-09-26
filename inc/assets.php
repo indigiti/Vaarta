@@ -46,6 +46,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		wp_register_script( 'vaarta-scheme', get_template_directory_uri() . '/assets/js/modules/scheme.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-article-interactions', get_template_directory_uri() . '/assets/js/modules/article-interactions.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-load-more', get_template_directory_uri() . '/assets/js/modules/load-more.js', array( 'vaarta-runtime' ), $version, true );
+		wp_register_script( 'vaarta-continuous-reading', get_template_directory_uri() . '/assets/js/modules/continuous-reading.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script(
 			'vaarta-chrome',
 			get_template_directory_uri() . '/assets/js/vaarta-chrome.js',
@@ -66,6 +67,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 			'vaarta-scheme',
 			'vaarta-article-interactions',
 			'vaarta-load-more',
+			'vaarta-continuous-reading',
 			'vaarta-chrome',
 		);
 
@@ -91,6 +93,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		);
 
 		wp_enqueue_script( 'vaarta-load-more' );
+		wp_enqueue_script( 'vaarta-continuous-reading' );
 		wp_enqueue_script( 'vaarta-chrome' );
 
 		if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
