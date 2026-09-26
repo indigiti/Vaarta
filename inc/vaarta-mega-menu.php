@@ -33,7 +33,7 @@ if ( class_exists( 'CSCO_Mega_Menu' ) && ! class_exists( 'Vaarta_Mega_Menu' ) ) 
 		 */
 		public function admin_reload_nav_menu() {
 			if ( ! current_user_can( 'edit_theme_options' ) ) {
-				wp_die( '-1', 403 );
+				wp_die( '-1', '', array( 'response' => 403 ) );
 			}
 
 			check_ajax_referer( 'vaarta_reload_menu', 'nonce' );
@@ -49,7 +49,7 @@ if ( class_exists( 'CSCO_Mega_Menu' ) && ! class_exists( 'Vaarta_Mega_Menu' ) ) 
 			$allowed_locations = $this->support_languages( (array) $allowed_locations );
 
 			if ( ! $nav_menu_selected_id || ! is_nav_menu( $nav_menu_selected_id ) || ! in_array( $menu_location, $allowed_locations, true ) ) {
-				wp_die( '0' );
+				wp_die( '0', '', array( 'response' => 400 ) );
 			}
 
 			require_once ABSPATH . 'wp-admin/includes/nav-menu.php';
@@ -82,8 +82,8 @@ if ( class_exists( 'CSCO_Mega_Menu' ) && ! class_exists( 'Vaarta_Mega_Menu' ) ) 
 			$per_page = absint( $request->get_param( 'per_page' ) );
 			$per_page = min( 8, max( 1, $per_page ? $per_page : 4 ) );
 
-			$term_id = absint( $request->get_param( 'term' ) );
-			$posts   = sanitize_text_field( (string) $request->get_param( 'posts' ) );
+			$term_id  = absint( $request->get_param( 'term' ) );
+			$posts    = sanitize_text_field( (string) $request->get_param( 'posts' ) );
 			$post_ids = array();
 
 			if ( $posts ) {
