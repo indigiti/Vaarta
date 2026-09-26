@@ -1,10 +1,10 @@
 <?php
 /**
- * The template for displaying the footer
+ * The template for displaying the footer.
  *
- * Contains the closing of the "cs-site" div and all content after
+ * Contains the closing of the "cs-site" div and all content after.
  *
- * @package Caards
+ * @package Vaarta
  */
 
 ?>
@@ -27,7 +27,7 @@
 
 		<?php do_action( 'csco_footer_before' ); ?>
 
-		<?php get_template_part( 'template-parts/footers/footer', csco_get_footer_layout_type() ); ?>
+		<?php vaarta_render_site_footer(); ?>
 
 		<?php do_action( 'csco_footer_after' ); ?>
 
