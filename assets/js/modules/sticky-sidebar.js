@@ -62,7 +62,7 @@
 
 		state.adminBarHeight = height( adminBar );
 		state.headerStickHeight = hasSmartHeader ? cssNumber( '--cs-header-height' ) : height( header );
-		state.headerStretchHeight = hasSmartHeader ? cssNumber( '--cs-header-height' ) : height( document.querySelector( '.cs-header-stretch' ) );
+		state.headerStretchHeight = hasSmartHeader ? cssNumber( '--cs-header-height' ) : state.headerStickHeight;
 	}
 
 	function offset( headerHeight ) {
