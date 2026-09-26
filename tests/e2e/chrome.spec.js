@@ -18,7 +18,8 @@ test( 'Vaarta modular runtime is present', async ( { page } ) => {
 		fullscreen: !! window.vaartaFullscreen,
 		fullscreenNav: !! window.vaartaFullscreenNav,
 		scheme: !! window.vaartaScheme,
-		articleInteractions: !! window.vaartaArticleInteractions
+		articleInteractions: !! window.vaartaArticleInteractions,
+		loadMore: !! window.vaartaLoadMore
 	} ) );
 
 	expect( runtime ).toEqual( {
@@ -28,8 +29,26 @@ test( 'Vaarta modular runtime is present', async ( { page } ) => {
 		fullscreen: true,
 		fullscreenNav: true,
 		scheme: true,
-		articleInteractions: true
+		articleInteractions: true,
+		loadMore: true
 	} );
+} );
+
+test( 'native load more appends the next archive page', async ( { page }, testInfo ) => {
+	test.skip( isMobileProject( testInfo ), 'Pagination transport is exercised once in the desktop project.' );
+
+	const area = page.locator( '.cs-posts-area-posts' ).first();
+	const posts = area.locator( '.cs-posts-area__main .cs-entry' );
+	const button = area.locator( '.cs-load-more[data-vaarta-pagination="true"]' );
+
+	await expect( area ).toBeVisible();
+	await expect( button ).toBeVisible();
+	const before = await posts.count();
+	expect( before ).toBeGreaterThan( 0 );
+
+	await button.click();
+	await expect.poll( async () => posts.count() ).toBeGreaterThan( before );
+	await expect( area.getByRole( 'link', { name: 'Vaarta Test Story 1', exact: true } ).first() ).toBeVisible();
 } );
 
 test( 'search opens and closes with synchronized ARIA state', async ( { page }, testInfo ) => {
@@ -111,10 +130,7 @@ test( 'article share copy and comments disclosure use native interactions', asyn
 	test.skip( isMobileProject( testInfo ), 'Article interaction assertions run once in the desktop project.' );
 
 	await context.grantPermissions( [ 'clipboard-read', 'clipboard-write' ], { origin: 'http://localhost:8888' } );
-
-	const storyLink = page.getByRole( 'link', { name: 'Vaarta Test Story 1', exact: true } ).first();
-	await expect( storyLink ).toBeVisible();
-	await storyLink.click();
+	await page.goto( '/vaarta-test-story-1/' );
 	await expect( page.locator( 'body' ) ).toHaveClass( /single-post/ );
 
 	const copyButton = page.locator( '.cs-entry__after-share-buttons-copy' ).first();
