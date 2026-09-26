@@ -225,7 +225,7 @@ function csSetCookie(name, value) {
 /* Vaarta native fullscreen shell owns legacy Webpack module 7. */
 /* Vaarta native tile hover owns legacy Webpack module 8. */
 /* Vaarta native load-more owns legacy Webpack module 9. */
-__webpack_require__(10);
+/* Vaarta native continuous reading owns legacy Webpack module 10. */
 /* Vaarta native masonry owns legacy Webpack module 11. */
 /* Vaarta native mega-menu owns legacy Webpack module 12. */
 /* Vaarta native navigation owns legacy Webpack module 13. */
