@@ -262,3 +262,25 @@ Built in the release-readiness milestone:
 - editorial-page visual tests wired to default demo-bootstrap routes
 
 A tagged release should only be cut after installing the generated ZIP on a clean WordPress site and completing `docs/release-checklist.md`.
+
+
+## Clean-install integration milestone
+
+Built in the integration-smoke milestone:
+
+- automated installation of the generated Vaarta ZIP into clean WordPress databases
+- compatibility matrix covering:
+  - WordPress 6.8.10 from Vaarta's declared minimum major/minor line
+  - WordPress 7.1.2, the current maintained release when introduced
+- PHP 8.2 runtime matrix
+- real ZIP installation and activation through WP-CLI
+- installed-theme demo bootstrap execution
+- required custom-block registration assertions
+- Contact / Team / Coming Soon page-template assignment checks
+- real HTTP server startup
+- frontend requests for all six demos, Blog and editorial utility pages
+- rendered Vaarta block assertions on representative pages
+- Search REST endpoint runtime check
+- invalid Contact Form server-validation check
+
+The integration matrix is a required gate before tagging a Vaarta release and should be refreshed as WordPress security releases advance.
