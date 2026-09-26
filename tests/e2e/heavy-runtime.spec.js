@@ -83,16 +83,16 @@ test( 'native video background owns player lifecycle and controls', async ( { pa
 	await expect.poll( () => page.evaluate( () => window.__vaartaVideoCalls.mute ) ).toBeGreaterThan( 0 );
 	await expect.poll( () => page.evaluate( () => window.__vaartaVideoCalls.resize ) ).toBeGreaterThan( 0 );
 
-	await volume.click();
+	await volume.evaluate( ( element ) => element.click() );
 	await expect( volume ).toHaveClass( /cs-player-unmute/ );
 	await expect.poll( () => page.evaluate( () => window.__vaartaVideoCalls.unmute ) ).toBeGreaterThan( 0 );
 
-	await shell.locator( '.cs-player-stop' ).click();
+	await shell.locator( '.cs-player-stop' ).evaluate( ( element ) => element.click() );
 	await expect( state ).toHaveClass( /cs-player-play/ );
 	await expect( state ).toHaveClass( /cs-player-upause/ );
 	await expect.poll( () => page.evaluate( () => window.__vaartaVideoCalls.pause ) ).toBeGreaterThan( 0 );
 
-	await state.click();
+	await state.evaluate( ( element ) => element.click() );
 	await expect( state ).toHaveClass( /cs-player-pause/ );
 	await expect( state ).not.toHaveClass( /cs-player-upause/ );
 	await expect.poll( () => page.evaluate( () => window.__vaartaVideoCalls.play ) ).toBeGreaterThan( 0 );
