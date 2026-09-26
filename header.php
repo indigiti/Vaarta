@@ -1,10 +1,10 @@
 <?php
 /**
- * The template for displaying the header
+ * The template for displaying the header.
  *
  * Displays all of the head element and everything up until the "cs-site" div.
  *
- * @package Caards
+ * @package Vaarta
  */
 
 ?>
@@ -31,7 +31,7 @@
 
 		<?php do_action( 'csco_header_before' ); ?>
 
-		<?php get_template_part( 'template-parts/headers/header', csco_get_header_layout_type() ); ?>
+		<?php vaarta_render_site_header(); ?>
 
 		<?php do_action( 'csco_header_after' ); ?>
 
