@@ -64,5 +64,14 @@ function csco_register_theme_mods() {
 	* Miscellaneous Settings.
 	*/
 	require get_template_directory() . '/inc/theme-mods/miscellaneous-settings.php';
+
+	/**
+	 * Vaarta registers complex read-time sanitizers only after every legacy
+	 * Customizer field is known. This keeps direct get_theme_mod() consumers on
+	 * the same sanitized data contract as the Customizer/output-style engine.
+	 */
+	if ( function_exists( 'vaarta_register_complex_theme_mod_filters' ) ) {
+		vaarta_register_complex_theme_mod_filters();
+	}
 }
 add_action( 'after_setup_theme', 'csco_register_theme_mods', 20 );
