@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vaarta/story-meta",
+  "version": "2.0.0-alpha.1",
+  "title": "Story Meta",
+  "category": "vaarta-editorial",
+  "icon": "admin-post",
+  "description": "Display Vaarta's existing category, author, date, comments, views, shares, and reading-time metadata with native Gutenberg controls.",
+  "keywords": ["post", "meta", "author", "date", "reading time"],
+  "textdomain": "caards",
+  "attributes": {
+    "items": {
+      "type": "array",
+      "default": ["category", "author", "date", "comments", "reading_time"]
+    },
+    "compact": {
+      "type": "boolean",
+      "default": false
+    },
+    "authorAvatar": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "spacing": {
+      "margin": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}
