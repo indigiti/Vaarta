@@ -167,8 +167,11 @@ test( 'article share copy and comments disclosure use native interactions', asyn
 	await expect( copyStatus ).toHaveText( 'Shareable URL copied.' );
 	await expect.poll( () => page.evaluate( () => navigator.clipboard.readText() ) ).toBe( shareUrl );
 
-	const commentsButton = page.locator( '.cs-entry__comments-show button' );
-	const comments = page.locator( '#comments-hidden' );
+	// Continuous reading may already have appended another article. Scope these
+	// assertions to the original article's controls instead of matching every
+	// repeated legacy comments ID/control on the page.
+	const commentsButton = page.locator( '.cs-entry__comments-show button' ).first();
+	const comments = page.locator( '#comments-hidden' ).first();
 	await expect( commentsButton ).toHaveAttribute( 'aria-expanded', 'false' );
 	await expect( comments ).toHaveAttribute( 'aria-hidden', 'true' );
 	await commentsButton.click();
