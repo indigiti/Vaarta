@@ -15,6 +15,7 @@ if ( ! function_exists( 'csco_editor_style' ) ) {
 	function csco_editor_style() {
 		add_theme_support( 'editor-styles' );
 		add_editor_style( 'assets/css/editor-style.css' );
+		add_editor_style( 'assets/css/vaarta-design-system.css' );
 	}
 }
 add_action( 'after_setup_theme', 'csco_editor_style', 20 );
