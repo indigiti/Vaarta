@@ -1,0 +1,77 @@
+@charset "UTF-8";
+/**
+ * Vaarta design-system bridge.
+ *
+ * WordPress owns the public design tokens through theme.json. The legacy
+ * visual engine continues to consume its established --cs-* custom properties.
+ * This layer connects the two systems without changing selector contracts or
+ * component markup.
+ */
+
+:root {
+	/* Layout widths. */
+	--cs-entry-content-width: var(--wp--style--global--content-size, 677px);
+	--cs-entry-content-medium-width: var(--wp--custom--vaarta--layout--content-medium-width, 1110px);
+	--cs-entry-content-large-width: var(--wp--style--global--wide-size, 1680px);
+	--cs-sidebar-width: var(--wp--custom--vaarta--layout--sidebar-width, 300px);
+	--cs-offcanvas-width: var(--wp--custom--vaarta--layout--offcanvas-width, 360px);
+
+	/* Shape tokens. */
+	--cs-layout-elements-border-radius: var(--wp--custom--vaarta--radius--layout, 12px);
+	--cs-image-border-radius: var(--wp--custom--vaarta--radius--image, 12px);
+	--cs-input-border-radius: var(--wp--custom--vaarta--radius--input, 6px);
+	--cs-button-border-radius: var(--wp--custom--vaarta--radius--button, 6px);
+	--cs-category-label-border-radius: var(--wp--custom--vaarta--radius--badge, 4px);
+	--cs-badge-border-radius: var(--wp--custom--vaarta--radius--badge, 4px);
+	--cs-tag-border-radius: var(--wp--custom--vaarta--radius--tag, 5px);
+	--cs-pagination-border-radius: var(--wp--custom--vaarta--radius--pill, 50rem);
+	--cs-light-box-zoom-icon-border-radius: var(--wp--custom--vaarta--radius--round, 50%);
+	--cs-cnvs-list-styled-border-radius: var(--wp--custom--vaarta--radius--round, 50%);
+	--cs-post-numbered-label-border-radius: var(--wp--custom--vaarta--radius--round, 50%);
+	--cs-pin-it-button-border-radius: var(--wp--custom--vaarta--radius--round, 50%);
+	--cs-toc-border-radius: var(--wp--custom--vaarta--radius--round, 50%);
+	--cs-arrow-button-border-radius: var(--wp--custom--vaarta--radius--round, 50%);
+	--cs-scroll-to-top-button-border-radius: var(--wp--custom--vaarta--radius--round, 50%);
+}
+
+:root,
+[data-site-scheme="default"] {
+	--cs-color-site-background: var(--wp--preset--color--site-background, #E6E9EB);
+	--cs-color-header-background: var(--wp--preset--color--surface, #FFFFFF);
+	--cs-color-submenu-background: var(--wp--preset--color--surface-muted, #F6F7F8);
+	--cs-color-submenu-link-background: var(--wp--preset--color--surface, #FFFFFF);
+	--cs-color-featured-column-background: var(--wp--preset--color--surface-muted, #F6F7F8);
+	--cs-color-featured-column-link-background: var(--wp--preset--color--surface, #FFFFFF);
+	--cs-color-multi-column-background: var(--wp--preset--color--surface-muted, #F6F7F8);
+	--cs-color-fullscreen-menu-background: var(--wp--preset--color--surface, #FFFFFF);
+	--cs-color-fullscreen-menu-link-background: var(--wp--preset--color--surface-muted, #F6F7F8);
+	--cs-color-footer-background: var(--wp--preset--color--surface, #FFFFFF);
+	--cs-color-widgets-background: var(--wp--preset--color--surface, #FFFFFF);
+	--cs-color-layout-elements-background: var(--wp--preset--color--surface, #FFFFFF);
+}
+
+[data-site-scheme="dark"] {
+	--cs-color-site-background: var(--wp--preset--color--dark-background, #30323E);
+	--cs-color-header-background: var(--wp--preset--color--dark-surface, #1B1C1F);
+	--cs-color-search-background: var(--wp--preset--color--dark-surface, #1B1C1F);
+	--cs-color-fullscreen-menu-background: var(--wp--preset--color--dark-background, #30323E);
+	--cs-color-footer-background: var(--wp--preset--color--dark-surface, #1B1C1F);
+	--cs-color-widgets-background: var(--wp--preset--color--dark-surface, #1B1C1F);
+	--cs-color-layout-elements-background: var(--wp--preset--color--dark-surface, #1B1C1F);
+}
+
+:root,
+[data-scheme="default"] {
+	--cs-color-primary: var(--wp--preset--color--primary, #2F323D);
+	--cs-color-secondary: var(--wp--preset--color--secondary, #78848F);
+	--cs-color-accent: var(--wp--preset--color--accent, #2D5DE0);
+	--cs-color-button: var(--wp--preset--color--accent, #2D5DE0);
+	--cs-color-entry-category: var(--wp--preset--color--accent, #2D5DE0);
+	--cs-color-category-contrast: var(--wp--preset--color--primary, #2F323D);
+	--cs-color-tags: var(--wp--preset--color--surface, #FFFFFF);
+	--cs-color-tags-contrast: var(--wp--preset--color--primary, #2F323D);
+	--cs-color-tags-hover: var(--wp--preset--color--accent, #2D5DE0);
+	--cs-color-link: var(--wp--preset--color--primary, #2F323D);
+	--cs-color-link-hover: var(--wp--preset--color--accent, #2D5DE0);
+	--cs-color-input: var(--wp--preset--color--surface-muted, #F6F7F8);
+}
