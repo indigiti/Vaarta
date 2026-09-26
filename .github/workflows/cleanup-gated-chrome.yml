@@ -1,0 +1,98 @@
+name: Cleanup gated chrome compatibility
+
+on:
+  push:
+    paths:
+      - '.github/workflows/cleanup-gated-chrome.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Remove obsolete legacy suppression shims
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          runtime_path = Path('assets/js/modules/runtime.js')
+          runtime = runtime_path.read_text(encoding='utf-8')
+          marker = "\n\t/**\n\t * The old compiled bundle is still required by unrelated components."
+          start = runtime.find(marker)
+          end = runtime.rfind("\n} )();")
+          if start < 0 or end < 0 or end <= start:
+              raise SystemExit('Could not locate obsolete runtime compatibility section')
+          runtime_path.write_text(runtime[:start] + "\n} )();\n", encoding='utf-8')
+
+          mega_path = Path('assets/js/modules/mega-menu.js')
+          mega = mega_path.read_text(encoding='utf-8')
+          old_config = """\n\t// Capture the server-provided endpoint before DOM ready, then make the old\n\t// Webpack loader's dependency unavailable. Its callbacks may remain in the\n\t// compiled file during migration, but they cannot issue requests.\n\tif ( config ) {\n\t\twindow.vaartaMegaMenuConfig = config;\n\t}\n\tif ( 'undefined' !== typeof window.csco_mega_menu ) {\n\t\twindow.csco_mega_menu = undefined;\n\t}\n"""
+          new_config = """\n\t// Preserve the localized legacy object as a compatibility alias while the\n\t// native controller owns all execution.\n\tif ( config ) {\n\t\twindow.vaartaMegaMenuConfig = config;\n\t}\n"""
+          if old_config not in mega:
+              raise SystemExit('Could not locate mega-menu compatibility config block')
+          mega = mega.replace(old_config, new_config, 1)
+          detach_start = mega.find("\n\tfunction detachLegacyHandlers() {")
+          direct_start = mega.find("\n\tfunction directLink( item )", detach_start)
+          if detach_start < 0 or direct_start < 0:
+              raise SystemExit('Could not locate mega-menu legacy detacher')
+          mega = mega[:detach_start] + mega[direct_start:]
+          old_init = "\n\t\tdetachLegacyHandlers();\n\t\twindow.setTimeout( detachLegacyHandlers, 0 );\n"
+          if old_init not in mega:
+              raise SystemExit('Could not locate mega-menu detacher calls')
+          mega = mega.replace(old_init, "", 1)
+          mega_path.write_text(mega, encoding='utf-8')
+
+          test_path = Path('tests/e2e/mega-menu.spec.js')
+          test = test_path.read_text(encoding='utf-8')
+          test = test.replace(
+              "\t\tnativeConfig: !! ( window.vaartaMegaMenuConfig && window.vaartaMegaMenuConfig.rest_url ),\n\t\tlegacyConfigType: typeof window.csco_mega_menu\n",
+              "\t\tnativeConfig: !! ( window.vaartaMegaMenuConfig && window.vaartaMegaMenuConfig.rest_url )\n",
+              1,
+          )
+          test = test.replace(
+              "\t\tnativeConfig: true,\n\t\tlegacyConfigType: 'undefined'\n",
+              "\t\tnativeConfig: true\n",
+              1,
+          )
+          if 'legacyConfigType' in test:
+              raise SystemExit('Mega-menu test still depends on cleared legacy config')
+          test_path.write_text(test, encoding='utf-8')
+
+          quality_path = Path('.github/workflows/quality.yml')
+          quality = quality_path.read_text(encoding='utf-8')
+          quality = quality.replace(
+              "              'article-interactions': Path('assets/js/modules/article-interactions.js'),\n",
+              "              'article-interactions': Path('assets/js/modules/article-interactions.js'),\n              'mega-menu': Path('assets/js/modules/mega-menu.js'),\n",
+              1,
+          )
+          pattern = re.compile(
+              r"          runtime = modules\['runtime'\]\.read_text\(encoding='utf-8'\)\n"
+              r"          required_runtime = \(.*?"
+              r"          for token in required_runtime:\n"
+              r"              if token not in runtime:\n"
+              r"                  raise SystemExit\(f'Vaarta runtime compatibility contract missing: \{token\}'\)\n",
+              re.DOTALL,
+          )
+          replacement = """          runtime = modules['runtime'].read_text(encoding='utf-8')\n          required_runtime = (\n              'prefersReducedMotion',\n              'fadeIn',\n              'fadeOut',\n              'emit',\n              'getCookie',\n              'setCookie',\n          )\n          for token in required_runtime:\n              if token not in runtime:\n                  raise SystemExit(f'Vaarta runtime primitive missing: {token}')\n\n          for forbidden in ('detachLegacyChromeHandlers', 'detachLegacyPaginationHandlers', 'window.jQuery'):\n              if forbidden in runtime:\n                  raise SystemExit(f'Obsolete legacy suppression remains in Vaarta runtime: {forbidden}')\n\n          mega_menu_js = modules['mega-menu'].read_text(encoding='utf-8')\n          for forbidden in ('detachLegacyHandlers', 'window.jQuery'):\n              if forbidden in mega_menu_js:\n                  raise SystemExit(f'Obsolete mega-menu suppression remains: {forbidden}')\n"""
+          quality, count = pattern.subn(replacement, quality, count=1)
+          if count != 1:
+              raise SystemExit(f'Expected one runtime quality contract block, replaced {count}')
+          quality_path.write_text(quality, encoding='utf-8')
+
+          Path('.github/workflows/cleanup-gated-chrome.yml').unlink()
+          PY
+
+      - name: Commit cleanup
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/js/modules/runtime.js assets/js/modules/mega-menu.js tests/e2e/mega-menu.spec.js .github/workflows/quality.yml .github/workflows/cleanup-gated-chrome.yml
+          git commit -m 'Runtime: remove obsolete legacy suppression shims'
+          git push
