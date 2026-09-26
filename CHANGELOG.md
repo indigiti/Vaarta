@@ -2,6 +2,26 @@
 
 All notable changes to Vaarta are documented here.
 
+## 0.9.1 — Gutenberg editorial architecture rebuild
+
+### WordPress-native composition
+- Replaced hard-wired homepage rendering with WordPress-selected front-page content.
+- Standard story collections now use Core Query Loop + Post Template patterns wherever possible.
+- Added reusable Featured Story Grid and Horizontal Story List Gutenberg patterns.
+- Reserved the dynamic Editorial Grid block for queries Core Query does not express cleanly, including most-viewed, trending-window and most-discussed ordering.
+- Added deterministic comment fixtures and cross-preset taxonomy assignments for demo content.
+
+### Shared editorial module system
+- Unified all six homepage presets around shared query-card, section, panel and list primitives.
+- Rebuilt Firmware with Popular, lead stories, Most Discussed, Top Weekly, Mobile, Computers, newsletter and Latest Posts regions.
+- Migrated Tech, Foundr, Datacrunch, Artboard and Design Loft onto the same Gutenberg-native module grammar.
+- Added responsive lead-card, category-card, horizontal-list and dark editorial-panel treatments.
+- Added module styling to both the front end and Block Editor.
+
+### Article experience
+- Rebuilt the default single-post template with category kicker, author byline, editorial metadata, featured media, share tools and long-form content flow.
+- Expanded article footers with tags, author/contributor modules, previous/next navigation, related stories and native comments.
+
 ## 0.9.0 — Pre-release
 
 ### Editorial design system
