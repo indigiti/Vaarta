@@ -139,9 +139,14 @@ require_once get_theme_file_path( '/inc/theme-mods.php' );
 require_once get_theme_file_path( '/inc/filters.php' );
 
 /**
- * Gutenberg.
+ * Gutenberg compatibility layer.
  */
 require_once get_theme_file_path( '/inc/gutenberg.php' );
+
+/**
+ * Native Vaarta Gutenberg blocks.
+ */
+require_once get_theme_file_path( '/inc/vaarta-blocks.php' );
 
 /**
  * Actions.
