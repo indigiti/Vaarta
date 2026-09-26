@@ -5,29 +5,14 @@
 	var config = window.vaartaMegaMenuConfig || window.csco_mega_menu || null;
 	var api = window.vaartaMegaMenu = window.vaartaMegaMenu || {};
 
-	// Capture the server-provided endpoint before DOM ready, then make the old
-	// Webpack loader's dependency unavailable. Its callbacks may remain in the
-	// compiled file during migration, but they cannot issue requests.
+	// Preserve the legacy localized object as a compatibility alias while the
+	// native controller owns all execution.
 	if ( config ) {
 		window.vaartaMegaMenuConfig = config;
-	}
-	if ( 'undefined' !== typeof window.csco_mega_menu ) {
-		window.csco_mega_menu = undefined;
 	}
 
 	if ( ! runtime ) {
 		return;
-	}
-
-	function detachLegacyHandlers() {
-		if ( ! window.jQuery ) {
-			return;
-		}
-		var $ = window.jQuery;
-		$( '.cs-header__nav .menu-item.cs-mega-menu-posts' ).off( 'mouseenter' );
-		$( '.cs-header__nav .menu-item.cs-mega-menu-term' ).off( 'mouseenter' );
-		$( '.cs-header__nav .menu-item.cs-mega-menu-child' ).off( 'mouseenter' );
-		$( '.cs-header__nav .menu-item.cs-mega-menu-terms' ).off( 'mouseenter' );
 	}
 
 	function directLink( item ) {
@@ -175,9 +160,6 @@
 	}
 
 	function init( root ) {
-		detachLegacyHandlers();
-		window.setTimeout( detachLegacyHandlers, 0 );
-
 		var scope = root && root.querySelectorAll ? root : document;
 		scope.querySelectorAll( '.cs-header__nav .menu-item.cs-mega-menu-terms' ).forEach( function ( item ) {
 			var tab = firstTab( item );
