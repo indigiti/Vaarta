@@ -35,9 +35,8 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		wp_register_script( 'colcade', get_template_directory_uri() . '/assets/vendor/colcade.js', array(), $version, true );
 		wp_register_script( 'csco-scripts', get_template_directory_uri() . '/assets/js/scripts.js', array( 'jquery', 'imagesloaded', 'flickity', 'colcade' ), $version, true );
 
-		// Modular Vaarta runtime. The compatibility shim executes after the
-		// compiled bundle so it can detach only legacy handlers already replaced by
-		// native modules without disturbing unrelated visual behavior.
+		// Modular Vaarta runtime. The compiled bundle remains only for behaviors
+		// that have not yet moved to native modules.
 		wp_register_script( 'vaarta-runtime', get_template_directory_uri() . '/assets/js/modules/runtime.js', array( 'csco-scripts' ), $version, true );
 		wp_register_script( 'vaarta-search', get_template_directory_uri() . '/assets/js/modules/search.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-navigation', get_template_directory_uri() . '/assets/js/modules/navigation.js', array( 'vaarta-runtime', 'vaarta-search' ), $version, true );
@@ -48,13 +47,27 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		wp_register_script( 'vaarta-fullscreen', get_template_directory_uri() . '/assets/js/modules/fullscreen.js', array( 'vaarta-runtime', 'vaarta-search', 'vaarta-fullscreen-nav' ), $version, true );
 		wp_register_script( 'vaarta-scheme', get_template_directory_uri() . '/assets/js/modules/scheme.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-article-interactions', get_template_directory_uri() . '/assets/js/modules/article-interactions.js', array( 'vaarta-runtime' ), $version, true );
+		wp_register_script( 'vaarta-metabar-alignment', get_template_directory_uri() . '/assets/js/modules/metabar-alignment.js', array( 'vaarta-runtime' ), $version, true );
+		wp_register_script( 'vaarta-tile-hover', get_template_directory_uri() . '/assets/js/modules/tile-hover.js', array( 'vaarta-runtime' ), $version, true );
+		wp_register_script( 'vaarta-player-controls', get_template_directory_uri() . '/assets/js/modules/player-controls.js', array( 'vaarta-runtime' ), $version, true );
+		wp_register_script( 'vaarta-widget-nav', get_template_directory_uri() . '/assets/js/modules/widget-nav.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-masonry', get_template_directory_uri() . '/assets/js/modules/masonry.js', array( 'vaarta-runtime', 'colcade' ), $version, true );
 		wp_register_script( 'vaarta-load-more', get_template_directory_uri() . '/assets/js/modules/load-more.js', array( 'vaarta-runtime', 'vaarta-masonry' ), $version, true );
 		wp_register_script( 'vaarta-continuous-reading', get_template_directory_uri() . '/assets/js/modules/continuous-reading.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script(
 			'vaarta-chrome',
 			get_template_directory_uri() . '/assets/js/vaarta-chrome.js',
-			array( 'vaarta-search', 'vaarta-offcanvas', 'vaarta-fullscreen', 'vaarta-scheme', 'vaarta-article-interactions' ),
+			array(
+				'vaarta-search',
+				'vaarta-offcanvas',
+				'vaarta-fullscreen',
+				'vaarta-scheme',
+				'vaarta-article-interactions',
+				'vaarta-metabar-alignment',
+				'vaarta-tile-hover',
+				'vaarta-player-controls',
+				'vaarta-widget-nav',
+			),
 			$version,
 			true
 		);
@@ -73,6 +86,10 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 			'vaarta-fullscreen',
 			'vaarta-scheme',
 			'vaarta-article-interactions',
+			'vaarta-metabar-alignment',
+			'vaarta-tile-hover',
+			'vaarta-player-controls',
+			'vaarta-widget-nav',
 			'vaarta-masonry',
 			'vaarta-load-more',
 			'vaarta-continuous-reading',
