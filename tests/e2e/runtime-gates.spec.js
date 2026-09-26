@@ -25,6 +25,7 @@ test( 'legacy bundle entry keeps migrated runtime modules gated', async ( { page
 		7: 'Vaarta native fullscreen shell owns legacy Webpack module 7.',
 		8: 'Vaarta native tile hover owns legacy Webpack module 8.',
 		9: 'Vaarta native load-more owns legacy Webpack module 9.',
+		10: 'Vaarta native continuous reading owns legacy Webpack module 10.',
 		11: 'Vaarta native masonry owns legacy Webpack module 11.',
 		12: 'Vaarta native mega-menu owns legacy Webpack module 12.',
 		13: 'Vaarta native navigation owns legacy Webpack module 13.',
