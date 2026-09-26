@@ -220,22 +220,23 @@ function csSetCookie(name, value) {
 /* Vaarta native carousel owns legacy Webpack module 2. */
 /* Vaarta native article interactions owns legacy Webpack module 3. */
 /* Vaarta native article interactions owns legacy Webpack module 4. */
-__webpack_require__(5);
+/* Vaarta native metabar alignment owns legacy Webpack module 5. */
 /* Vaarta native fullscreen navigation owns legacy Webpack module 6. */
 /* Vaarta native fullscreen shell owns legacy Webpack module 7. */
-__webpack_require__(8);
+/* Vaarta native tile hover owns legacy Webpack module 8. */
 /* Vaarta native load-more owns legacy Webpack module 9. */
 __webpack_require__(10);
 /* Vaarta native masonry owns legacy Webpack module 11. */
 /* Vaarta native mega-menu owns legacy Webpack module 12. */
 /* Vaarta native navigation owns legacy Webpack module 13. */
 /* Vaarta native offcanvas owns legacy Webpack module 14. */
-__webpack_require__(15);
+/* Vaarta native player controls own legacy Webpack module 15. */
 /* Vaarta native scheme owns legacy Webpack module 16. */
 /* Vaarta native search owns legacy Webpack module 17. */
 __webpack_require__(18);
 __webpack_require__(19);
-module.exports = __webpack_require__(20);
+/* Vaarta native widget navigation owns legacy Webpack module 20. */
+module.exports = {};
 
 
 /***/ }),
