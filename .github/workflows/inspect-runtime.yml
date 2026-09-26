@@ -1,0 +1,51 @@
+name: Inspect remaining runtime modules
+
+on:
+  push:
+    paths:
+      - '.github/workflows/inspect-runtime.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract selected Webpack modules
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          source = Path('assets/js/scripts.js').read_text(encoding='utf-8')
+          out = Path('runtime-inspection')
+          out.mkdir()
+
+          for module_id in (5, 8, 15, 20):
+              start_marker = f'/* {module_id} */\n/***/ (function(module, exports, __webpack_require__) {{'
+              start = source.find(start_marker)
+              if start < 0:
+                  raise SystemExit(f'Module {module_id} start not found')
+
+              next_match = re.search(r'\n/\* ' + str(module_id + 1) + r' \*/\n/\*\*\*/ \(function\(module, exports, __webpack_require__\) \{', source[start:])
+              if next_match:
+                  end = start + next_match.start()
+              else:
+                  end = source.find('\n/******/ ]);', start)
+                  if end < 0:
+                      end = len(source)
+
+              Path(out / f'module-{module_id}.js').write_text(source[start:end], encoding='utf-8')
+          PY
+
+      - name: Upload extracted modules
+        uses: actions/upload-artifact@v4
+        with:
+          name: remaining-runtime-modules
+          path: runtime-inspection/
+          retention-days: 1
