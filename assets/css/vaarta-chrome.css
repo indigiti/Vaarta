@@ -7,6 +7,25 @@
  * continues to own sizing, spacing, color, and animation.
  */
 
+.vaarta-skip-link {
+	position: fixed;
+	top: 8px;
+	left: 8px;
+	z-index: 100000;
+	padding: 10px 14px;
+	background: var(--cs-color-primary, #2F323D);
+	color: var(--cs-color-primary-contrast, #FFFFFF);
+	border-radius: var(--cs-button-border-radius, 6px);
+	font-weight: 600;
+	text-decoration: none;
+	transform: translateY(-160%);
+	transition: transform 120ms ease;
+}
+
+.vaarta-skip-link:focus {
+	transform: translateY(0);
+}
+
 .cs-header__search-toggle:focus-visible,
 .cs-header__offcanvas-toggle:focus-visible,
 .cs-header__fullscreen-menu-toggle:focus-visible,
@@ -34,6 +53,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+	.vaarta-skip-link {
+		transition: none;
+	}
+
 	.cs-search,
 	.cs-offcanvas,
 	.cs-fullscreen-menu,
