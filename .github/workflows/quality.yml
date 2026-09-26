@@ -64,6 +64,77 @@ jobs:
           print('theme.json is valid and uses version 3')
           PY
 
+  native-blocks:
+    name: Validate native Vaarta blocks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate block metadata and scripts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          registry = Path('inc/vaarta-blocks.php').read_text(encoding='utf-8')
+          functions = Path('functions.php').read_text(encoding='utf-8')
+
+          if "'/inc/vaarta-blocks.php'" not in functions:
+              raise SystemExit('functions.php must load inc/vaarta-blocks.php')
+
+          block_names = set()
+          block_dirs = sorted(path.parent for path in Path('blocks').glob('*/block.json'))
+          if not block_dirs:
+              raise SystemExit('No native Vaarta blocks found')
+
+          for block_dir in block_dirs:
+              metadata_path = block_dir / 'block.json'
+              metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
+              name = metadata.get('name', '')
+
+              if metadata.get('apiVersion') != 3:
+                  raise SystemExit(f'{metadata_path}: apiVersion must be 3')
+              if not name.startswith('vaarta/'):
+                  raise SystemExit(f'{metadata_path}: block name must use vaarta/ namespace')
+              if name in block_names:
+                  raise SystemExit(f'Duplicate block name: {name}')
+              block_names.add(name)
+
+              slug = block_dir.name
+              if f"'{slug}'" not in registry:
+                  raise SystemExit(f'{metadata_path}: {slug} missing from Vaarta block registry')
+
+              render = metadata.get('render')
+              if render and render.startswith('file:./'):
+                  target = block_dir / render.removeprefix('file:./')
+                  if not target.is_file():
+                      raise SystemExit(f'{metadata_path}: missing render file {target}')
+
+              editor_script = metadata.get('editorScript')
+              if editor_script and editor_script.startswith('file:./'):
+                  target = block_dir / editor_script.removeprefix('file:./')
+                  if not target.is_file():
+                      raise SystemExit(f'{metadata_path}: missing editor script {target}')
+                  asset = target.with_suffix('.asset.php')
+                  if not asset.is_file():
+                      raise SystemExit(f'{metadata_path}: missing dependency file {asset}')
+
+          print(f'Validated {len(block_dirs)} native Vaarta blocks')
+          PY
+
+          while IFS= read -r -d '' file; do
+            node --check "$file"
+          done < <(find blocks -type f -name '*.js' -print0)
+
   security-regressions:
     name: Security regression checks
     runs-on: ubuntu-latest
