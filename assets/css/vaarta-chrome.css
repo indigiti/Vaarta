@@ -1,0 +1,43 @@
+@charset "UTF-8";
+/**
+ * Vaarta site-chrome accessibility layer.
+ *
+ * These rules intentionally avoid changing pointer/visual states. They only add
+ * visible keyboard focus to legacy controls while the existing component CSS
+ * continues to own sizing, spacing, color, and animation.
+ */
+
+.cs-header__search-toggle:focus-visible,
+.cs-header__offcanvas-toggle:focus-visible,
+.cs-header__fullscreen-menu-toggle:focus-visible,
+.cs-site-scheme-toggle:focus-visible,
+.cs-offcanvas__toggle:focus-visible,
+.cs-fullscreen-menu__header-toggle:focus-visible,
+.cs-header__nav-inner a:focus-visible,
+.cs-fullscreen-menu a:focus-visible,
+.cs-offcanvas a:focus-visible,
+.cs-search__input:focus-visible,
+.cs-search__submit:focus-visible,
+.cs-search__close:focus-visible {
+	outline: 2px solid var(--cs-color-accent, #2D5DE0);
+	outline-offset: 3px;
+}
+
+[data-scheme="inverse"] .cs-header__search-toggle:focus-visible,
+[data-scheme="inverse"] .cs-header__offcanvas-toggle:focus-visible,
+[data-scheme="inverse"] .cs-header__fullscreen-menu-toggle:focus-visible,
+[data-scheme="inverse"] .cs-site-scheme-toggle:focus-visible,
+[data-scheme="inverse"] .cs-offcanvas__toggle:focus-visible,
+[data-scheme="inverse"] .cs-fullscreen-menu__header-toggle:focus-visible,
+[data-scheme="inverse"] a:focus-visible {
+	outline-color: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cs-search,
+	.cs-offcanvas,
+	.cs-fullscreen-menu,
+	.cs-site-overlay {
+		scroll-behavior: auto;
+	}
+}
