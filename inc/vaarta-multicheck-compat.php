@@ -77,6 +77,9 @@ function vaarta_customize_sanitize_registered_multicheck( $value, $setting = nul
 /**
  * Force multicheck Customizer writes onto the registered-field sanitizer.
  *
+ * This must run before CSCO_Customizer::field_add_setting_args() at priority 10,
+ * because that legacy normalizer intentionally removes the field `type` key.
+ *
  * @param array<string,mixed> $args Customizer field definition.
  * @return array<string,mixed>
  */
@@ -87,7 +90,7 @@ function vaarta_customize_registered_multicheck_setting_args( $args ) {
 
 	return $args;
 }
-add_filter( 'csco_customizer_field_add_setting_args', 'vaarta_customize_registered_multicheck_setting_args', 20 );
+add_filter( 'csco_customizer_field_add_setting_args', 'vaarta_customize_registered_multicheck_setting_args', 9 );
 
 /**
  * Keep the legacy output engine on the same multicheck data contract.
