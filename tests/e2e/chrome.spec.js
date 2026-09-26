@@ -83,7 +83,7 @@ test( 'fullscreen navigation populates progressive submenu columns', async ( { p
 	await expect( firstColumn ).toContainText( 'News' );
 	await expect( firstColumn ).toContainText( 'Culture' );
 
-	const news = firstColumn.locator( '> .sub-menu > .menu-item-has-children' ).first();
+	const news = firstColumn.locator( ':scope > .sub-menu > .menu-item-has-children' ).first();
 	await expect( news ).toContainText( 'News' );
 	await news.hover();
 	await expect( lastColumn ).toHaveClass( /visible/ );
