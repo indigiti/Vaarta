@@ -176,6 +176,13 @@ require_once get_theme_file_path( '/inc/vaarta-chrome-markup.php' );
 require_once get_theme_file_path( '/inc/vaarta-shell-components.php' );
 
 /**
+ * Vaarta-owned post/article context and editorial-card renderers.
+ * Their csco_* wrappers preserve the established template and child-theme API.
+ */
+require_once get_theme_file_path( '/inc/vaarta-editorial-components.php' );
+require_once get_theme_file_path( '/inc/vaarta-card-renderers.php' );
+
+/**
  * Actions.
  */
 require_once get_theme_file_path( '/inc/actions.php' );
@@ -192,7 +199,7 @@ require_once get_theme_file_path( '/inc/metabox.php' );
 
 /**
  * Custom template tags for this theme.
- * Remaining post/article helpers still live here during the compatibility phase.
+ * Unadopted compatibility helpers remain here during the migration phase.
  */
 require_once get_theme_file_path( '/inc/theme-tags.php' );
 
