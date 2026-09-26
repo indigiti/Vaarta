@@ -17,8 +17,8 @@
 
 	<!-- wp:group {"className":"vaarta-article-navigation","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"nowrap"}} -->
 	<div class="wp-block-group vaarta-article-navigation">
-		<!-- wp:post-navigation-link {"type":"previous","showTitle":true,"linkLabel":true} /-->
-		<!-- wp:post-navigation-link {"type":"next","showTitle":true,"linkLabel":true} /-->
+		<!-- wp:post-navigation-link {"type":"previous","showTitle":true} /-->
+		<!-- wp:post-navigation-link {"type":"next","showTitle":true} /-->
 	</div>
 	<!-- /wp:group -->
 
