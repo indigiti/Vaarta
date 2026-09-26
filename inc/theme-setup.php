@@ -2,7 +2,7 @@
 /**
  * Theme Setup
  *
- * @package Caards
+ * @package Vaarta
  */
 
 /**
@@ -25,11 +25,14 @@ add_filter( 'csco_theme_fonts', 'csco_register_theme_fonts' );
  */
 function csco_plugin_set_options( $plugin ) {
 	if ( 'post-views-counter' === $plugin ) {
-		// Get display options.
-		$display_options = get_option( 'post_views_counter_settings_display' );
-		// Set position value.
+		// A clean install returns false until the plugin creates its option. PHP
+		// 8.1+ deprecates treating that boolean as an array, so normalize it first.
+		$display_options = get_option( 'post_views_counter_settings_display', array() );
+		if ( ! is_array( $display_options ) ) {
+			$display_options = array();
+		}
+
 		$display_options['position'] = 'manual';
-		// Update options.
 		update_option( 'post_views_counter_settings_display', $display_options );
 	}
 }
