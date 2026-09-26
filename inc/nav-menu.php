@@ -2,7 +2,7 @@
 /**
  * Add badge fields to menu item
  *
- * @package Caards
+ * @package Vaarta
  */
 
 if ( ! function_exists( 'csco_primary_menu_item_args' ) ) {
@@ -73,32 +73,48 @@ function csco_menu_item_badge_fields( $id ) {
 add_action( 'wp_nav_menu_item_custom_fields', 'csco_menu_item_badge_fields' );
 
 /**
- * Save the badge menu item meta
+ * Save the badge menu item meta from the authenticated nav-menu editor form.
+ *
+ * Programmatic menu writes (WP-CLI, REST, imports) also fire
+ * wp_update_nav_menu_item. They must not require this wp-admin-only nonce and
+ * must leave existing badge metadata untouched.
  *
  * @param int $menu_id menu id.
  * @param int $menu_item_db_id menu item db id.
  */
 function csco_menu_item_badge_fields_update( $menu_id, $menu_item_db_id ) {
+	unset( $menu_id );
 
-	// Check ajax.
-	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+	if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX )
+		|| ( defined( 'REST_REQUEST' ) && REST_REQUEST )
+		|| ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 		return;
 	}
 
-	// Security.
-	check_admin_referer( 'csco_menu_meta_nonce', 'csco_menu_meta_nonce_name' );
+	if ( ! is_admin() || ! current_user_can( 'edit_theme_options' ) ) {
+		return;
+	}
+
+	if ( ! isset( $_POST['csco_menu_meta_nonce_name'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Presence checked before verification below.
+		return;
+	}
+
+	$nonce = sanitize_text_field( wp_unslash( $_POST['csco_menu_meta_nonce_name'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verification follows immediately.
+	if ( ! wp_verify_nonce( $nonce, 'csco_menu_meta_nonce' ) ) {
+		return;
+	}
 
 	// Save badge color.
-	if ( isset( $_POST['csco_menu_badge_color'][ $menu_item_db_id ] ) ) {
-		$sanitized_data = sanitize_text_field( $_POST['csco_menu_badge_color'][ $menu_item_db_id ] );
+	if ( isset( $_POST['csco_menu_badge_color'][ $menu_item_db_id ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified above.
+		$sanitized_data = sanitize_key( wp_unslash( $_POST['csco_menu_badge_color'][ $menu_item_db_id ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified above.
 		update_post_meta( $menu_item_db_id, '_csco_menu_badge_color', $sanitized_data );
 	} else {
 		delete_post_meta( $menu_item_db_id, '_csco_menu_badge_color' );
 	}
 
 	// Save badge text.
-	if ( isset( $_POST['csco_menu_badge_text'][ $menu_item_db_id ] ) ) {
-		$sanitized_data = sanitize_text_field( $_POST['csco_menu_badge_text'][ $menu_item_db_id ] );
+	if ( isset( $_POST['csco_menu_badge_text'][ $menu_item_db_id ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified above.
+		$sanitized_data = sanitize_text_field( wp_unslash( $_POST['csco_menu_badge_text'][ $menu_item_db_id ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified above.
 		update_post_meta( $menu_item_db_id, '_csco_menu_badge_text', $sanitized_data );
 	} else {
 		delete_post_meta( $menu_item_db_id, '_csco_menu_badge_text' );
