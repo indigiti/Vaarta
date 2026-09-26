@@ -246,6 +246,7 @@ jobs:
               'runtime': Path('assets/js/modules/runtime.js'),
               'search': Path('assets/js/modules/search.js'),
               'offcanvas': Path('assets/js/modules/offcanvas.js'),
+              'fullscreen-nav': Path('assets/js/modules/fullscreen-nav.js'),
               'fullscreen': Path('assets/js/modules/fullscreen.js'),
               'scheme': Path('assets/js/modules/scheme.js'),
           }
@@ -262,10 +263,24 @@ jobs:
               ".cs-header__offcanvas-toggle, .cs-site-overlay, .cs-offcanvas__toggle",
               ".cs-header__fullscreen-menu-toggle, .cs-fullscreen-menu__header-toggle",
               "off( 'click', '.cs-site-scheme-toggle' )",
+              "off( 'mouseenter', '.cs-fullscreen-menu .menu-item' )",
+              "off( 'mouseleave', '.cs-fullscreen-menu__nav-col, .cs-fullscreen-menu__nav-inner' )",
           )
           for token in required_runtime:
               if token not in runtime:
                   raise SystemExit(f'Vaarta runtime compatibility contract missing: {token}')
+
+          fullscreen_nav = modules['fullscreen-nav'].read_text(encoding='utf-8')
+          required_fullscreen_nav = (
+              'window.vaartaFullscreenNav',
+              'submenu-visible',
+              'menu-item-expanded',
+              'vaarta-fullscreen-submenu-toggle',
+              "classList.add( 'visible' )",
+          )
+          for token in required_fullscreen_nav:
+              if token not in fullscreen_nav:
+                  raise SystemExit(f'Fullscreen navigation module missing behavior contract: {token}')
 
           if "array( 'csco-scripts' )" not in assets or "array( 'vaarta-runtime' )" not in assets:
               raise SystemExit('Vaarta chrome modules must load after the legacy bundle through dependencies')
