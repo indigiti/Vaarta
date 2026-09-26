@@ -101,7 +101,7 @@
 
 	/**
 	 * The old compiled bundle is still required by unrelated components. Remove
-	 * only the handlers for chrome controls that now have Vaarta-native modules.
+	 * only the handlers for interactions now owned by Vaarta-native modules.
 	 * The selectors are owned by this theme, so this does not touch generic links
 	 * or third-party form controls.
 	 */
@@ -124,6 +124,11 @@
 		$( document ).off( 'mouseenter', '.cs-fullscreen-menu .menu-item' );
 		$( document ).off( 'mouseenter', '.cs-fullscreen-menu__nav-col, .cs-fullscreen-menu__nav-inner' );
 		$( document ).off( 'mouseleave', '.cs-fullscreen-menu__nav-col, .cs-fullscreen-menu__nav-inner' );
+
+		// Article controls are isolated legacy handlers and can be replaced without
+		// touching the rest of the compiled bundle.
+		$( document ).off( 'click', '.cs-entry__comments-show button' );
+		$( '.cs-entry__after-share-buttons-copy' ).off( 'click' );
 	};
 
 	api.detachLegacyChromeHandlers();
