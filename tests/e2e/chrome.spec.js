@@ -17,7 +17,8 @@ test( 'Vaarta modular runtime is present', async ( { page } ) => {
 		offcanvas: !! window.vaartaOffcanvas,
 		fullscreen: !! window.vaartaFullscreen,
 		fullscreenNav: !! window.vaartaFullscreenNav,
-		scheme: !! window.vaartaScheme
+		scheme: !! window.vaartaScheme,
+		articleInteractions: !! window.vaartaArticleInteractions
 	} ) );
 
 	expect( runtime ).toEqual( {
@@ -26,7 +27,8 @@ test( 'Vaarta modular runtime is present', async ( { page } ) => {
 		offcanvas: true,
 		fullscreen: true,
 		fullscreenNav: true,
-		scheme: true
+		scheme: true,
+		articleInteractions: true
 	} );
 } );
 
@@ -103,6 +105,38 @@ test( 'scheme control changes the active color scheme', async ( { page }, testIn
 
 	const after = await body.getAttribute( 'data-site-scheme' );
 	await expect( toggle ).toHaveAttribute( 'aria-pressed', 'dark' === after ? 'true' : 'false' );
+} );
+
+test( 'article share copy and comments disclosure use native interactions', async ( { page, context }, testInfo ) => {
+	test.skip( isMobileProject( testInfo ), 'Article interaction assertions run once in the desktop project.' );
+
+	await context.grantPermissions( [ 'clipboard-read', 'clipboard-write' ], { origin: 'http://localhost:8888' } );
+
+	const storyLink = page.getByRole( 'link', { name: 'Vaarta Test Story 1', exact: true } ).first();
+	await expect( storyLink ).toBeVisible();
+	await storyLink.click();
+	await expect( page.locator( 'body' ) ).toHaveClass( /single-post/ );
+
+	const copyButton = page.locator( '.cs-entry__after-share-buttons-copy' ).first();
+	const shareInput = page.locator( 'input.cs-entry__after-share-buttons-text' ).first();
+	const copyStatus = page.locator( '.cs-entry__after-share-buttons-status' ).first();
+	await expect( copyButton ).toHaveAttribute( 'type', 'button' );
+	await expect( copyButton ).toHaveAttribute( 'aria-label', 'Copy shareable URL' );
+	await expect( shareInput ).toHaveAttribute( 'readonly', '' );
+
+	const shareUrl = await shareInput.inputValue();
+	await copyButton.click();
+	await expect( copyStatus ).toHaveText( 'Shareable URL copied.' );
+	await expect.poll( () => page.evaluate( () => navigator.clipboard.readText() ) ).toBe( shareUrl );
+
+	const commentsButton = page.locator( '.cs-entry__comments-show button' );
+	const comments = page.locator( '#comments-hidden' );
+	await expect( commentsButton ).toHaveAttribute( 'aria-expanded', 'false' );
+	await expect( comments ).toHaveAttribute( 'aria-hidden', 'true' );
+	await commentsButton.click();
+	await expect( comments ).toHaveAttribute( 'aria-hidden', 'false' );
+	await expect( comments ).toBeVisible();
+	await expect( comments ).toBeFocused();
 } );
 
 test( 'mobile off-canvas menu opens and closes with Escape', async ( { page }, testInfo ) => {
