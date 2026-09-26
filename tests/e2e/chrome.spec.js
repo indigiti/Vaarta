@@ -19,6 +19,7 @@ test( 'Vaarta modular runtime is present', async ( { page } ) => {
 		fullscreenNav: !! window.vaartaFullscreenNav,
 		scheme: !! window.vaartaScheme,
 		articleInteractions: !! window.vaartaArticleInteractions,
+		masonry: !! window.vaartaMasonry,
 		loadMore: !! window.vaartaLoadMore,
 		continuousReading: !! window.vaartaContinuousReading
 	} ) );
@@ -31,9 +32,33 @@ test( 'Vaarta modular runtime is present', async ( { page } ) => {
 		fullscreenNav: true,
 		scheme: true,
 		articleInteractions: true,
+		masonry: true,
 		loadMore: true,
 		continuousReading: true
 	} );
+} );
+
+test( 'native masonry adapter preserves the legacy Colcade column contract', async ( { page }, testInfo ) => {
+	test.skip( isMobileProject( testInfo ), 'Masonry adapter is exercised once in the desktop project.' );
+
+	await page.evaluate( () => {
+		const masonry = document.createElement( 'div' );
+		masonry.id = 'vaarta-masonry-test';
+		masonry.className = 'cs-posts-area__masonry';
+		for ( let index = 0; index < 3; index++ ) {
+			const card = document.createElement( 'article' );
+			card.className = 'cs-posts-area-card';
+			card.textContent = `Masonry card ${ index + 1 }`;
+			masonry.appendChild( card );
+		}
+		document.body.appendChild( masonry );
+		window.vaartaMasonry.init( masonry );
+	} );
+
+	const masonry = page.locator( '#vaarta-masonry-test' );
+	await expect( masonry ).toHaveAttribute( 'data-vaarta-masonry', 'true' );
+	await expect( masonry.locator( ':scope > .cs-posts-area__masonry-col' ) ).toHaveCount( 4 );
+	await expect( masonry.locator( '.cs-posts-area__masonry-col .cs-posts-area-card' ) ).toHaveCount( 3 );
 } );
 
 test( 'native load more appends the next archive page', async ( { page }, testInfo ) => {
