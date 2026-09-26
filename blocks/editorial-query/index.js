@@ -55,6 +55,25 @@
 		icon: 'grid-view',
 		category: 'vaarta-editorial',
 		description: __( 'Query stories and render them with Vaarta editorial layouts.', 'caards' ),
+		attributes: {
+			layout: { type: 'string', default: 'standard-type-1' },
+			postsToShow: { type: 'number', default: 6 },
+			category: { type: 'number', default: 0 },
+			orderBy: { type: 'string', default: 'date' },
+			order: { type: 'string', default: 'DESC' },
+			offset: { type: 'number', default: 0 },
+			excludeCurrent: { type: 'boolean', default: true },
+			showCategory: { type: 'boolean', default: true },
+			showAuthor: { type: 'boolean', default: true },
+			showDate: { type: 'boolean', default: true },
+			showExcerpt: { type: 'boolean', default: true },
+			excerptLength: { type: 'number', default: 24 },
+			imageSize: { type: 'string', default: 'medium_large' },
+			imageOrientation: { type: 'string', default: 'landscape-16-9' },
+			columns: { type: 'number', default: 1 },
+			columnGap: { type: 'number', default: 40 },
+			rowGap: { type: 'number', default: 40 }
+		},
 		edit: function ( props ) {
 			var attributes = props.attributes;
 			var blockProps = useBlockProps( { className: 'vaarta-editorial-query-editor' } );
@@ -236,7 +255,6 @@
 							disabled: ! attributes.showExcerpt,
 							onChange: function ( value ) {
 								props.setAttributes( { excerptLength: value || 24 } );
-							}
 						} )
 					)
 				),
