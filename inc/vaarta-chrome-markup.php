@@ -33,7 +33,7 @@ if ( ! function_exists( 'csco_header_search_toggle' ) ) {
 	 * Header search toggle.
 	 */
 	function csco_header_search_toggle( $settings = array() ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
-		if ( ! get_theme_mod( 'header_search_button', true ) ) {
+		if ( ! vaarta_get_setting( 'header_search_button' ) ) {
 			return;
 		}
 		?>
@@ -49,7 +49,7 @@ if ( ! function_exists( 'csco_header_fullscreen_menu_toggle' ) ) {
 	 * Header full-screen menu toggle.
 	 */
 	function csco_header_fullscreen_menu_toggle( $settings = array() ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
-		if ( ! get_theme_mod( 'header_fullscreen_menu', false ) ) {
+		if ( ! vaarta_get_setting( 'header_fullscreen_menu' ) ) {
 			return;
 		}
 		?>
@@ -65,7 +65,7 @@ if ( ! function_exists( 'csco_header_scheme_toggle' ) ) {
 	 * Header color-scheme toggle.
 	 */
 	function csco_header_scheme_toggle( $settings = array() ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
-		if ( ! get_theme_mod( 'color_scheme_toggle', true ) ) {
+		if ( ! vaarta_get_setting( 'color_scheme_toggle' ) ) {
 			return;
 		}
 		?>
@@ -84,7 +84,7 @@ if ( ! function_exists( 'csco_header_scheme_toggle_mobile' ) ) {
 	 * Mobile color-scheme toggle.
 	 */
 	function csco_header_scheme_toggle_mobile( $settings = array() ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
-		if ( ! get_theme_mod( 'color_scheme_toggle', true ) ) {
+		if ( ! vaarta_get_setting( 'color_scheme_toggle' ) ) {
 			return;
 		}
 		?>
