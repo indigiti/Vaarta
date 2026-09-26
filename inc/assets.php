@@ -54,6 +54,15 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		wp_enqueue_style( 'csco-styles' );
 		wp_style_add_data( 'csco-styles', 'rtl', 'replace' );
 
+		// Bridge theme.json tokens into the established --cs-* visual contract.
+		wp_register_style(
+			'vaarta-design-system',
+			get_template_directory_uri() . '/assets/css/vaarta-design-system.css',
+			array( 'csco-styles' ),
+			$version
+		);
+		wp_enqueue_style( 'vaarta-design-system' );
+
 		wp_add_inline_style( 'csco-styles', sprintf( ':root { --social-links-label: "%s"; }', esc_html__( 'CONNECT', 'caards' ) ) );
 
 		// Preserve the legacy Contact Form 7 styling behavior during visual migration.
