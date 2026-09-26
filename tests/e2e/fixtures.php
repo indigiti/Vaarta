@@ -73,10 +73,10 @@ if ( ! wp_get_nav_menu_items( $fullscreen_id ) ) {
 	vaarta_e2e_menu_item( $fullscreen_id, 'Culture', home_url( '/?s=culture' ), $stories_id );
 }
 
-$locations                = (array) get_theme_mod( 'nav_menu_locations', array() );
-$locations['primary']      = $primary_id;
-$locations['mobile']       = $primary_id;
-$locations['fullscreen']   = $fullscreen_id;
+$locations               = (array) get_theme_mod( 'nav_menu_locations', array() );
+$locations['primary']     = $primary_id;
+$locations['mobile']      = $primary_id;
+$locations['fullscreen']  = $fullscreen_id;
 set_theme_mod( 'nav_menu_locations', $locations );
 
 set_theme_mod( 'header_navigation_menu', true );
@@ -87,16 +87,27 @@ set_theme_mod( 'color_scheme', 'system' );
 set_theme_mod( 'post_share_link', true );
 set_theme_mod( 'post_comments_simple', false );
 
-if ( ! get_posts( array( 'post_type' => 'post', 'post_status' => 'publish', 'numberposts' => 1 ) ) ) {
-	for ( $index = 1; $index <= 3; $index++ ) {
-		wp_insert_post(
-			array(
-				'post_title'    => sprintf( 'Vaarta Test Story %d', $index ),
-				'post_content'  => str_repeat( 'Editorial test content. ', 30 ),
-				'post_status'   => 'publish',
-				'post_type'     => 'post',
-				'comment_status' => 'open',
-			)
-		);
+for ( $index = 1; $index <= 3; $index++ ) {
+	$title = sprintf( 'Vaarta Test Story %d', $index );
+	$slug  = sanitize_title( $title );
+
+	if ( get_page_by_path( $slug, OBJECT, 'post' ) ) {
+		continue;
+	}
+
+	$post_id = wp_insert_post(
+		array(
+			'post_title'     => $title,
+			'post_name'      => $slug,
+			'post_content'   => str_repeat( 'Editorial test content. ', 30 ),
+			'post_status'    => 'publish',
+			'post_type'      => 'post',
+			'comment_status' => 'open',
+		),
+		true
+	);
+
+	if ( is_wp_error( $post_id ) ) {
+		throw new RuntimeException( $post_id->get_error_message() );
 	}
 }
