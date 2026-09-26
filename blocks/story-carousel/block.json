@@ -1,0 +1,101 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vaarta/story-carousel",
+  "version": "2.0.0-alpha.1",
+  "title": "Story Carousel",
+  "category": "vaarta-editorial",
+  "icon": "slides",
+  "description": "Display a query of stories using Vaarta's existing carousel visual system.",
+  "keywords": ["posts", "carousel", "slider", "stories", "featured"],
+  "textdomain": "caards",
+  "attributes": {
+    "variant": {
+      "type": "string",
+      "default": "wide"
+    },
+    "postsToShow": {
+      "type": "number",
+      "default": 6
+    },
+    "category": {
+      "type": "number",
+      "default": 0
+    },
+    "orderBy": {
+      "type": "string",
+      "default": "date"
+    },
+    "order": {
+      "type": "string",
+      "default": "DESC"
+    },
+    "excludeCurrent": {
+      "type": "boolean",
+      "default": true
+    },
+    "columns": {
+      "type": "number",
+      "default": 4
+    },
+    "gap": {
+      "type": "number",
+      "default": 40
+    },
+    "autoplay": {
+      "type": "boolean",
+      "default": true
+    },
+    "pageDots": {
+      "type": "boolean",
+      "default": true
+    },
+    "wrapAround": {
+      "type": "boolean",
+      "default": true
+    },
+    "imageSize": {
+      "type": "string",
+      "default": "medium_large"
+    },
+    "imageOrientation": {
+      "type": "string",
+      "default": "landscape-16-9"
+    },
+    "topMeta": {
+      "type": "string",
+      "default": "author"
+    },
+    "showCategory": {
+      "type": "boolean",
+      "default": true
+    },
+    "showAuthor": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDate": {
+      "type": "boolean",
+      "default": true
+    },
+    "showExcerpt": {
+      "type": "boolean",
+      "default": true
+    },
+    "excerptLength": {
+      "type": "number",
+      "default": 20
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": ["wide", "full"],
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}
