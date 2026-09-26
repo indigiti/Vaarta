@@ -1,0 +1,41 @@
+name: Gate legacy continuous reading runtime
+
+on:
+  push:
+    paths:
+      - '.github/workflows/gate-continuous-reading.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Gate legacy Webpack module 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('assets/js/scripts.js')
+          source = path.read_text(encoding='utf-8')
+          old = '__webpack_require__(10);'
+          new = '/* Vaarta native continuous reading owns legacy Webpack module 10. */'
+          if source.count(old) != 1:
+              raise SystemExit(f'Expected exactly one module 10 entry, found {source.count(old)}')
+          path.write_text(source.replace(old, new, 1), encoding='utf-8')
+          Path('.github/workflows/gate-continuous-reading.yml').unlink()
+          PY
+
+      - name: Commit runtime gate
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/js/scripts.js .github/workflows/gate-continuous-reading.yml
+          git commit -m 'Runtime: gate legacy continuous reading module'
+          git push
