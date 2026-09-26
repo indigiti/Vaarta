@@ -1,0 +1,326 @@
+<?php
+/**
+ * Editorial Query dynamic block renderer.
+ *
+ * The block owns its query arguments and only passes a finite, sanitized set of
+ * values to WP_Query. When the legacy card helpers are available, it reuses the
+ * existing template parts so current Vaarta/Caards visuals remain intact. A
+ * native fallback prevents optional legacy integrations from becoming a hard
+ * dependency for the block.
+ *
+ * @package Vaarta
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+$block_attributes = is_array( $attributes ) ? $attributes : array();
+
+$allowed_layouts = array(
+	'standard-type-1',
+	'standard-type-2',
+	'standard-type-3',
+	'standard-type-4',
+	'masonry-type-1',
+	'horizontal-type-1',
+	'horizontal-type-2',
+	'horizontal-type-3',
+	'horizontal-type-4',
+	'horizontal-type-5',
+	'tile-type-1',
+	'tile-type-2',
+	'tile-type-3',
+	'tile-type-4',
+);
+
+$layout = isset( $block_attributes['layout'] ) ? sanitize_key( $block_attributes['layout'] ) : 'standard-type-1';
+if ( ! in_array( $layout, $allowed_layouts, true ) ) {
+	$layout = 'standard-type-1';
+}
+
+$posts_to_show = isset( $block_attributes['postsToShow'] ) ? absint( $block_attributes['postsToShow'] ) : 6;
+$posts_to_show = min( 20, max( 1, $posts_to_show ) );
+
+$category = isset( $block_attributes['category'] ) ? absint( $block_attributes['category'] ) : 0;
+$offset   = isset( $block_attributes['offset'] ) ? absint( $block_attributes['offset'] ) : 0;
+$offset   = min( 100, $offset );
+
+$allowed_orderby = array( 'date', 'modified', 'comment_count', 'title', 'rand' );
+$order_by        = isset( $block_attributes['orderBy'] ) ? sanitize_key( $block_attributes['orderBy'] ) : 'date';
+if ( ! in_array( $order_by, $allowed_orderby, true ) ) {
+	$order_by = 'date';
+}
+
+$order = isset( $block_attributes['order'] ) ? strtoupper( sanitize_text_field( $block_attributes['order'] ) ) : 'DESC';
+if ( ! in_array( $order, array( 'ASC', 'DESC' ), true ) ) {
+	$order = 'DESC';
+}
+
+$show_category   = ! isset( $block_attributes['showCategory'] ) || (bool) $block_attributes['showCategory'];
+$show_author     = ! isset( $block_attributes['showAuthor'] ) || (bool) $block_attributes['showAuthor'];
+$show_date       = ! isset( $block_attributes['showDate'] ) || (bool) $block_attributes['showDate'];
+$show_excerpt    = ! isset( $block_attributes['showExcerpt'] ) || (bool) $block_attributes['showExcerpt'];
+$exclude_current = ! isset( $block_attributes['excludeCurrent'] ) || (bool) $block_attributes['excludeCurrent'];
+
+$excerpt_length = isset( $block_attributes['excerptLength'] ) ? absint( $block_attributes['excerptLength'] ) : 24;
+$excerpt_length = min( 80, max( 1, $excerpt_length ) );
+
+$image_size = isset( $block_attributes['imageSize'] ) ? sanitize_key( $block_attributes['imageSize'] ) : 'medium_large';
+if ( ! $image_size ) {
+	$image_size = 'medium_large';
+}
+
+$allowed_orientations = array(
+	'original',
+	'landscape',
+	'landscape-3-2',
+	'landscape-16-9',
+	'landscape-21-10',
+	'portrait',
+	'portrait-2-3',
+	'square',
+);
+$image_orientation = isset( $block_attributes['imageOrientation'] ) ? sanitize_key( $block_attributes['imageOrientation'] ) : 'landscape-16-9';
+if ( ! in_array( $image_orientation, $allowed_orientations, true ) ) {
+	$image_orientation = 'landscape-16-9';
+}
+
+$columns = isset( $block_attributes['columns'] ) ? absint( $block_attributes['columns'] ) : 1;
+$columns = min( 6, max( 1, $columns ) );
+
+$column_gap = isset( $block_attributes['columnGap'] ) ? absint( $block_attributes['columnGap'] ) : 40;
+$row_gap    = isset( $block_attributes['rowGap'] ) ? absint( $block_attributes['rowGap'] ) : 40;
+$column_gap = min( 120, $column_gap );
+$row_gap    = min( 120, $row_gap );
+
+$query_args = array(
+	'post_type'           => 'post',
+	'post_status'         => 'publish',
+	'posts_per_page'      => $posts_to_show,
+	'offset'              => $offset,
+	'orderby'             => $order_by,
+	'order'               => $order,
+	'ignore_sticky_posts' => true,
+	'no_found_rows'       => true,
+);
+
+if ( $category ) {
+	$query_args['cat'] = $category;
+}
+
+if ( $exclude_current && is_singular( 'post' ) ) {
+	$current_post_id = get_queried_object_id();
+	if ( $current_post_id ) {
+		$query_args['post__not_in'] = array( $current_post_id );
+	}
+}
+
+/**
+ * Filter the native Editorial Query arguments after Vaarta has sanitized and
+ * constrained all block-provided values.
+ *
+ * @param array $query_args       WP_Query arguments.
+ * @param array $block_attributes Sanitized block attributes source.
+ */
+$query_args = apply_filters( 'vaarta_editorial_query_args', $query_args, $block_attributes );
+
+$posts = new WP_Query( $query_args );
+
+$wrapper_attributes = get_block_wrapper_attributes(
+	array(
+		'class'       => 'vaarta-editorial-query',
+		'data-layout' => $layout,
+	)
+);
+
+if ( ! $posts->have_posts() ) {
+	?>
+	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated by core. ?>>
+		<p class="vaarta-editorial-query__empty"><?php esc_html_e( 'No stories found.', 'caards' ); ?></p>
+	</div>
+	<?php
+	return;
+}
+
+$legacy_attributes = array(
+	'layout'         => $layout,
+	'className'      => 'vaarta-editorial-query__legacy',
+	'canvasLocation' => 'section-content',
+);
+
+$options = array(
+	'image_orientation'          => $image_orientation,
+	'image_size'                 => $image_size,
+	'image_width'                => 'default',
+	'post_format'                => true,
+	'video'                      => false,
+	'video_controls'             => false,
+	'top_meta'                   => 'none',
+	'display_meta_category'      => $show_category,
+	'display_meta_author'        => $show_author,
+	'display_meta_date'          => $show_date,
+	'display_meta_comments'      => false,
+	'display_meta_views'         => false,
+	'display_meta_reading_time'  => false,
+	'display_meta_shares'        => false,
+	'display_meta_compact'       => false,
+	'display_excerpt'            => $show_excerpt,
+	'excerpt_length'             => max( 40, $excerpt_length * 5 ),
+	'typography_heading_tag'     => 'h3',
+	'display_view_post_button'   => false,
+	'view_post_button_label'     => esc_html__( 'View Post', 'caards' ),
+	'view_post_button_type'      => 'simple',
+	'view_post_button_size'      => 'small',
+	'view_post_button_fullwidth' => false,
+	'post_class'                 => '',
+	'current_post'               => 0,
+);
+
+$legacy_template = get_theme_file_path( '/template-parts/blocks/posts-area/' . $layout . '.php' );
+
+$required_helpers = array(
+	'cnvs_block_post_meta',
+	'csco_block_post_title',
+	'csco_block_post_excerpt',
+);
+
+if ( in_array( $layout, array( 'standard-type-1', 'standard-type-2', 'standard-type-3', 'masonry-type-1', 'horizontal-type-1', 'horizontal-type-2', 'horizontal-type-3' ), true ) ) {
+	$required_helpers[] = 'csco_block_post_thumbnail';
+	$required_helpers[] = 'csco_block_post_footer';
+}
+
+if ( 'standard-type-4' === $layout ) {
+	$required_helpers[] = 'csco_block_post_author';
+	$required_helpers[] = 'csco_block_post_category';
+	$required_helpers[] = 'csco_block_post_footer';
+}
+
+if ( 'horizontal-type-5' === $layout ) {
+	$required_helpers[] = 'csco_block_post_overlay_thumbnail';
+}
+
+if ( 0 === strpos( $layout, 'tile-type-' ) ) {
+	$required_helpers[] = 'csco_block_post_overlay_thumbnail';
+	$required_helpers[] = 'csco_block_post_author';
+	$required_helpers[] = 'csco_block_post_category';
+	$required_helpers[] = 'csco_block_post_footer';
+}
+
+$legacy_available = file_exists( $legacy_template );
+foreach ( array_unique( $required_helpers ) as $helper ) {
+	if ( ! function_exists( $helper ) ) {
+		$legacy_available = false;
+		break;
+	}
+}
+
+$main_classes = 'cs-posts-area__main cs-block-posts-layout-' . $layout;
+if ( in_array( $layout, array( 'tile-type-2', 'tile-type-4' ), true ) ) {
+	$main_classes .= ' cs-block-posts-layout-tile-hover';
+}
+
+$main_style = sprintf(
+	'--cs-posts-area-grid-columns:%1$d;--cs-posts-area-grid-column-gap:%2$dpx;--cs-posts-area-grid-row-gap:%3$dpx;',
+	$columns,
+	$column_gap,
+	$row_gap
+);
+
+$render_fallback = static function ( $image_size_value, $orientation, $display_category, $display_author, $display_date, $display_excerpt, $words, $is_tile ) {
+	$outer_classes   = 'cs-entry__outer';
+	$content_classes = 'cs-entry__inner cs-entry__content';
+
+	if ( $is_tile ) {
+		$outer_classes  .= ' cs-entry__overlay cs-overlay-ratio cs-ratio-' . sanitize_html_class( $orientation );
+		$content_classes .= ' cs-overlay-content';
+	}
+	?>
+	<article <?php post_class( 'cs-entry vaarta-editorial-card' ); ?>>
+		<div class="<?php echo esc_attr( $outer_classes ); ?>"<?php echo $is_tile ? ' data-scheme="inverse"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static attribute. ?>>
+			<?php if ( has_post_thumbnail() ) { ?>
+				<div class="cs-entry__inner cs-entry__thumbnail cs-overlay-ratio cs-ratio-<?php echo esc_attr( $orientation ); ?>">
+					<a href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
+						<?php the_post_thumbnail( $image_size_value ); ?>
+					</a>
+				</div>
+			<?php } ?>
+
+			<div class="<?php echo esc_attr( $content_classes ); ?>">
+				<?php if ( $display_category ) { ?>
+					<div class="cs-entry__post-meta cs-entry__post-meta-category">
+						<?php echo wp_kses_post( get_the_category_list( ', ' ) ); ?>
+					</div>
+				<?php } ?>
+
+				<h3 class="cs-entry__title">
+					<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+				</h3>
+
+				<?php if ( $display_author || $display_date ) { ?>
+					<div class="cs-entry__post-meta">
+						<?php if ( $display_author ) { ?>
+							<span class="cs-entry__post-meta-author">
+								<a href="<?php echo esc_url( get_author_posts_url( (int) get_the_author_meta( 'ID' ) ) ); ?>"><?php echo esc_html( get_the_author() ); ?></a>
+							</span>
+						<?php } ?>
+						<?php if ( $display_date ) { ?>
+							<time class="cs-entry__post-meta-date" datetime="<?php echo esc_attr( get_the_date( DATE_W3C ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time>
+						<?php } ?>
+					</div>
+				<?php } ?>
+
+				<?php if ( $display_excerpt ) { ?>
+					<div class="cs-entry__excerpt">
+						<?php echo esc_html( wp_trim_words( get_the_excerpt(), $words, '&hellip;' ) ); ?>
+					</div>
+				<?php } ?>
+			</div>
+		</div>
+	</article>
+	<?php
+};
+?>
+<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated by core. ?>>
+	<div class="cs-posts-area">
+		<div class="cs-posts-area__outer">
+			<div class="<?php echo esc_attr( $main_classes ); ?>" style="<?php echo esc_attr( $main_style ); ?>">
+				<?php
+				$current = 0;
+				while ( $posts->have_posts() ) {
+					$posts->the_post();
+					$current++;
+					$options['current_post'] = $current;
+
+					$is_masonry = 'masonry-type-1' === $layout;
+					if ( $is_masonry ) {
+						echo '<div class="cs-posts-area-card">';
+					}
+
+					if ( $legacy_available ) {
+						$attributes = $legacy_attributes; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Required by legacy included template contract.
+						include $legacy_template;
+					} else {
+						$render_fallback(
+							$image_size,
+							$image_orientation,
+							$show_category,
+							$show_author,
+							$show_date,
+							$show_excerpt,
+							$excerpt_length,
+							0 === strpos( $layout, 'tile-type-' )
+						);
+					}
+
+					if ( $is_masonry ) {
+						echo '</div>';
+					}
+				}
+				?>
+			</div>
+		</div>
+	</div>
+</div>
+<?php
+wp_reset_postdata();
