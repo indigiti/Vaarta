@@ -47,6 +47,6 @@
 
 					<?php do_action( 'csco_main_content_before' ); ?>
 
-					<div id="content" class="cs-main-content">
+					<div id="content" class="cs-main-content" tabindex="-1">
 
 						<?php do_action( 'csco_main_content_start' ); ?>
