@@ -15,6 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Typed settings adopted by the site shell.
+ */
+require_once get_theme_file_path( '/inc/vaarta-shell-settings.php' );
+
+/**
  * Return the registered site-shell layouts.
  *
  * The registry keeps template routing explicit while preserving the existing
