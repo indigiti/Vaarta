@@ -135,6 +135,75 @@ jobs:
             node --check "$file"
           done < <(find blocks -type f -name '*.js' -print0)
 
+  design-system-patterns:
+    name: Validate Vaarta design system and patterns
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate token bridge and pattern headers
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          functions = Path('functions.php').read_text(encoding='utf-8')
+          assets = Path('inc/assets.php').read_text(encoding='utf-8')
+          editor_assets = Path('inc/gutenberg/assets.php').read_text(encoding='utf-8')
+          bridge_path = Path('assets/css/vaarta-design-system.css')
+
+          if "'/inc/vaarta-patterns.php'" not in functions:
+              raise SystemExit('functions.php must load inc/vaarta-patterns.php')
+          if not bridge_path.is_file():
+              raise SystemExit('Missing Vaarta design-system bridge stylesheet')
+
+          bridge = bridge_path.read_text(encoding='utf-8')
+          required_tokens = (
+              '--wp--preset--color--primary',
+              '--wp--preset--color--accent',
+              '--wp--style--global--content-size',
+              '--wp--custom--vaarta--radius--image',
+              '--cs-color-primary',
+              '--cs-entry-content-width',
+              '--cs-image-border-radius',
+          )
+          for token in required_tokens:
+              if token not in bridge:
+                  raise SystemExit(f'Design-system bridge missing token: {token}')
+
+          if 'vaarta-design-system' not in assets:
+              raise SystemExit('Frontend assets must enqueue the Vaarta design-system bridge')
+          if 'assets/css/vaarta-design-system.css' not in editor_assets:
+              raise SystemExit('Editor styles must load the Vaarta design-system bridge')
+
+          pattern_paths = sorted(Path('patterns').glob('*.php'))
+          if not pattern_paths:
+              raise SystemExit('No Vaarta block patterns found')
+
+          slugs = set()
+          for path in pattern_paths:
+              text = path.read_text(encoding='utf-8')
+              title = re.search(r'^ \* Title:\s*(.+)$', text, re.MULTILINE)
+              slug = re.search(r'^ \* Slug:\s*(\S+)$', text, re.MULTILINE)
+              categories = re.search(r'^ \* Categories:\s*(.+)$', text, re.MULTILINE)
+
+              if not title or not slug or not categories:
+                  raise SystemExit(f'{path}: missing Title, Slug, or Categories header')
+              if not slug.group(1).startswith('vaarta/'):
+                  raise SystemExit(f'{path}: pattern slug must use vaarta/ namespace')
+              if slug.group(1) in slugs:
+                  raise SystemExit(f'Duplicate pattern slug: {slug.group(1)}')
+              slugs.add(slug.group(1))
+              if '<!-- wp:vaarta/' not in text:
+                  raise SystemExit(f'{path}: pattern must use at least one native Vaarta block')
+
+          print(f'Validated design-system bridge and {len(pattern_paths)} Vaarta patterns')
+          PY
+
   security-regressions:
     name: Security regression checks
     runs-on: ubuntu-latest
