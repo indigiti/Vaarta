@@ -45,7 +45,8 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		wp_register_script( 'vaarta-fullscreen', get_template_directory_uri() . '/assets/js/modules/fullscreen.js', array( 'vaarta-runtime', 'vaarta-search', 'vaarta-fullscreen-nav' ), $version, true );
 		wp_register_script( 'vaarta-scheme', get_template_directory_uri() . '/assets/js/modules/scheme.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-article-interactions', get_template_directory_uri() . '/assets/js/modules/article-interactions.js', array( 'vaarta-runtime' ), $version, true );
-		wp_register_script( 'vaarta-load-more', get_template_directory_uri() . '/assets/js/modules/load-more.js', array( 'vaarta-runtime' ), $version, true );
+		wp_register_script( 'vaarta-masonry', get_template_directory_uri() . '/assets/js/modules/masonry.js', array( 'vaarta-runtime', 'colcade' ), $version, true );
+		wp_register_script( 'vaarta-load-more', get_template_directory_uri() . '/assets/js/modules/load-more.js', array( 'vaarta-runtime', 'vaarta-masonry' ), $version, true );
 		wp_register_script( 'vaarta-continuous-reading', get_template_directory_uri() . '/assets/js/modules/continuous-reading.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script(
 			'vaarta-chrome',
@@ -66,6 +67,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 			'vaarta-fullscreen',
 			'vaarta-scheme',
 			'vaarta-article-interactions',
+			'vaarta-masonry',
 			'vaarta-load-more',
 			'vaarta-continuous-reading',
 			'vaarta-chrome',
