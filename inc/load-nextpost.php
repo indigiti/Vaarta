@@ -56,7 +56,7 @@ function csco_nextpost_more_js() {
 		'url'       => admin_url( 'admin-ajax.php' ),
 	);
 
-	wp_localize_script( 'csco-scripts', 'csco_ajax_nextpost', $args );
+	wp_localize_script( 'vaarta-continuous-reading', 'csco_ajax_nextpost', $args );
 }
 add_action( 'wp_enqueue_scripts', 'csco_nextpost_more_js' );
 

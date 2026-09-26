@@ -839,7 +839,7 @@ class CSCO_Mega_Menu {
 			'rest_url' => esc_url( get_rest_url( null, '/csco/v1/menu-posts' ) ),
 		);
 
-		wp_localize_script( 'csco-scripts', 'csco_mega_menu', $args );
+		wp_localize_script( 'vaarta-mega-menu', 'csco_mega_menu', $args );
 	}
 
 	/**

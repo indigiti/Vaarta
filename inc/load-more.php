@@ -132,7 +132,7 @@ function csco_load_more_js() {
 		);
 
 		$args = csco_get_load_more_args( $data, false, csco_get_archive_options() );
-		wp_localize_script( 'csco-scripts', 'csco_ajax_pagination', $args );
+		wp_localize_script( 'vaarta-load-more', 'csco_ajax_pagination', $args );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'csco_load_more_js' );
