@@ -14,6 +14,8 @@ test( 'Vaarta modular runtime is present', async ( { page } ) => {
 	const runtime = await page.evaluate( () => ( {
 		runtime: !! window.vaartaRuntime,
 		search: !! window.vaartaSearch,
+		navigation: !! window.vaartaNavigation,
+		carousel: !! window.vaartaCarousel,
 		offcanvas: !! window.vaartaOffcanvas,
 		fullscreen: !! window.vaartaFullscreen,
 		fullscreenNav: !! window.vaartaFullscreenNav,
@@ -27,6 +29,8 @@ test( 'Vaarta modular runtime is present', async ( { page } ) => {
 	expect( runtime ).toEqual( {
 		runtime: true,
 		search: true,
+		navigation: true,
+		carousel: true,
 		offcanvas: true,
 		fullscreen: true,
 		fullscreenNav: true,
@@ -36,6 +40,65 @@ test( 'Vaarta modular runtime is present', async ( { page } ) => {
 		loadMore: true,
 		continuousReading: true
 	} );
+} );
+
+test( 'native carousel initializes Flickity and advances with theme controls', async ( { page }, testInfo ) => {
+	test.skip( isMobileProject( testInfo ), 'Carousel adapter is exercised once in the desktop project.' );
+
+	await page.evaluate( () => {
+		const block = document.createElement( 'section' );
+		block.id = 'vaarta-carousel-test';
+		block.className = 'cnvs-block-posts-layout-wide-type-1';
+		block.style.setProperty( '--cs-carousel-columns', '1' );
+		block.innerHTML = `
+			<button type="button" class="cs-carousel__arrow-previous">Previous</button>
+			<div class="cs-flickity-init" data-autoplay="false" data-pagedots="false" data-wraparound="false">
+				<div class="cs-carousel__items">
+					<article class="cs-carousel__cell" style="width: 220px;">Story A</article>
+					<article class="cs-carousel__cell" style="width: 220px;">Story B</article>
+					<article class="cs-carousel__cell" style="width: 220px;">Story C</article>
+				</div>
+			</div>
+			<div class="cs-carousel__counters"><span class="cs-carousel__counters-current"></span>/<span class="cs-carousel__counters-total"></span></div>
+			<button type="button" class="cs-carousel__arrow-next">Next</button>`;
+		document.body.appendChild( block );
+		window.vaartaCarousel.init( block );
+	} );
+
+	const block = page.locator( '#vaarta-carousel-test' );
+	const slider = block.locator( '.cs-carousel__items' );
+	await expect( block ).toHaveAttribute( 'data-vaarta-carousel', 'true' );
+	await expect( slider ).toHaveClass( /flickity-enabled/ );
+	await expect( block.locator( '.cs-carousel__counters-current' ) ).toHaveText( '1' );
+	await block.locator( '.cs-carousel__arrow-next' ).click();
+	await expect.poll( () => page.evaluate( () => window.vaartaCarousel.getInstance( document.querySelector( '#vaarta-carousel-test .cs-carousel__items' ) ).selectedIndex ) ).toBe( 1 );
+	await expect( block.locator( '.cs-carousel__counters-current' ) ).toHaveText( '2' );
+} );
+
+test( 'native navigation applies sticky and smart-visible header states', async ( { page }, testInfo ) => {
+	test.skip( isMobileProject( testInfo ), 'Sticky header geometry is exercised once in the desktop project.' );
+
+	await page.evaluate( () => {
+		document.body.classList.remove( 'cs-navbar-smart-enabled' );
+		document.body.classList.add( 'cs-navbar-sticky-enabled' );
+		const spacer = document.createElement( 'div' );
+		spacer.id = 'vaarta-scroll-fixture';
+		spacer.style.height = '5000px';
+		document.body.appendChild( spacer );
+		window.scrollTo( 0, 0 );
+		window.vaartaNavigation.refresh();
+	} );
+
+	const body = page.locator( 'body' );
+	const header = page.locator( '.cs-header' ).first();
+	await page.evaluate( () => window.scrollTo( 0, 1600 ) );
+	await expect( body ).toHaveClass( /cs-header-scroll-sticky/ );
+	await expect( header ).toHaveClass( /cs-scroll-sticky/ );
+
+	await page.evaluate( () => window.scrollTo( 0, 1100 ) );
+	await expect.poll( () => page.evaluate( () => window.scrollY ) ).toBeLessThan( 1600 );
+	await page.evaluate( () => window.scrollTo( 0, 1080 ) );
+	await expect( header ).toHaveClass( /cs-header-smart-visible/ );
 } );
 
 test( 'native masonry adapter preserves the legacy Colcade column contract', async ( { page }, testInfo ) => {
