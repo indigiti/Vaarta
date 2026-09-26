@@ -73,6 +73,14 @@
           "sidebar-width": "300px",
           "offcanvas-width": "360px"
         },
+        "shell": {
+          "header-height": "80px",
+          "header-initial-height": "80px",
+          "search-height": "80px",
+          "header-topbar-height": "115px",
+          "header-padding": "64px",
+          "footer-padding": "64px"
+        },
         "radius": {
           "layout": "12px",
           "image": "12px",
