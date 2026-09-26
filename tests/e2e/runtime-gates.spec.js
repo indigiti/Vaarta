@@ -16,12 +16,23 @@ test( 'legacy bundle entry keeps migrated runtime modules gated', async ( { page
 		return response.text();
 	}, source );
 
-	expect( bundle ).not.toContain( '__webpack_require__(2);' );
-	expect( bundle ).not.toContain( '__webpack_require__(9);' );
-	expect( bundle ).not.toContain( '__webpack_require__(11);' );
-	expect( bundle ).not.toContain( '__webpack_require__(13);' );
-	expect( bundle ).toContain( 'Vaarta native carousel owns legacy Webpack module 2.' );
-	expect( bundle ).toContain( 'Vaarta native load-more owns legacy Webpack module 9.' );
-	expect( bundle ).toContain( 'Vaarta native masonry owns legacy Webpack module 11.' );
-	expect( bundle ).toContain( 'Vaarta native navigation owns legacy Webpack module 13.' );
+	const gatedModules = {
+		2: 'Vaarta native carousel owns legacy Webpack module 2.',
+		3: 'Vaarta native article interactions owns legacy Webpack module 3.',
+		4: 'Vaarta native article interactions owns legacy Webpack module 4.',
+		6: 'Vaarta native fullscreen navigation owns legacy Webpack module 6.',
+		7: 'Vaarta native fullscreen shell owns legacy Webpack module 7.',
+		9: 'Vaarta native load-more owns legacy Webpack module 9.',
+		11: 'Vaarta native masonry owns legacy Webpack module 11.',
+		12: 'Vaarta native mega-menu owns legacy Webpack module 12.',
+		13: 'Vaarta native navigation owns legacy Webpack module 13.',
+		14: 'Vaarta native offcanvas owns legacy Webpack module 14.',
+		16: 'Vaarta native scheme owns legacy Webpack module 16.',
+		17: 'Vaarta native search owns legacy Webpack module 17.'
+	};
+
+	Object.entries( gatedModules ).forEach( ( [ moduleId, marker ] ) => {
+		expect( bundle ).not.toContain( `__webpack_require__(${ moduleId });` );
+		expect( bundle ).toContain( marker );
+	} );
 } );
