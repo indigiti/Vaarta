@@ -184,9 +184,10 @@ require_once get_theme_file_path( '/inc/post-meta.php' );
 require_once get_theme_file_path( '/inc/nav-menu.php' );
 
 /**
- * Mega menu.
+ * Legacy mega-menu renderer and Vaarta's hardened request layer.
  */
 require_once get_theme_file_path( '/inc/mega-menu.php' );
+require_once get_theme_file_path( '/inc/vaarta-mega-menu.php' );
 
 /**
  * Load More.
