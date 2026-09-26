@@ -99,6 +99,20 @@ jobs:
           wp rewrite structure '/%postname%/' --path=wp
           wp rewrite flush --hard --path=wp
 
+      - name: Verify Vaarta admin demo importer
+        run: |
+          wp eval '
+            if ( ! function_exists( "vaarta_install_demo_site" ) ) {
+              fwrite( STDERR, "Missing shared demo installer.\n" );
+              exit( 1 );
+            }
+            if ( ! function_exists( "vaarta_register_demo_setup_page" ) ) {
+              fwrite( STDERR, "Missing Vaarta Setup admin screen.\n" );
+              exit( 1 );
+            }
+            echo "Vaarta admin demo importer registered.\n";
+          ' --path=wp
+
       - name: Bootstrap Vaarta demo site from installed package
         run: |
           wp eval-file \
