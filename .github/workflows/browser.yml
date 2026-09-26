@@ -46,6 +46,7 @@ jobs:
           npm run wp-env -- run cli wp eval-file "wp-content/themes/${THEME_SLUG}/tests/e2e/site-shell-contract.php"
           npm run wp-env -- run cli wp eval-file "wp-content/themes/${THEME_SLUG}/tests/e2e/shell-components-contract.php"
           npm run wp-env -- run cli wp eval-file "wp-content/themes/${THEME_SLUG}/tests/e2e/editorial-components-contract.php"
+          npm run wp-env -- run cli wp eval-file "wp-content/themes/${THEME_SLUG}/tests/e2e/post-meta-contract.php"
 
       - name: Run browser smoke tests
         run: npm run test:e2e
