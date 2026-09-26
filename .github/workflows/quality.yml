@@ -204,6 +204,70 @@ jobs:
           print(f'Validated design-system bridge and {len(pattern_paths)} Vaarta patterns')
           PY
 
+  site-chrome:
+    name: Validate Vaarta site chrome
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate chrome assets and accessible markup
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check assets/js/vaarta-chrome.js
+
+          python - <<'PY'
+          from pathlib import Path
+
+          functions = Path('functions.php').read_text(encoding='utf-8')
+          assets = Path('inc/assets.php').read_text(encoding='utf-8')
+          chrome_js = Path('assets/js/vaarta-chrome.js').read_text(encoding='utf-8')
+          chrome_css = Path('assets/css/vaarta-chrome.css').read_text(encoding='utf-8')
+          search = Path('template-parts/site-search.php').read_text(encoding='utf-8')
+          offcanvas = Path('template-parts/offcanvas.php').read_text(encoding='utf-8')
+          fullscreen = Path('template-parts/fullscreen-menu.php').read_text(encoding='utf-8')
+
+          if "'/inc/vaarta-mega-menu.php'" not in functions:
+              raise SystemExit('functions.php must load the hardened Vaarta mega-menu layer')
+          if 'vaarta-chrome.js' not in assets or 'vaarta-chrome.css' not in assets:
+              raise SystemExit('Frontend assets must load Vaarta chrome JS and CSS')
+
+          required_js = (
+              "'Escape'",
+              'aria-expanded',
+              'aria-hidden',
+              'cs-offcanvas-active',
+              'cs-fullscreen-menu-active',
+              'MutationObserver',
+          )
+          for token in required_js:
+              if token not in chrome_js:
+                  raise SystemExit(f'Vaarta chrome JS missing behavior contract: {token}')
+
+          if ':focus-visible' not in chrome_css:
+              raise SystemExit('Vaarta chrome CSS must provide keyboard-visible focus')
+
+          markup_contracts = {
+              'site search': (search, 'id="vaarta-site-search"', 'aria-live="polite"', 'type="button"'),
+              'offcanvas': (offcanvas, 'id="vaarta-offcanvas"', 'role="dialog"', 'aria-modal="true"'),
+              'fullscreen': (fullscreen, 'id="vaarta-fullscreen-menu"', 'role="dialog"', 'aria-modal="true"'),
+          }
+          for label, values in markup_contracts.items():
+              text = values[0]
+              for token in values[1:]:
+                  if token not in text:
+                      raise SystemExit(f'{label} markup missing contract: {token}')
+
+          print('Vaarta site chrome assets and accessibility contracts are valid')
+          PY
+
   security-regressions:
     name: Security regression checks
     runs-on: ubuntu-latest
@@ -225,5 +289,28 @@ jobs:
             echo 'Forced legacy license state detected in functions.php.'
             exit 1
           fi
+
+          python - <<'PY'
+          from pathlib import Path
+
+          functions = Path('functions.php').read_text(encoding='utf-8')
+          mega = Path('inc/vaarta-mega-menu.php').read_text(encoding='utf-8')
+
+          if "'/inc/vaarta-mega-menu.php'" not in functions:
+              raise SystemExit('Hardened mega-menu compatibility layer is not loaded')
+
+          required = (
+              "remove_action( 'wp_ajax_nopriv_csco_reload_menu'",
+              "current_user_can( 'edit_theme_options' )",
+              "check_ajax_referer( 'vaarta_reload_menu', 'nonce' )",
+              "'post_status'         => 'publish'",
+              "'posts_per_page'      => $per_page",
+          )
+          for token in required:
+              if token not in mega:
+                  raise SystemExit(f'Mega-menu security contract missing: {token}')
+
+          print('Mega-menu request boundary is hardened')
+          PY
 
           echo 'Security regression checks passed.'
