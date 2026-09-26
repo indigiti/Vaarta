@@ -109,8 +109,10 @@ try {
 	set_theme_mod( 'header_height', '80px; color:red' );
 	vaarta_test_settings_assert( '80px' === get_theme_mod( 'header_height' ), 'Injected dimension did not fall back to the field default.' );
 
-	// Multicheck values are a finite set, not arbitrary strings.
-	set_theme_mod( 'header_multi_column_posts_meta', array( 'date', 'views', 'not-a-meta-key', 'date' ) );
+	// Multicheck values are a finite set, not arbitrary strings. Use core theme
+	// choices here; optional Powerkit-backed choices such as views/shares are
+	// intentionally absent when the integration is not active in wp-env.
+	set_theme_mod( 'header_multi_column_posts_meta', array( 'date', 'author', 'not-a-meta-key', 'date' ) );
 	$multicheck_actual  = get_theme_mod( 'header_multi_column_posts_meta' );
 	$multicheck_field   = vaarta_get_customizer_field( 'header_multi_column_posts_meta' );
 	$multicheck_choices = is_array( $multicheck_field ) && isset( $multicheck_field['choices'] ) && is_array( $multicheck_field['choices'] )
@@ -118,7 +120,7 @@ try {
 		: null;
 	$multicheck_filter  = has_filter( 'theme_mod_header_multi_column_posts_meta', 'vaarta_filter_registered_multicheck_theme_mod' );
 	vaarta_test_settings_assert(
-		array( 'date', 'views' ) === $multicheck_actual,
+		array( 'date', 'author' ) === $multicheck_actual,
 		'Multicheck sanitizer contract failed. actual=' . wp_json_encode( $multicheck_actual )
 		. ' choices=' . wp_json_encode( $multicheck_choices )
 		. ' filter=' . wp_json_encode( $multicheck_filter )
