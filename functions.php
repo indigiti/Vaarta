@@ -154,6 +154,12 @@ require_once get_theme_file_path( '/inc/vaarta-blocks.php' );
 require_once get_theme_file_path( '/inc/vaarta-patterns.php' );
 
 /**
+ * Accessible header-control compatibility functions.
+ * Loaded before legacy theme-tags so its conditional definitions are skipped.
+ */
+require_once get_theme_file_path( '/inc/vaarta-chrome-markup.php' );
+
+/**
  * Actions.
  */
 require_once get_theme_file_path( '/inc/actions.php' );
