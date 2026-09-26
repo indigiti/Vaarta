@@ -1,41 +1,38 @@
 <?php
 /**
- * Caards functions and definitions
+ * Vaarta theme functions and definitions.
+ *
+ * The frontend remains compatible with the legacy Caards markup while the
+ * runtime is modernized incrementally.
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  *
- * @package Caards
+ * @package Vaarta
  */
+
+/**
+ * Vaarta modernization bootstrap.
+ */
+require_once get_theme_file_path( '/inc/vaarta-foundation.php' );
 
 if ( ! function_exists( 'csco_setup' ) ) {
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
 	 *
-	 * Note that this function is hooked into the after_setup_theme hook, which
-	 * runs before the init hook. The init hook is too late for some features, such
-	 * as indicating support for post thumbnails.
+	 * Legacy csco_* identifiers are retained during the compatibility phase so
+	 * existing templates, child themes, and integrations continue to work.
 	 */
 	function csco_setup() {
-		/*
-		 * Make theme available for translation.
-		 * Translations can be filed in the /languages/ directory.
-		 * If you're building a theme based on Caards, use a find and replace
-		 * to change 'caards' to the name of your theme in all the template files.
-		 */
+		// Keep the legacy text domain until the translation migration is complete.
 		load_theme_textdomain( 'caards', get_template_directory() . '/languages' );
 
 		// Add default posts and comments RSS feed links to head.
 		add_theme_support( 'automatic-feed-links' );
 
-		/*
-		 * Let WordPress manage the document title.
-		 * By adding theme support, we declare that this theme does not use a
-		 * hard-coded <title> tag in the document head, and expect WordPress to
-		 * provide it for us.
-		 */
+		// Let WordPress manage the document title.
 		add_theme_support( 'title-tag' );
 
-		// This theme uses wp_nav_menu() in one location.
+		// Register existing menu locations unchanged for backwards compatibility.
 		register_nav_menus(
 			array(
 				'primary'           => esc_html__( 'Primary', 'caards' ),
@@ -48,10 +45,7 @@ if ( ! function_exists( 'csco_setup' ) ) {
 			)
 		);
 
-		/*
-		 * Switch default core markup for search form, comment form, comments, etc.
-		 * to output valid HTML5.
-		 */
+		// Use valid HTML5 markup for core output.
 		add_theme_support(
 			'html5',
 			array(
@@ -65,39 +59,21 @@ if ( ! function_exists( 'csco_setup' ) ) {
 			)
 		);
 
-		// Add support for responsive embeds.
 		add_theme_support( 'responsive-embeds' );
-
-		// Add support for custom line height controls.
 		add_theme_support( 'custom-line-height' );
-
-		// Add support for experimental cover block spacing.
 		add_theme_support( 'custom-spacing' );
-
-		// Supported Formats.
 		add_theme_support( 'post-formats', array( 'gallery', 'video', 'audio' ) );
-
-		// Add theme support for selective refresh for widgets.
 		add_theme_support( 'customize-selective-refresh-widgets' );
-
-		// Add support for full and wide align images.
 		add_theme_support( 'align-wide' );
 
-		// Canvas: Disable section responsive.
+		// Existing Canvas compatibility flags remain active during migration.
 		add_theme_support( 'canvas-disable-section-responsive' );
-
-		// Canvas: Enable data scheme.
 		add_theme_support( 'canvas-enable-data-scheme' );
 		add_theme_support( 'canvas-support-inverse-scheme' );
 
-		/*
-		 * Enable support for Post Thumbnails on posts and pages.
-		 *
-		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
-		 */
 		add_theme_support( 'post-thumbnails' );
 
-		// Register custom thumbnail sizes.
+		// Preserve existing image-size contracts so current layouts do not regress.
 		add_image_size( 'csco-smaller', 80, 80, true );
 		add_image_size( 'csco-small', 110, 110, true );
 		add_image_size( 'csco-thumbnail', 380, 250, true );
@@ -121,14 +97,10 @@ add_action( 'after_setup_theme', 'csco_setup' );
 require_once get_theme_file_path( '/inc/theme-setup.php' );
 
 /**
- * Theme dashboard.
+ * Legacy Code Supply dashboard, remote license activation, and demo-import
+ * runtime are intentionally not loaded. Their frontend-independent definitions
+ * remain in the repository until the Vaarta-native admin/importer is rebuilt.
  */
-require_once get_theme_file_path( '/core/theme-dashboard/class-theme-dashboard.php' );
-
-/**
- * Theme demos.
- */
-require_once get_theme_file_path( '/core/theme-demos/class-theme-demos.php' );
 
 /**
  * Customizer.
@@ -146,13 +118,13 @@ require_once get_theme_file_path( '/inc/assets.php' );
 require_once get_theme_file_path( '/inc/widgets-init.php' );
 
 /**
- *
  * Template Functions.
  */
 require_once get_theme_file_path( '/inc/theme-functions.php' );
 
 /**
- * Theme Demos.
+ * Demo definitions and import-finish hooks are retained as migration data.
+ * No importer endpoint is registered while the legacy admin runtime is disabled.
  */
 require_once get_theme_file_path( '/inc/theme-demos.php' );
 
@@ -227,11 +199,11 @@ require_once get_theme_file_path( '/inc/custom-content.php' );
 require_once get_theme_file_path( '/inc/sight.php' );
 
 /**
- * Powerkit fuctions.
+ * Powerkit functions.
  */
 require_once get_theme_file_path( '/inc/powerkit.php' );
 
 /**
- * Deprecated.
+ * Deprecated compatibility layer.
  */
 require_once get_theme_file_path( '/inc/deprecated.php' );
