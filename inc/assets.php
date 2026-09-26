@@ -35,9 +35,9 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		wp_register_script( 'colcade', get_template_directory_uri() . '/assets/vendor/colcade.js', array( 'jquery' ), $version, true );
 		wp_register_script( 'csco-scripts', get_template_directory_uri() . '/assets/js/scripts.js', array( 'jquery', 'imagesloaded', 'flickity', 'colcade' ), $version, true );
 
-		// Modular Vaarta site chrome. The runtime compatibility shim executes after
-		// the compiled bundle so it can detach only the legacy handlers now owned by
-		// these vanilla-JS modules.
+		// Modular Vaarta runtime. The compatibility shim executes after the
+		// compiled bundle so it can detach only legacy handlers already replaced by
+		// native modules without disturbing unrelated visual behavior.
 		wp_register_script( 'vaarta-runtime', get_template_directory_uri() . '/assets/js/modules/runtime.js', array( 'csco-scripts' ), $version, true );
 		wp_register_script( 'vaarta-search', get_template_directory_uri() . '/assets/js/modules/search.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-offcanvas', get_template_directory_uri() . '/assets/js/modules/offcanvas.js', array( 'vaarta-runtime' ), $version, true );
@@ -45,6 +45,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		wp_register_script( 'vaarta-fullscreen', get_template_directory_uri() . '/assets/js/modules/fullscreen.js', array( 'vaarta-runtime', 'vaarta-search', 'vaarta-fullscreen-nav' ), $version, true );
 		wp_register_script( 'vaarta-scheme', get_template_directory_uri() . '/assets/js/modules/scheme.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-article-interactions', get_template_directory_uri() . '/assets/js/modules/article-interactions.js', array( 'vaarta-runtime' ), $version, true );
+		wp_register_script( 'vaarta-load-more', get_template_directory_uri() . '/assets/js/modules/load-more.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script(
 			'vaarta-chrome',
 			get_template_directory_uri() . '/assets/js/vaarta-chrome.js',
@@ -64,6 +65,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 			'vaarta-fullscreen',
 			'vaarta-scheme',
 			'vaarta-article-interactions',
+			'vaarta-load-more',
 			'vaarta-chrome',
 		);
 
@@ -87,6 +89,8 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 				'copyFailed'  => esc_html__( 'Copy failed. Select the URL and copy it manually.', 'caards' ),
 			)
 		);
+
+		wp_enqueue_script( 'vaarta-load-more' );
 		wp_enqueue_script( 'vaarta-chrome' );
 
 		if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
