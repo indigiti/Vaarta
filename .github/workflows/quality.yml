@@ -222,6 +222,9 @@ jobs:
         run: |
           set -euo pipefail
           node --check assets/js/vaarta-chrome.js
+          while IFS= read -r -d '' file; do
+            node --check "$file"
+          done < <(find assets/js/modules -type f -name '*.js' -print0)
 
           python - <<'PY'
           from pathlib import Path
@@ -238,6 +241,34 @@ jobs:
               raise SystemExit('functions.php must load the hardened Vaarta mega-menu layer')
           if 'vaarta-chrome.js' not in assets or 'vaarta-chrome.css' not in assets:
               raise SystemExit('Frontend assets must load Vaarta chrome JS and CSS')
+
+          modules = {
+              'runtime': Path('assets/js/modules/runtime.js'),
+              'search': Path('assets/js/modules/search.js'),
+              'offcanvas': Path('assets/js/modules/offcanvas.js'),
+              'fullscreen': Path('assets/js/modules/fullscreen.js'),
+              'scheme': Path('assets/js/modules/scheme.js'),
+          }
+          for name, path in modules.items():
+              if not path.is_file():
+                  raise SystemExit(f'Missing Vaarta chrome module: {name}')
+              if f'assets/js/modules/{path.name}' not in assets:
+                  raise SystemExit(f'inc/assets.php must register Vaarta chrome module: {name}')
+
+          runtime = modules['runtime'].read_text(encoding='utf-8')
+          required_runtime = (
+              'detachLegacyChromeHandlers',
+              ".cs-header__search-toggle, .cs-search__close",
+              ".cs-header__offcanvas-toggle, .cs-site-overlay, .cs-offcanvas__toggle",
+              ".cs-header__fullscreen-menu-toggle, .cs-fullscreen-menu__header-toggle",
+              "off( 'click', '.cs-site-scheme-toggle' )",
+          )
+          for token in required_runtime:
+              if token not in runtime:
+                  raise SystemExit(f'Vaarta runtime compatibility contract missing: {token}')
+
+          if "array( 'csco-scripts' )" not in assets or "array( 'vaarta-runtime' )" not in assets:
+              raise SystemExit('Vaarta chrome modules must load after the legacy bundle through dependencies')
 
           required_js = (
               "'Escape'",
@@ -265,7 +296,7 @@ jobs:
                   if token not in text:
                       raise SystemExit(f'{label} markup missing contract: {token}')
 
-          print('Vaarta site chrome assets and accessibility contracts are valid')
+          print('Vaarta modular site chrome and accessibility contracts are valid')
           PY
 
   security-regressions:
