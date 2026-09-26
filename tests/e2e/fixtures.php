@@ -86,6 +86,9 @@ set_theme_mod( 'color_scheme_toggle', true );
 set_theme_mod( 'color_scheme', 'system' );
 set_theme_mod( 'post_share_link', true );
 set_theme_mod( 'post_comments_simple', false );
+set_theme_mod( 'post_load_nextpost', true );
+set_theme_mod( 'post_load_nextpost_same_category', false );
+set_theme_mod( 'post_load_nextpost_reverse', false );
 
 // Keep archive pagination deterministic so the browser suite exercises the
 // native Vaarta load-more transport against a real second query page.
@@ -99,13 +102,16 @@ for ( $index = 1; $index <= 3; $index++ ) {
 		continue;
 	}
 
-	$post_id = wp_insert_post(
+	$post_date = sprintf( '2026-01-%02d 12:00:00', $index );
+	$post_id   = wp_insert_post(
 		array(
 			'post_title'     => $title,
 			'post_name'      => $slug,
 			'post_content'   => str_repeat( 'Editorial test content. ', 30 ),
 			'post_status'    => 'publish',
 			'post_type'      => 'post',
+			'post_date'      => $post_date,
+			'post_date_gmt'  => get_gmt_from_date( $post_date ),
 			'comment_status' => 'open',
 		),
 		true
