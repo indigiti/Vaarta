@@ -2,7 +2,7 @@
 /**
  * The template part for displaying fullscreen menu area.
  *
- * @package Caards
+ * @package Vaarta
  */
 
 $scheme = csco_color_scheme(
@@ -11,11 +11,11 @@ $scheme = csco_color_scheme(
 );
 ?>
 
-<div class="cs-fullscreen-menu cs-fullscreen-menu-<?php echo esc_attr( csco_get_header_layout_type() ); ?>" <?php echo wp_kses( $scheme, 'csco' ); ?>>
+<div id="vaarta-fullscreen-menu" class="cs-fullscreen-menu cs-fullscreen-menu-<?php echo esc_attr( csco_get_header_layout_type() ); ?>" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Full-screen menu', 'caards' ); ?>" aria-hidden="true" tabindex="-1" <?php echo wp_kses( $scheme, 'csco' ); ?>>
 	<div class="cs-fullscreen-menu__inner">
 		<div class="cs-fullscreen-menu__header">
-			<span class="cs-fullscreen-menu__header-toggle" role="button">
-				<span></span>
+			<span class="cs-fullscreen-menu__header-toggle" role="button" tabindex="0" aria-controls="vaarta-fullscreen-menu" aria-label="<?php esc_attr_e( 'Close full-screen menu', 'caards' ); ?>">
+				<span aria-hidden="true"></span>
 			</span>
 
 			<?php csco_component( 'header_logo' ); ?>
