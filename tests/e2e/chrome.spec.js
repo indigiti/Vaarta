@@ -19,7 +19,8 @@ test( 'Vaarta modular runtime is present', async ( { page } ) => {
 		fullscreenNav: !! window.vaartaFullscreenNav,
 		scheme: !! window.vaartaScheme,
 		articleInteractions: !! window.vaartaArticleInteractions,
-		loadMore: !! window.vaartaLoadMore
+		loadMore: !! window.vaartaLoadMore,
+		continuousReading: !! window.vaartaContinuousReading
 	} ) );
 
 	expect( runtime ).toEqual( {
@@ -30,7 +31,8 @@ test( 'Vaarta modular runtime is present', async ( { page } ) => {
 		fullscreenNav: true,
 		scheme: true,
 		articleInteractions: true,
-		loadMore: true
+		loadMore: true,
+		continuousReading: true
 	} );
 } );
 
@@ -49,6 +51,26 @@ test( 'native load more appends the next archive page', async ( { page }, testIn
 	await button.click();
 	await expect.poll( async () => posts.count() ).toBeGreaterThan( before );
 	await expect( area.getByRole( 'link', { name: 'Vaarta Test Story 1', exact: true } ).first() ).toBeVisible();
+} );
+
+test( 'native continuous reading appends the adjacent published story', async ( { page }, testInfo ) => {
+	test.skip( isMobileProject( testInfo ), 'Continuous-reading transport is exercised once in the desktop project.' );
+
+	await page.goto( '/vaarta-test-story-1/' );
+	await expect( page.locator( 'body' ) ).toHaveClass( /single-post/ );
+
+	const legacyNextPost = await page.evaluate( () => window.csco_ajax_nextpost ? window.csco_ajax_nextpost.next_post : null );
+	expect( legacyNextPost ).toBeFalsy();
+
+	await page.evaluate( async () => {
+		if ( ! document.querySelector( '.cs-nextpost-section' ) ) {
+			await window.vaartaContinuousReading.load();
+		}
+	} );
+
+	const nextSection = page.locator( '.cs-nextpost-section' ).first();
+	await expect( nextSection ).toHaveAttribute( 'data-title', 'Vaarta Test Story 2' );
+	await expect( nextSection ).toContainText( 'Vaarta Test Story 2' );
 } );
 
 test( 'search opens and closes with synchronized ARIA state', async ( { page }, testInfo ) => {
