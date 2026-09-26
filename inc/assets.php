@@ -44,10 +44,11 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		wp_register_script( 'vaarta-fullscreen-nav', get_template_directory_uri() . '/assets/js/modules/fullscreen-nav.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-fullscreen', get_template_directory_uri() . '/assets/js/modules/fullscreen.js', array( 'vaarta-runtime', 'vaarta-search', 'vaarta-fullscreen-nav' ), $version, true );
 		wp_register_script( 'vaarta-scheme', get_template_directory_uri() . '/assets/js/modules/scheme.js', array( 'vaarta-runtime' ), $version, true );
+		wp_register_script( 'vaarta-article-interactions', get_template_directory_uri() . '/assets/js/modules/article-interactions.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script(
 			'vaarta-chrome',
 			get_template_directory_uri() . '/assets/js/vaarta-chrome.js',
-			array( 'vaarta-search', 'vaarta-offcanvas', 'vaarta-fullscreen', 'vaarta-scheme' ),
+			array( 'vaarta-search', 'vaarta-offcanvas', 'vaarta-fullscreen', 'vaarta-scheme', 'vaarta-article-interactions' ),
 			$version,
 			true
 		);
@@ -62,6 +63,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 			'vaarta-fullscreen-nav',
 			'vaarta-fullscreen',
 			'vaarta-scheme',
+			'vaarta-article-interactions',
 			'vaarta-chrome',
 		);
 
@@ -75,6 +77,16 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		);
 
 		wp_localize_script( 'csco-scripts', 'csLocalize', $localize );
+		wp_localize_script(
+			'vaarta-article-interactions',
+			'vaartaArticleI18n',
+			array(
+				'copyLabel'  => esc_html__( 'Copy shareable URL', 'caards' ),
+				'copiedLabel' => esc_html__( 'Shareable URL copied', 'caards' ),
+				'copied'      => esc_html__( 'Shareable URL copied.', 'caards' ),
+				'copyFailed'  => esc_html__( 'Copy failed. Select the URL and copy it manually.', 'caards' ),
+			)
+		);
 		wp_enqueue_script( 'vaarta-chrome' );
 
 		if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
