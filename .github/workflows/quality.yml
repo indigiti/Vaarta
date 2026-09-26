@@ -236,6 +236,7 @@ jobs:
           search = Path('template-parts/site-search.php').read_text(encoding='utf-8')
           offcanvas = Path('template-parts/offcanvas.php').read_text(encoding='utf-8')
           fullscreen = Path('template-parts/fullscreen-menu.php').read_text(encoding='utf-8')
+          comments = Path('comments.php').read_text(encoding='utf-8')
 
           if "'/inc/vaarta-mega-menu.php'" not in functions:
               raise SystemExit('functions.php must load the hardened Vaarta mega-menu layer')
@@ -249,6 +250,7 @@ jobs:
               'fullscreen-nav': Path('assets/js/modules/fullscreen-nav.js'),
               'fullscreen': Path('assets/js/modules/fullscreen.js'),
               'scheme': Path('assets/js/modules/scheme.js'),
+              'article-interactions': Path('assets/js/modules/article-interactions.js'),
           }
           for name, path in modules.items():
               if not path.is_file():
@@ -265,6 +267,8 @@ jobs:
               "off( 'click', '.cs-site-scheme-toggle' )",
               "off( 'mouseenter', '.cs-fullscreen-menu .menu-item' )",
               "off( 'mouseleave', '.cs-fullscreen-menu__nav-col, .cs-fullscreen-menu__nav-inner' )",
+              "off( 'click', '.cs-entry__comments-show button' )",
+              ".cs-entry__after-share-buttons-copy' ).off( 'click' )",
           )
           for token in required_runtime:
               if token not in runtime:
@@ -281,6 +285,18 @@ jobs:
           for token in required_fullscreen_nav:
               if token not in fullscreen_nav:
                   raise SystemExit(f'Fullscreen navigation module missing behavior contract: {token}')
+
+          article = modules['article-interactions'].read_text(encoding='utf-8')
+          required_article = (
+              'window.vaartaArticleInteractions',
+              'navigator.clipboard',
+              "vaarta:comments-open",
+              "vaarta:share-copy",
+              'aria-hidden',
+          )
+          for token in required_article:
+              if token not in article:
+                  raise SystemExit(f'Article interaction module missing behavior contract: {token}')
 
           if "array( 'csco-scripts' )" not in assets or "array( 'vaarta-runtime' )" not in assets:
               raise SystemExit('Vaarta chrome modules must load after the legacy bundle through dependencies')
@@ -304,6 +320,7 @@ jobs:
               'site search': (search, 'id="vaarta-site-search"', 'aria-live="polite"', 'type="button"'),
               'offcanvas': (offcanvas, 'id="vaarta-offcanvas"', 'role="dialog"', 'aria-modal="true"'),
               'fullscreen': (fullscreen, 'id="vaarta-fullscreen-menu"', 'role="dialog"', 'aria-modal="true"'),
+              'comments': (comments, 'aria-hidden="true"', 'aria-expanded="false"', 'aria-controls="comments-hidden"'),
           }
           for label, values in markup_contracts.items():
               text = values[0]
@@ -311,7 +328,7 @@ jobs:
                   if token not in text:
                       raise SystemExit(f'{label} markup missing contract: {token}')
 
-          print('Vaarta modular site chrome and accessibility contracts are valid')
+          print('Vaarta modular site chrome and article accessibility contracts are valid')
           PY
 
   security-regressions:
