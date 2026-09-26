@@ -115,6 +115,15 @@
 		$( '.cs-header__offcanvas-toggle, .cs-site-overlay, .cs-offcanvas__toggle' ).off( 'click' );
 		$( '.cs-header__fullscreen-menu-toggle, .cs-fullscreen-menu__header-toggle' ).off( 'click' );
 		$( document ).off( 'click', '.cs-site-scheme-toggle' );
+
+		// Fullscreen navigation columns and nested disclosure behavior are delegated
+		// by the legacy bundle, so they can be removed without disturbing unrelated
+		// document events.
+		$( document ).off( 'click', '.cs-fullscreen-menu__nav-col-last > .sub-menu > .menu-item-has-children > span' );
+		$( document ).off( 'click', '.cs-fullscreen-menu__nav-col-last > .sub-menu > .menu-item-has-children > a' );
+		$( document ).off( 'mouseenter', '.cs-fullscreen-menu .menu-item' );
+		$( document ).off( 'mouseenter', '.cs-fullscreen-menu__nav-col, .cs-fullscreen-menu__nav-inner' );
+		$( document ).off( 'mouseleave', '.cs-fullscreen-menu__nav-col, .cs-fullscreen-menu__nav-inner' );
 	};
 
 	api.detachLegacyChromeHandlers();
