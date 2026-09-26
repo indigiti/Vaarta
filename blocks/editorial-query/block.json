@@ -1,0 +1,93 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vaarta/editorial-query",
+  "version": "2.0.0-alpha.1",
+  "title": "Editorial Query",
+  "category": "vaarta-editorial",
+  "icon": "grid-view",
+  "description": "Query and display stories with Vaarta's existing editorial card layouts using native Gutenberg controls.",
+  "keywords": ["posts", "query", "grid", "magazine", "stories"],
+  "textdomain": "caards",
+  "attributes": {
+    "layout": {
+      "type": "string",
+      "default": "standard-type-1"
+    },
+    "postsToShow": {
+      "type": "number",
+      "default": 6
+    },
+    "category": {
+      "type": "number",
+      "default": 0
+    },
+    "orderBy": {
+      "type": "string",
+      "default": "date"
+    },
+    "order": {
+      "type": "string",
+      "default": "DESC"
+    },
+    "offset": {
+      "type": "number",
+      "default": 0
+    },
+    "excludeCurrent": {
+      "type": "boolean",
+      "default": true
+    },
+    "showCategory": {
+      "type": "boolean",
+      "default": true
+    },
+    "showAuthor": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDate": {
+      "type": "boolean",
+      "default": true
+    },
+    "showExcerpt": {
+      "type": "boolean",
+      "default": true
+    },
+    "excerptLength": {
+      "type": "number",
+      "default": 24
+    },
+    "imageSize": {
+      "type": "string",
+      "default": "medium_large"
+    },
+    "imageOrientation": {
+      "type": "string",
+      "default": "landscape-16-9"
+    },
+    "columns": {
+      "type": "number",
+      "default": 1
+    },
+    "columnGap": {
+      "type": "number",
+      "default": 40
+    },
+    "rowGap": {
+      "type": "number",
+      "default": 40
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": ["wide", "full"],
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}
