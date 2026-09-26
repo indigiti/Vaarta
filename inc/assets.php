@@ -41,7 +41,8 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		wp_register_script( 'vaarta-runtime', get_template_directory_uri() . '/assets/js/modules/runtime.js', array( 'csco-scripts' ), $version, true );
 		wp_register_script( 'vaarta-search', get_template_directory_uri() . '/assets/js/modules/search.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-offcanvas', get_template_directory_uri() . '/assets/js/modules/offcanvas.js', array( 'vaarta-runtime' ), $version, true );
-		wp_register_script( 'vaarta-fullscreen', get_template_directory_uri() . '/assets/js/modules/fullscreen.js', array( 'vaarta-runtime', 'vaarta-search' ), $version, true );
+		wp_register_script( 'vaarta-fullscreen-nav', get_template_directory_uri() . '/assets/js/modules/fullscreen-nav.js', array( 'vaarta-runtime' ), $version, true );
+		wp_register_script( 'vaarta-fullscreen', get_template_directory_uri() . '/assets/js/modules/fullscreen.js', array( 'vaarta-runtime', 'vaarta-search', 'vaarta-fullscreen-nav' ), $version, true );
 		wp_register_script( 'vaarta-scheme', get_template_directory_uri() . '/assets/js/modules/scheme.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script(
 			'vaarta-chrome',
@@ -58,6 +59,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 			'vaarta-runtime',
 			'vaarta-search',
 			'vaarta-offcanvas',
+			'vaarta-fullscreen-nav',
 			'vaarta-fullscreen',
 			'vaarta-scheme',
 			'vaarta-chrome',
