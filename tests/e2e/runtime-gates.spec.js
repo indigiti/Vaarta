@@ -4,17 +4,20 @@ function isMobileProject( testInfo ) {
 	return testInfo.project.name.includes( 'mobile' );
 }
 
-test( 'legacy bundle entry keeps migrated runtime modules gated', async ( { page }, testInfo ) => {
+test( 'legacy bundle is not enqueued and keeps migrated modules gated', async ( { page }, testInfo ) => {
 	test.skip( isMobileProject( testInfo ), 'Generated bundle gate is verified once in the desktop project.' );
 
 	await page.goto( '/' );
-	const source = await page.locator( 'script[src*="/assets/js/scripts.js"]' ).getAttribute( 'src' );
-	expect( source ).toBeTruthy();
+	await expect( page.locator( 'script[src*="/assets/js/scripts.js"]' ) ).toHaveCount( 0 );
 
-	const bundle = await page.evaluate( async ( scriptSource ) => {
-		const response = await fetch( scriptSource, { credentials: 'same-origin' } );
+	const runtimeSource = await page.locator( 'script[src*="/assets/js/modules/runtime.js"]' ).getAttribute( 'src' );
+	expect( runtimeSource ).toBeTruthy();
+
+	const bundle = await page.evaluate( async ( source ) => {
+		const bundleUrl = new URL( '../scripts.js', new URL( source, window.location.href ) );
+		const response = await fetch( bundleUrl.toString(), { credentials: 'same-origin' } );
 		return response.text();
-	}, source );
+	}, runtimeSource );
 
 	const gatedModules = {
 		2: 'Vaarta native carousel owns legacy Webpack module 2.',
