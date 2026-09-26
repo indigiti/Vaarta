@@ -149,6 +149,11 @@ require_once get_theme_file_path( '/inc/gutenberg.php' );
 require_once get_theme_file_path( '/inc/vaarta-blocks.php' );
 
 /**
+ * Native Vaarta block-pattern categories.
+ */
+require_once get_theme_file_path( '/inc/vaarta-patterns.php' );
+
+/**
  * Actions.
  */
 require_once get_theme_file_path( '/inc/actions.php' );
