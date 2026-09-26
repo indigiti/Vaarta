@@ -2,7 +2,7 @@
 /**
  * The template part for displaying off-canvas area.
  *
- * @package Caards
+ * @package Vaarta
  */
 
 if ( csco_offcanvas_exists() ) {
@@ -13,16 +13,16 @@ if ( csco_offcanvas_exists() ) {
 	);
 	?>
 
-	<div class="cs-site-overlay"></div>
+	<div class="cs-site-overlay" aria-hidden="true"></div>
 
-	<div class="cs-offcanvas">
+	<div id="vaarta-offcanvas" class="cs-offcanvas" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Site menu', 'caards' ); ?>" aria-hidden="true" tabindex="-1">
 		<div class="cs-offcanvas__header" <?php echo wp_kses( $scheme, 'csco' ); ?>>
 			<?php do_action( 'csco_offcanvas_header_start' ); ?>
 
-			<nav class="cs-offcanvas__nav">
+			<nav class="cs-offcanvas__nav" aria-label="<?php esc_attr_e( 'Mobile navigation', 'caards' ); ?>">
 				<?php csco_component( 'header_logo' ); ?>
 
-				<span class="cs-offcanvas__toggle" role="button"><i class="cs-icon cs-icon-x"></i></span>
+				<span class="cs-offcanvas__toggle" role="button" tabindex="0" aria-controls="vaarta-offcanvas" aria-label="<?php esc_attr_e( 'Close menu', 'caards' ); ?>"><i class="cs-icon cs-icon-x" aria-hidden="true"></i></span>
 			</nav>
 
 			<?php do_action( 'csco_offcanvas_header_end' ); ?>
