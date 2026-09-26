@@ -20,6 +20,8 @@ test( 'continuous reading owns title and URL synchronization', async ( { page },
 
 	const nextSection = page.locator( '.cs-nextpost-section' ).first();
 	await expect( nextSection ).toHaveAttribute( 'data-title', 'Vaarta Test Story 2' );
+	const nextUrl = await nextSection.getAttribute( 'data-url' );
+	expect( nextUrl ).toBeTruthy();
 
 	await page.evaluate( () => {
 		const section = document.querySelector( '.cs-nextpost-section' );
@@ -27,7 +29,7 @@ test( 'continuous reading owns title and URL synchronization', async ( { page },
 		window.vaartaContinuousReading.syncHistory();
 	} );
 
-	await expect.poll( () => new URL( page.url() ).pathname ).toBe( '/vaarta-test-story-2/' );
+	await expect.poll( () => page.url() ).toBe( nextUrl );
 	await expect.poll( () => page.title() ).toContain( 'Vaarta Test Story 2' );
 
 	await page.evaluate( () => {
