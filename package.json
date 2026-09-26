@@ -1,0 +1,14 @@
+{
+  "name": "vaarta-theme",
+  "private": true,
+  "version": "2.0.0-alpha.1",
+  "description": "Development and browser-test tooling for the Vaarta WordPress theme.",
+  "scripts": {
+    "wp-env": "wp-env",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@wordpress/env": "11.16.0"
+  }
+}
