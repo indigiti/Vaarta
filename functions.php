@@ -165,22 +165,27 @@ require_once get_theme_file_path( '/inc/vaarta-patterns.php' );
 
 /**
  * Accessible header-control compatibility functions.
- * Loaded before legacy theme-tags so its conditional definitions are skipped.
  */
 require_once get_theme_file_path( '/inc/vaarta-chrome-markup.php' );
 
 /**
  * Vaarta-owned header/footer shell components and csco_* compatibility wrappers.
- * Loaded before legacy theme-tags so adopted component definitions stay dormant.
  */
 require_once get_theme_file_path( '/inc/vaarta-shell-components.php' );
 
 /**
- * Vaarta-owned post/article context and editorial-card renderers.
- * Their csco_* wrappers preserve the established template and child-theme API.
+ * Vaarta-owned post/article context, editorial-card renderers, and metadata.
+ * Legacy csco_* names remain available as compatibility wrappers.
  */
 require_once get_theme_file_path( '/inc/vaarta-editorial-components.php' );
+require_once get_theme_file_path( '/inc/vaarta-post-meta.php' );
 require_once get_theme_file_path( '/inc/vaarta-card-renderers.php' );
+
+/**
+ * Legacy inc/theme-tags.php and inc/post-meta.php remain in the repository as
+ * migration reference/fallback source but are no longer part of the active
+ * bootstrap. Their public runtime APIs are owned by the Vaarta modules above.
+ */
 
 /**
  * Actions.
@@ -196,17 +201,6 @@ require_once get_theme_file_path( '/inc/partials.php' );
  * Meta Boxes.
  */
 require_once get_theme_file_path( '/inc/metabox.php' );
-
-/**
- * Custom template tags for this theme.
- * Unadopted compatibility helpers remain here during the migration phase.
- */
-require_once get_theme_file_path( '/inc/theme-tags.php' );
-
-/**
- * Custom post meta function.
- */
-require_once get_theme_file_path( '/inc/post-meta.php' );
 
 /**
  * Nav Menu.
