@@ -73,10 +73,10 @@ if ( ! wp_get_nav_menu_items( $fullscreen_id ) ) {
 	vaarta_e2e_menu_item( $fullscreen_id, 'Culture', home_url( '/?s=culture' ), $stories_id );
 }
 
-$locations               = (array) get_theme_mod( 'nav_menu_locations', array() );
-$locations['primary']     = $primary_id;
-$locations['mobile']      = $primary_id;
-$locations['fullscreen']  = $fullscreen_id;
+$locations              = (array) get_theme_mod( 'nav_menu_locations', array() );
+$locations['primary']    = $primary_id;
+$locations['mobile']     = $primary_id;
+$locations['fullscreen'] = $fullscreen_id;
 set_theme_mod( 'nav_menu_locations', $locations );
 
 set_theme_mod( 'header_navigation_menu', true );
@@ -86,6 +86,10 @@ set_theme_mod( 'color_scheme_toggle', true );
 set_theme_mod( 'color_scheme', 'system' );
 set_theme_mod( 'post_share_link', true );
 set_theme_mod( 'post_comments_simple', false );
+
+// Keep archive pagination deterministic so the browser suite exercises the
+// native Vaarta load-more transport against a real second query page.
+update_option( 'posts_per_page', 2 );
 
 for ( $index = 1; $index <= 3; $index++ ) {
 	$title = sprintf( 'Vaarta Test Story %d', $index );
