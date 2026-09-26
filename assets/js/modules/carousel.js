@@ -125,7 +125,7 @@
 		var groupCells = 'large' === type && boolData( init, 'groupcells', false );
 		var shouldEnable = cells.length >= columns + 1;
 		var existing = getFlickity( slider );
-		var state = states.get( block ) || { slider: slider, controlsBound: false, columns: null, instance: null };
+		var state = states.get( block ) || { slider: slider, controlsBound: false, columns: null, instance: null, selectBound: false };
 		state.slider = slider;
 		bindControls( block, state );
 
@@ -133,8 +133,10 @@
 			if ( existing ) {
 				existing.destroy();
 			}
+			slider.classList.remove( 'cs-groupcells-active' );
 			state.instance = null;
 			state.columns = columns;
+			state.selectBound = false;
 			states.set( block, state );
 			return null;
 		}
@@ -143,6 +145,7 @@
 		if ( needsRecreate && existing ) {
 			existing.destroy();
 			existing = null;
+			state.selectBound = false;
 		}
 
 		if ( ! existing ) {
@@ -157,11 +160,12 @@
 
 			if ( 'wide' === type ) {
 				options.cellAlign = rtl ? 'right' : 'left';
+				slider.classList.remove( 'cs-groupcells-active' );
 			} else {
 				options.groupCells = groupCells ? columns : false;
 				options.selectedAttraction = 0.006;
 				options.friction = 0.14;
-				block.classList.toggle( 'cs-groupcells-active', groupCells );
+				slider.classList.toggle( 'cs-groupcells-active', groupCells );
 			}
 
 			existing = new window.Flickity( slider, options );
@@ -198,7 +202,7 @@
 		var rtl = document.body.classList.contains( 'rtl' );
 		var wrapAround = boolData( block, 'wraparound', false );
 		var autoPlay = boolData( block, 'autoplay', false );
-		var state = states.get( block ) || { slider: slider, controlsBound: false };
+		var state = states.get( block ) || { slider: slider, controlsBound: false, selectBound: false };
 		state.slider = slider;
 		bindControls( block, state );
 		var instance = getFlickity( slider );
@@ -207,6 +211,8 @@
 			if ( instance ) {
 				instance.destroy();
 			}
+			state.instance = null;
+			state.selectBound = false;
 			states.set( block, state );
 			return null;
 		}
