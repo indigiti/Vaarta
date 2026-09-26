@@ -7,14 +7,6 @@
  * @package Caards
  */
 
-update_option( 'caards_license_data', [
-	'status'          => 'active',
-	'count'           => '1',
-	'sold_at'         => 'now',
-	'supported_until' => 'now',
-	'demos_list'      => 'csco_register_demos_list',
-] );
-
 if ( ! function_exists( 'csco_setup' ) ) {
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
