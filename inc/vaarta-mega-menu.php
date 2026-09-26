@@ -29,6 +29,52 @@ if ( class_exists( 'CSCO_Mega_Menu' ) && ! class_exists( 'Vaarta_Mega_Menu' ) ) 
 		}
 
 		/**
+		 * Save the legacy mega-menu field only for an authenticated nav-menu form.
+		 *
+		 * WordPress also fires wp_update_nav_menu_item for WP-CLI, REST, imports and
+		 * other programmatic menu updates. Those contexts do not carry the
+		 * nav-menus.php nonce and must not be terminated by an admin-form check.
+		 *
+		 * @param int   $menu_id         Nav menu ID.
+		 * @param int   $menu_item_db_id Menu item ID.
+		 * @param array $menu_item_args  Menu item data.
+		 */
+		public function admin_save_new_fields( $menu_id, $menu_item_db_id, $menu_item_args ) {
+			unset( $menu_id, $menu_item_args );
+
+			if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX )
+				|| ( defined( 'REST_REQUEST' ) && REST_REQUEST )
+				|| ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+				return;
+			}
+
+			if ( ! is_admin() || ! current_user_can( 'edit_theme_options' ) ) {
+				return;
+			}
+
+			// If the menu item was changed programmatically from an admin request,
+			// leave the existing mega-menu metadata untouched.
+			if ( ! isset( $_POST['update-nav-menu-nonce'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Presence is checked before verification below.
+				return;
+			}
+
+			check_admin_referer( 'update-nav_menu', 'update-nav-menu-nonce' );
+
+			foreach ( self::$fields as $_key => $field ) {
+				unset( $field );
+				$key = sprintf( 'menu-item-%s', $_key );
+
+				if ( isset( $_POST[ $key ][ $menu_item_db_id ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified above.
+					$value = sanitize_text_field( wp_unslash( $_POST[ $key ][ $menu_item_db_id ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified above.
+					update_post_meta( $menu_item_db_id, $key, $value );
+				} else {
+					// Unchecked checkboxes are absent from the nav-menu form payload.
+					delete_post_meta( $menu_item_db_id, $key );
+				}
+			}
+		}
+
+		/**
 		 * Refresh the menu editor after a protected theme-location change.
 		 */
 		public function admin_reload_nav_menu() {
