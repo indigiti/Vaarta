@@ -51,6 +51,8 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		wp_register_script( 'vaarta-tile-hover', get_template_directory_uri() . '/assets/js/modules/tile-hover.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-player-controls', get_template_directory_uri() . '/assets/js/modules/player-controls.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-widget-nav', get_template_directory_uri() . '/assets/js/modules/widget-nav.js', array( 'vaarta-runtime' ), $version, true );
+		wp_register_script( 'vaarta-sticky-sidebar', get_template_directory_uri() . '/assets/js/modules/sticky-sidebar.js', array( 'vaarta-runtime', 'vaarta-navigation' ), $version, true );
+		wp_register_script( 'vaarta-video-background', get_template_directory_uri() . '/assets/js/modules/video-background.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-masonry', get_template_directory_uri() . '/assets/js/modules/masonry.js', array( 'vaarta-runtime', 'colcade' ), $version, true );
 		wp_register_script( 'vaarta-load-more', get_template_directory_uri() . '/assets/js/modules/load-more.js', array( 'vaarta-runtime', 'vaarta-masonry' ), $version, true );
 		wp_register_script( 'vaarta-continuous-reading', get_template_directory_uri() . '/assets/js/modules/continuous-reading.js', array( 'vaarta-runtime' ), $version, true );
@@ -67,6 +69,8 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 				'vaarta-tile-hover',
 				'vaarta-player-controls',
 				'vaarta-widget-nav',
+				'vaarta-sticky-sidebar',
+				'vaarta-video-background',
 			),
 			$version,
 			true
@@ -90,6 +94,8 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 			'vaarta-tile-hover',
 			'vaarta-player-controls',
 			'vaarta-widget-nav',
+			'vaarta-sticky-sidebar',
+			'vaarta-video-background',
 			'vaarta-masonry',
 			'vaarta-load-more',
 			'vaarta-continuous-reading',
