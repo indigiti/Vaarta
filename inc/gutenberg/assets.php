@@ -1,53 +1,46 @@
 <?php
 /**
- * Assets
+ * Block editor assets.
  *
- * All enqueues of scripts and styles.
+ * Frontend interaction code is intentionally not loaded in the editor. The
+ * editor receives only presentation assets required for visual parity.
  *
- * @package Caards
+ * @package Vaarta
  */
 
 if ( ! function_exists( 'csco_editor_style' ) ) {
 	/**
-	 * Add callback for custom editor stylesheets.
+	 * Enable editor styles early enough for the block editor iframe.
 	 */
 	function csco_editor_style() {
-		// Add support for editor styles.
 		add_theme_support( 'editor-styles' );
+		add_editor_style( 'assets/css/editor-style.css' );
 	}
 }
-add_action( 'current_screen', 'csco_editor_style' );
+add_action( 'after_setup_theme', 'csco_editor_style', 20 );
 
 if ( ! function_exists( 'csco_enqueue_block_editor_assets' ) ) {
 	/**
-	 * Enqueue block editor specific scripts.
+	 * Enqueue editor-only styles.
+	 *
+	 * Interactive frontend dependencies such as Flickity, Colcade, scroll
+	 * handlers, cookie helpers, and continuous-reading code are excluded from
+	 * the editor runtime. Editor-specific scripts can be added here as Vaarta's
+	 * Gutenberg modules are migrated.
 	 */
 	function csco_enqueue_block_editor_assets() {
-		$version = csco_get_theme_data( 'Version' );
+		$version = function_exists( 'vaarta_get_foundation_version' )
+			? vaarta_get_foundation_version()
+			: csco_get_theme_data( 'Version' );
 
-		// Register theme scripts.
-		wp_register_script( 'colcade', get_template_directory_uri() . '/assets/vendor/colcade.js', array( 'jquery' ), $version, true );
-		wp_register_script( 'csco-scripts', get_template_directory_uri() . '/assets/js/scripts.js', array( 'jquery', 'imagesloaded', 'colcade' ), $version, true );
-
-		// Localization array.
-		$localize = array(
-			'siteSchemeMode'   => 'light',
-			'siteSchemeToogle' => false,
+		wp_register_style(
+			'csco-editor',
+			csco_style( get_template_directory_uri() . '/assets/css/editor-style.css' ),
+			array(),
+			$version
 		);
 
-		// Localize the main theme scripts.
-		wp_localize_script( 'csco-scripts', 'csLocalize', $localize );
-
-		// Enqueue theme scripts.
-		wp_enqueue_script( 'csco-scripts' );
-
-		// Register theme styles.
-		wp_register_style( 'csco-editor', csco_style( get_template_directory_uri() . '/assets/css/editor-style.css' ), false, $version );
-
-		// Add RTL support.
 		wp_style_add_data( 'csco-editor', 'rtl', 'replace' );
-
-		// Enqueue theme styles.
 		wp_enqueue_style( 'csco-editor' );
 	}
 	add_action( 'enqueue_block_editor_assets', 'csco_enqueue_block_editor_assets' );
