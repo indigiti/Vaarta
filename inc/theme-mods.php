@@ -6,6 +6,15 @@
  */
 
 /**
+ * Vaarta multicheck compatibility normalization.
+ *
+ * Loaded before the legacy field definitions are registered so the Customizer
+ * write sanitizer is available, while its read-time filters attach after the
+ * complete field catalog exists.
+ */
+require_once get_theme_file_path( '/inc/vaarta-multicheck-compat.php' );
+
+/**
  * Register Theme Mods
  */
 function csco_register_theme_mods() {
