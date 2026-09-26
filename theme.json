@@ -1,0 +1,89 @@
+{
+  "$schema": "https://schemas.wp.org/wp/7.1/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "color": {
+      "custom": true,
+      "defaultPalette": false,
+      "palette": [
+        {
+          "slug": "primary",
+          "name": "Primary",
+          "color": "#2F323D"
+        },
+        {
+          "slug": "secondary",
+          "name": "Secondary",
+          "color": "#78848F"
+        },
+        {
+          "slug": "accent",
+          "name": "Accent",
+          "color": "#2D5DE0"
+        },
+        {
+          "slug": "surface",
+          "name": "Surface",
+          "color": "#FFFFFF"
+        },
+        {
+          "slug": "surface-muted",
+          "name": "Muted Surface",
+          "color": "#F6F7F8"
+        },
+        {
+          "slug": "site-background",
+          "name": "Site Background",
+          "color": "#E6E9EB"
+        },
+        {
+          "slug": "dark-surface",
+          "name": "Dark Surface",
+          "color": "#1B1C1F"
+        },
+        {
+          "slug": "dark-background",
+          "name": "Dark Background",
+          "color": "#30323E"
+        }
+      ]
+    },
+    "layout": {
+      "contentSize": "677px",
+      "wideSize": "1680px"
+    },
+    "spacing": {
+      "units": [
+        "px",
+        "rem",
+        "%",
+        "vw",
+        "vh"
+      ]
+    },
+    "typography": {
+      "customFontSize": true,
+      "fluid": true
+    },
+    "custom": {
+      "vaarta": {
+        "layout": {
+          "content-medium-width": "1110px",
+          "sidebar-width": "300px",
+          "offcanvas-width": "360px"
+        },
+        "radius": {
+          "layout": "12px",
+          "image": "12px",
+          "input": "6px",
+          "button": "6px",
+          "badge": "4px",
+          "tag": "5px",
+          "pill": "50rem",
+          "round": "50%"
+        }
+      }
+    }
+  }
+}
