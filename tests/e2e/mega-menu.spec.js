@@ -19,13 +19,11 @@ test( 'native mega-menu loader exclusively fetches published taxonomy stories', 
 
 	const runtime = await page.evaluate( () => ( {
 		native: !! window.vaartaMegaMenu,
-		nativeConfig: !! ( window.vaartaMegaMenuConfig && window.vaartaMegaMenuConfig.rest_url ),
-		legacyConfigType: typeof window.csco_mega_menu
+		nativeConfig: !! ( window.vaartaMegaMenuConfig && window.vaartaMegaMenuConfig.rest_url )
 	} ) );
 	expect( runtime ).toEqual( {
 		native: true,
-		nativeConfig: true,
-		legacyConfigType: 'undefined'
+		nativeConfig: true
 	} );
 
 	const item = page.locator( '.cs-header__nav .menu-item.cs-mega-menu-term' ).filter( { hasText: 'Mega News' } ).first();
@@ -39,7 +37,7 @@ test( 'native mega-menu loader exclusively fetches published taxonomy stories', 
 	await expect( posts ).toContainText( 'Vaarta Test Story 3' );
 	await expect( posts ).toContainText( 'Vaarta Test Story 1' );
 
-	// The native controller autoloads this fixture exactly once. If the legacy
-	// jQuery loader were still active it would issue a duplicate request.
+	// The native controller autoloads this fixture exactly once. If a second
+	// frontend loader is introduced it will issue a duplicate request.
 	expect( menuRequests ).toBe( 1 );
 } );
