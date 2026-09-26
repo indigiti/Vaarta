@@ -119,12 +119,15 @@
 			return;
 		}
 
-		var toggle = directChild( item, '.vaarta-widget-nav-toggle' );
+		// Adopt the legacy direct-child span while both runtimes coexist during
+		// migration. Once the Webpack module is gated this remains the same visual
+		// element, now enhanced with an explicit Vaarta class and ARIA state.
+		var toggle = directChild( item, '.vaarta-widget-nav-toggle' ) || directChild( item, 'span' );
 		if ( ! toggle ) {
 			toggle = document.createElement( 'span' );
-			toggle.className = 'vaarta-widget-nav-toggle';
 			item.appendChild( toggle );
 		}
+		toggle.classList.add( 'vaarta-widget-nav-toggle' );
 
 		toggle.setAttribute( 'role', 'button' );
 		toggle.setAttribute( 'tabindex', '0' );
