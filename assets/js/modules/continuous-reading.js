@@ -21,10 +21,12 @@
 	var sentinel = null;
 	var observer = null;
 	var loading = false;
+	var historyTicking = false;
+	var initialTitle = document.title;
+	var initialUrl = window.location.href;
 
 	// The compiled bundle checks this global before initiating its own request.
-	// Keep its history-sync listener alive for compatibility, but neutralize the
-	// legacy loading branch now owned by this module.
+	// Keep its loading branch neutral while the native controller owns transport.
 	if ( source && config && config.next_post ) {
 		source.next_post = false;
 	}
@@ -106,6 +108,72 @@
 		}
 	}
 
+	function analyticsPageView( title, url ) {
+		if ( 'function' !== typeof window.gtag || ! window.gaData || 'object' !== typeof window.gaData ) {
+			return;
+		}
+
+		var trackingId = Object.keys( window.gaData )[0];
+		if ( ! trackingId ) {
+			return;
+		}
+
+		window.gtag( 'config', trackingId, {
+			page_title: title,
+			page_location: url
+		} );
+		window.gtag( 'event', 'page_view', { send_to: trackingId } );
+	}
+
+	function activateHistory( title, url ) {
+		if ( ! url || window.location.href === url ) {
+			return;
+		}
+
+		document.title = title || document.title;
+		window.history.pushState( null, title || document.title, url );
+		analyticsPageView( title || document.title, url );
+		runtime.emit( 'vaarta:continuous-reading-history', { title: title || document.title, url: url } );
+	}
+
+	function syncHistory() {
+		historyTicking = false;
+		var scrollTop = Math.max( 0, window.scrollY || window.pageYOffset || 0 );
+		var sections = Array.prototype.slice.call( document.querySelectorAll( '.cs-nextpost-section' ) );
+
+		if ( ! sections.length ) {
+			return;
+		}
+
+		var firstTop = sections[0].getBoundingClientRect().top + scrollTop;
+		if ( scrollTop < firstTop && window.location.href !== initialUrl ) {
+			document.title = initialTitle;
+			window.history.pushState( null, initialTitle, initialUrl );
+			runtime.emit( 'vaarta:continuous-reading-history', { title: initialTitle, url: initialUrl } );
+			return;
+		}
+
+		for ( var index = 0; index < sections.length; index++ ) {
+			var section = sections[ index ];
+			var rect = section.getBoundingClientRect();
+			var top = rect.top + scrollTop;
+			var height = rect.height || section.offsetHeight;
+
+			if ( scrollTop > top && scrollTop < top + height ) {
+				activateHistory( section.getAttribute( 'data-title' ) || '', section.getAttribute( 'data-url' ) || '' );
+				break;
+			}
+		}
+	}
+
+	function requestHistorySync() {
+		if ( historyTicking ) {
+			return;
+		}
+		historyTicking = true;
+		window.requestAnimationFrame( syncHistory );
+	}
+
 	async function load() {
 		if ( loading || ! config || ! config.next_post ) {
 			return false;
@@ -157,6 +225,7 @@
 	}
 
 	api.load = load;
+	api.syncHistory = syncHistory;
 	api.getState = function () {
 		return config ? {
 			nextPost: config.next_post,
@@ -166,6 +235,9 @@
 	};
 
 	api.init = function () {
+		window.addEventListener( 'scroll', requestHistorySync, { passive: true } );
+		document.addEventListener( 'vaarta:next-post-added', requestHistorySync );
+
 		if ( ! config || ! config.next_post || ! ensureContainer() ) {
 			return;
 		}
