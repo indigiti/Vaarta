@@ -9,6 +9,14 @@
  */
 
 :root {
+	/* Shell dimensions. */
+	--cs-header-height: var(--wp--custom--vaarta--shell--header-height, 80px);
+	--cs-header-initial-height: var(--wp--custom--vaarta--shell--header-initial-height, 80px);
+	--cs-search-height: var(--wp--custom--vaarta--shell--search-height, 80px);
+	--cs-header-topbar-height: var(--wp--custom--vaarta--shell--header-topbar-height, 115px);
+	--cs-header-padding: var(--wp--custom--vaarta--shell--header-padding, 64px);
+	--cs-footer-padding: var(--wp--custom--vaarta--shell--footer-padding, 64px);
+
 	/* Layout widths. */
 	--cs-entry-content-width: var(--wp--style--global--content-size, 677px);
 	--cs-entry-content-medium-width: var(--wp--custom--vaarta--layout--content-medium-width, 1110px);
