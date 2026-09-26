@@ -32,7 +32,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		// Keep the remaining legacy dependency graph while Vaarta replaces
 		// individual behaviors with small native modules.
 		wp_register_script( 'flickity', get_template_directory_uri() . '/assets/vendor/flickity.pkgd.min.js', array(), $version, true );
-		wp_register_script( 'colcade', get_template_directory_uri() . '/assets/vendor/colcade.js', array( 'jquery' ), $version, true );
+		wp_register_script( 'colcade', get_template_directory_uri() . '/assets/vendor/colcade.js', array(), $version, true );
 		wp_register_script( 'csco-scripts', get_template_directory_uri() . '/assets/js/scripts.js', array( 'jquery', 'imagesloaded', 'flickity', 'colcade' ), $version, true );
 
 		// Modular Vaarta runtime. The compatibility shim executes after the
