@@ -131,5 +131,24 @@
 		$( '.cs-entry__after-share-buttons-copy' ).off( 'click' );
 	};
 
+	/**
+	 * Disable the legacy load-more click path and its anonymous infinite-scroll
+	 * loop without removing unrelated window scroll listeners. Existing buttons
+	 * keep their visual/data contract, but Vaarta's native module owns requests.
+	 */
+	api.detachLegacyPaginationHandlers = function ( root ) {
+		if ( ! window.jQuery ) {
+			return;
+		}
+
+		var $ = window.jQuery;
+		$( 'body' ).off( 'click', '.cs-load-more' );
+		$( root || document ).find( '.cs-load-more' ).each( function () {
+			$( this ).data( 'scrollHandling', { allow: false, delay: 400 } );
+			$( this ).data( 'loading', false );
+		} );
+	};
+
 	api.detachLegacyChromeHandlers();
+	api.detachLegacyPaginationHandlers( document );
 } )();
