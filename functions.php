@@ -108,11 +108,12 @@ require_once get_theme_file_path( '/inc/theme-setup.php' );
 require_once get_theme_file_path( '/core/customizer/class-customizer.php' );
 
 /**
- * Typed settings, integration adapters, and template rendering facade.
- * These load before legacy helpers so their csco_* compatibility wrappers can
- * own adopted behavior without redeclaring the rest of the legacy API.
+ * Typed settings, Customizer sanitation, integration adapters, and template
+ * rendering facade. These load before legacy helpers so their csco_* wrappers
+ * can own adopted behavior without redeclaring the rest of the legacy API.
  */
 require_once get_theme_file_path( '/inc/vaarta-settings.php' );
+require_once get_theme_file_path( '/inc/vaarta-customizer-sanitizers.php' );
 require_once get_theme_file_path( '/inc/vaarta-integrations.php' );
 require_once get_theme_file_path( '/inc/vaarta-template-api.php' );
 
