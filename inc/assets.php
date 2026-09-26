@@ -29,15 +29,13 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 			? vaarta_get_foundation_version()
 			: csco_get_theme_data( 'Version' );
 
-		// Keep the remaining legacy dependency graph while Vaarta replaces
-		// individual behaviors with small native modules.
+		// Vendor libraries stay isolated behind the native Vaarta adapters that use them.
 		wp_register_script( 'flickity', get_template_directory_uri() . '/assets/vendor/flickity.pkgd.min.js', array(), $version, true );
 		wp_register_script( 'colcade', get_template_directory_uri() . '/assets/vendor/colcade.js', array(), $version, true );
-		wp_register_script( 'csco-scripts', get_template_directory_uri() . '/assets/js/scripts.js', array( 'jquery', 'imagesloaded', 'flickity', 'colcade' ), $version, true );
 
-		// Modular Vaarta runtime. The compiled bundle remains only for behaviors
-		// that have not yet moved to native modules.
-		wp_register_script( 'vaarta-runtime', get_template_directory_uri() . '/assets/js/modules/runtime.js', array( 'csco-scripts' ), $version, true );
+		// Modular Vaarta runtime. The old compiled bundle is retained in the repository
+		// only as a compatibility/reference artifact and is no longer enqueued.
+		wp_register_script( 'vaarta-runtime', get_template_directory_uri() . '/assets/js/modules/runtime.js', array(), $version, true );
 		wp_register_script( 'vaarta-search', get_template_directory_uri() . '/assets/js/modules/search.js', array( 'vaarta-runtime' ), $version, true );
 		wp_register_script( 'vaarta-navigation', get_template_directory_uri() . '/assets/js/modules/navigation.js', array( 'vaarta-runtime', 'vaarta-search' ), $version, true );
 		wp_register_script( 'vaarta-carousel', get_template_directory_uri() . '/assets/js/modules/carousel.js', array( 'vaarta-runtime', 'flickity', 'imagesloaded' ), $version, true );
@@ -79,7 +77,6 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 		$deferred_scripts = array(
 			'flickity',
 			'colcade',
-			'csco-scripts',
 			'vaarta-runtime',
 			'vaarta-search',
 			'vaarta-navigation',
@@ -111,7 +108,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 			'siteSchemeToogle' => get_theme_mod( 'color_scheme_toggle', true ),
 		);
 
-		wp_localize_script( 'csco-scripts', 'csLocalize', $localize );
+		wp_localize_script( 'vaarta-runtime', 'csLocalize', $localize );
 		wp_localize_script(
 			'vaarta-article-interactions',
 			'vaartaArticleI18n',
