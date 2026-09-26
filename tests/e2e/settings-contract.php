@@ -48,9 +48,13 @@ $test_keys = array(
 	'color_accent',
 	'header_layout',
 	'header_search_type',
+	'header_height',
 	'header_button_link',
 	'header_button_target',
+	'header_multi_column_posts_meta',
 	'footer_layout',
+	'site_background',
+	'font_base',
 );
 
 $original_mods = get_theme_mods();
@@ -61,6 +65,7 @@ try {
 	vaarta_test_settings_assert( function_exists( 'vaarta_render_site_header' ), 'Vaarta header renderer is not loaded.' );
 	vaarta_test_settings_assert( function_exists( 'vaarta_render_site_footer' ), 'Vaarta footer renderer is not loaded.' );
 	vaarta_test_settings_assert( function_exists( 'vaarta_powerkit_module_enabled' ), 'Vaarta integration facade is not loaded.' );
+	vaarta_test_settings_assert( function_exists( 'vaarta_sanitize_customizer_field_value' ), 'Complex Customizer sanitation layer is not loaded.' );
 
 	set_theme_mod( 'header_layout', 'three' );
 	vaarta_test_settings_assert( 'three' === vaarta_get_setting( 'header_layout' ), 'Valid header layout was not preserved.' );
@@ -97,6 +102,63 @@ try {
 	);
 	vaarta_test_settings_assert( 'ASC' === vaarta_customize_sanitize_choice_value( 'ASC', $order_setting ), 'Choice sanitizer must preserve case-sensitive keys.' );
 	vaarta_test_settings_assert( 'DESC' === vaarta_customize_sanitize_choice_value( 'invalid', $order_setting ), 'Invalid finite choice did not fall back to its default.' );
+
+	// Dimension fields must keep valid CSS lengths while rejecting declarations.
+	set_theme_mod( 'header_height', '92px' );
+	vaarta_test_settings_assert( '92px' === get_theme_mod( 'header_height' ), 'Valid dimension was not preserved.' );
+	set_theme_mod( 'header_height', '80px; color:red' );
+	vaarta_test_settings_assert( '80px' === get_theme_mod( 'header_height' ), 'Injected dimension did not fall back to the field default.' );
+
+	// Multicheck values are a finite set, not arbitrary strings.
+	set_theme_mod( 'header_multi_column_posts_meta', array( 'date', 'views', 'not-a-meta-key', 'date' ) );
+	vaarta_test_settings_assert(
+		array( 'date', 'views' ) === get_theme_mod( 'header_multi_column_posts_meta' ),
+		'Multicheck sanitizer did not remove unsupported or duplicate values.'
+	);
+
+	// Grouped backgrounds retain their exact legacy array contract while each
+	// CSS/URL sub-value is constrained server-side.
+	set_theme_mod(
+		'site_background',
+		array(
+			'background-color'      => 'expression(alert(1))',
+			'background-image'      => 'javascript:alert(1)',
+			'background-repeat'     => 'inject-repeat',
+			'background-position'   => 'center top',
+			'background-size'       => 'inject-size',
+			'background-attachment' => 'inject-attachment',
+		)
+	);
+	$background = get_theme_mod( 'site_background' );
+	vaarta_test_settings_assert( is_array( $background ), 'Background sanitizer changed the stored value shape.' );
+	vaarta_test_settings_assert( '#f6f7f8' === $background['background-color'], 'Unsafe background color did not fall back safely.' );
+	vaarta_test_settings_assert( '' === $background['background-image'], 'Unsafe background image URL was not rejected.' );
+	vaarta_test_settings_assert( 'no-repeat' === $background['background-repeat'], 'Invalid background repeat did not fall back.' );
+	vaarta_test_settings_assert( 'center top' === $background['background-position'], 'Valid background position was not preserved.' );
+	vaarta_test_settings_assert( 'contain' === $background['background-size'], 'Invalid background size did not fall back.' );
+	vaarta_test_settings_assert( 'scroll' === $background['background-attachment'], 'Invalid background attachment did not fall back.' );
+
+	// Typography must preserve legacy semantic values such as `normal` and font
+	// subsets while dropping CSS declaration injection attempts.
+	set_theme_mod(
+		'font_base',
+		array(
+			'font-family'    => 'Manrope; color:red',
+			'font-size'      => '1rem; color:red',
+			'variant'        => '700italic',
+			'letter-spacing' => 'normal',
+			'line-height'    => '1.5',
+			'subsets'        => array( 'latin', 'latin-ext', '<bad>' ),
+		)
+	);
+	$font_base = get_theme_mod( 'font_base' );
+	vaarta_test_settings_assert( is_array( $font_base ), 'Typography sanitizer changed the stored value shape.' );
+	vaarta_test_settings_assert( false === strpos( $font_base['font-family'], ';' ), 'Typography font family retained a CSS declaration delimiter.' );
+	vaarta_test_settings_assert( ! isset( $font_base['font-size'] ), 'Injected typography font size was not removed.' );
+	vaarta_test_settings_assert( '700italic' === $font_base['variant'], 'Allowed typography variant was not preserved.' );
+	vaarta_test_settings_assert( 'normal' === $font_base['letter-spacing'], 'Legacy `normal` letter spacing was not preserved.' );
+	vaarta_test_settings_assert( '1.5' === $font_base['line-height'], 'Unitless line height was not preserved.' );
+	vaarta_test_settings_assert( array( 'latin', 'latin-ext' ) === $font_base['subsets'], 'Typography subsets were not sanitized compatibly.' );
 } finally {
 	foreach ( $test_keys as $key ) {
 		if ( array_key_exists( $key, $original_mods ) ) {
