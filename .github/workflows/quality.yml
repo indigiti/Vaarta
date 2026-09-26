@@ -217,7 +217,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Validate chrome assets and accessible markup
+      - name: Validate native runtime and accessible markup
         shell: bash
         run: |
           set -euo pipefail
@@ -246,33 +246,51 @@ jobs:
           modules = {
               'runtime': Path('assets/js/modules/runtime.js'),
               'search': Path('assets/js/modules/search.js'),
+              'navigation': Path('assets/js/modules/navigation.js'),
+              'carousel': Path('assets/js/modules/carousel.js'),
+              'mega-menu': Path('assets/js/modules/mega-menu.js'),
               'offcanvas': Path('assets/js/modules/offcanvas.js'),
               'fullscreen-nav': Path('assets/js/modules/fullscreen-nav.js'),
               'fullscreen': Path('assets/js/modules/fullscreen.js'),
               'scheme': Path('assets/js/modules/scheme.js'),
               'article-interactions': Path('assets/js/modules/article-interactions.js'),
+              'metabar-alignment': Path('assets/js/modules/metabar-alignment.js'),
+              'tile-hover': Path('assets/js/modules/tile-hover.js'),
+              'player-controls': Path('assets/js/modules/player-controls.js'),
+              'widget-nav': Path('assets/js/modules/widget-nav.js'),
+              'sticky-sidebar': Path('assets/js/modules/sticky-sidebar.js'),
+              'video-background': Path('assets/js/modules/video-background.js'),
+              'masonry': Path('assets/js/modules/masonry.js'),
+              'load-more': Path('assets/js/modules/load-more.js'),
+              'continuous-reading': Path('assets/js/modules/continuous-reading.js'),
           }
           for name, path in modules.items():
               if not path.is_file():
-                  raise SystemExit(f'Missing Vaarta chrome module: {name}')
+                  raise SystemExit(f'Missing Vaarta runtime module: {name}')
               if f'assets/js/modules/{path.name}' not in assets:
-                  raise SystemExit(f'inc/assets.php must register Vaarta chrome module: {name}')
+                  raise SystemExit(f'inc/assets.php must register Vaarta runtime module: {name}')
 
           runtime = modules['runtime'].read_text(encoding='utf-8')
           required_runtime = (
-              'detachLegacyChromeHandlers',
-              ".cs-header__search-toggle, .cs-search__close",
-              ".cs-header__offcanvas-toggle, .cs-site-overlay, .cs-offcanvas__toggle",
-              ".cs-header__fullscreen-menu-toggle, .cs-fullscreen-menu__header-toggle",
-              "off( 'click', '.cs-site-scheme-toggle' )",
-              "off( 'mouseenter', '.cs-fullscreen-menu .menu-item' )",
-              "off( 'mouseleave', '.cs-fullscreen-menu__nav-col, .cs-fullscreen-menu__nav-inner' )",
-              "off( 'click', '.cs-entry__comments-show button' )",
-              ".cs-entry__after-share-buttons-copy' ).off( 'click' )",
+              'prefersReducedMotion',
+              'fadeIn',
+              'fadeOut',
+              'emit',
+              'getCookie',
+              'setCookie',
           )
           for token in required_runtime:
               if token not in runtime:
-                  raise SystemExit(f'Vaarta runtime compatibility contract missing: {token}')
+                  raise SystemExit(f'Vaarta runtime primitive missing: {token}')
+
+          for forbidden in ('detachLegacyChromeHandlers', 'detachLegacyPaginationHandlers', 'window.jQuery'):
+              if forbidden in runtime:
+                  raise SystemExit(f'Obsolete legacy suppression remains in Vaarta runtime: {forbidden}')
+
+          mega_menu_js = modules['mega-menu'].read_text(encoding='utf-8')
+          for forbidden in ('detachLegacyHandlers', 'window.jQuery'):
+              if forbidden in mega_menu_js:
+                  raise SystemExit(f'Obsolete mega-menu suppression remains: {forbidden}')
 
           fullscreen_nav = modules['fullscreen-nav'].read_text(encoding='utf-8')
           required_fullscreen_nav = (
@@ -298,8 +316,21 @@ jobs:
               if token not in article:
                   raise SystemExit(f'Article interaction module missing behavior contract: {token}')
 
-          if "array( 'csco-scripts' )" not in assets or "array( 'vaarta-runtime' )" not in assets:
-              raise SystemExit('Vaarta chrome modules must load after the legacy bundle through dependencies')
+          if "wp_register_script( 'csco-scripts'" in assets or '/assets/js/scripts.js' in assets:
+              raise SystemExit('Legacy compiled bundle must not be registered or enqueued by frontend assets')
+          if "'jquery'" in assets:
+              raise SystemExit('Frontend Vaarta runtime must not declare jQuery as a theme dependency')
+          if "wp_register_script( 'vaarta-runtime'" not in assets or "wp_localize_script( 'vaarta-runtime', 'csLocalize'" not in assets:
+              raise SystemExit('Native Vaarta runtime registration/localization is incomplete')
+
+          localization_contracts = {
+              Path('inc/load-more.php'): "wp_localize_script( 'vaarta-load-more', 'csco_ajax_pagination'",
+              Path('inc/load-nextpost.php'): "wp_localize_script( 'vaarta-continuous-reading', 'csco_ajax_nextpost'",
+              Path('inc/mega-menu.php'): "wp_localize_script( 'vaarta-mega-menu', 'csco_mega_menu'",
+          }
+          for path, token in localization_contracts.items():
+              if token not in path.read_text(encoding='utf-8'):
+                  raise SystemExit(f'{path}: runtime config must localize onto its native Vaarta handle')
 
           required_js = (
               "'Escape'",
@@ -328,7 +359,7 @@ jobs:
                   if token not in text:
                       raise SystemExit(f'{label} markup missing contract: {token}')
 
-          print('Vaarta modular site chrome and article accessibility contracts are valid')
+          print('Vaarta native bundle-free runtime and accessibility contracts are valid')
           PY
 
   security-regressions:
