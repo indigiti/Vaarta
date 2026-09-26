@@ -16,6 +16,7 @@ test( 'Vaarta modular runtime is present', async ( { page } ) => {
 		search: !! window.vaartaSearch,
 		offcanvas: !! window.vaartaOffcanvas,
 		fullscreen: !! window.vaartaFullscreen,
+		fullscreenNav: !! window.vaartaFullscreenNav,
 		scheme: !! window.vaartaScheme
 	} ) );
 
@@ -24,6 +25,7 @@ test( 'Vaarta modular runtime is present', async ( { page } ) => {
 		search: true,
 		offcanvas: true,
 		fullscreen: true,
+		fullscreenNav: true,
 		scheme: true
 	} );
 } );
@@ -62,6 +64,30 @@ test( 'fullscreen menu closes with Escape', async ( { page }, testInfo ) => {
 	await page.keyboard.press( 'Escape' );
 	await expect( page.locator( 'body' ) ).not.toHaveClass( /cs-fullscreen-menu-active/ );
 	await expect( panel ).toHaveAttribute( 'aria-hidden', 'true' );
+} );
+
+test( 'fullscreen navigation populates progressive submenu columns', async ( { page }, testInfo ) => {
+	test.skip( isMobileProject( testInfo ), 'Fullscreen hover columns are a desktop interaction.' );
+
+	const toggle = page.locator( '.cs-header__fullscreen-menu-toggle:visible' ).first();
+	const firstColumn = page.locator( '.cs-fullscreen-menu__nav-col-first' );
+	const lastColumn = page.locator( '.cs-fullscreen-menu__nav-col-last' );
+	const stories = page.locator( '.cs-fullscreen-menu__nav-inner > .menu-item-has-children' ).first();
+
+	await toggle.click();
+	await expect( page.locator( '#vaarta-fullscreen-menu' ) ).toHaveAttribute( 'aria-hidden', 'false' );
+	await expect( stories ).toContainText( 'Stories' );
+
+	await stories.hover();
+	await expect( firstColumn ).toHaveClass( /visible/ );
+	await expect( firstColumn ).toContainText( 'News' );
+	await expect( firstColumn ).toContainText( 'Culture' );
+
+	const news = firstColumn.locator( '> .sub-menu > .menu-item-has-children' ).first();
+	await expect( news ).toContainText( 'News' );
+	await news.hover();
+	await expect( lastColumn ).toHaveClass( /visible/ );
+	await expect( lastColumn ).toContainText( 'World' );
 } );
 
 test( 'scheme control changes the active color scheme', async ( { page }, testInfo ) => {
