@@ -46,7 +46,7 @@ function vaarta_customize_sanitize_dimension_value( $value, $setting = null ) {
 		return '';
 	}
 
-	if ( in_array( strtolower( $value ), array( 'auto', 'inherit', 'initial', 'unset' ), true ) ) {
+	if ( in_array( strtolower( $value ), array( 'auto', 'normal', 'inherit', 'initial', 'unset' ), true ) ) {
 		return strtolower( $value );
 	}
 
@@ -227,8 +227,16 @@ function vaarta_customize_sanitize_typography_value( $value, $setting = null ) {
 
 			case 'variant':
 				if ( is_scalar( $candidate ) ) {
-					$variant = strtolower( trim( (string) $candidate ) );
-					if ( preg_match( '/^(?:regular|italic|[1-9]00(?:italic)?)$/', $variant ) ) {
+					$variant          = strtolower( trim( (string) $candidate ) );
+					$allowed_variants = array();
+
+					if ( $field && ! empty( $field['choices']['variant'] ) && is_array( $field['choices']['variant'] ) ) {
+						$allowed_variants = array_map( 'strval', $field['choices']['variant'] );
+					} elseif ( class_exists( 'CSCO_Customizer_Fonts' ) ) {
+						$allowed_variants = array_keys( CSCO_Customizer_Fonts::get_all_variants() );
+					}
+
+					if ( in_array( $variant, $allowed_variants, true ) || ( empty( $allowed_variants ) && preg_match( '/^(?:regular|italic|[1-9]00(?:italic|bold|light)?)$/', $variant ) ) ) {
 						$output[ $key ] = $variant;
 					}
 				}
@@ -276,6 +284,32 @@ function vaarta_customize_sanitize_typography_value( $value, $setting = null ) {
 				$decoration = is_scalar( $candidate ) ? strtolower( trim( (string) $candidate ) ) : '';
 				if ( in_array( $decoration, array( '', 'none', 'underline', 'overline', 'line-through', 'initial', 'inherit' ), true ) ) {
 					$output[ $key ] = $decoration;
+				}
+				break;
+
+			case 'subsets':
+				if ( is_array( $candidate ) ) {
+					$subsets = array();
+
+					foreach ( $candidate as $subset ) {
+						if ( ! is_scalar( $subset ) ) {
+							continue;
+						}
+
+						$subset = trim( (string) $subset );
+						if ( ! preg_match( '/^[a-z0-9_-]+$/i', $subset ) ) {
+							continue;
+						}
+
+						$subset = sanitize_key( $subset );
+						if ( $subset && ! in_array( $subset, $subsets, true ) ) {
+							$subsets[] = $subset;
+						}
+					}
+
+					if ( $subsets ) {
+						$output[ $key ] = $subsets;
+					}
 				}
 				break;
 
