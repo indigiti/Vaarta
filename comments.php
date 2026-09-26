@@ -1,8 +1,8 @@
 <?php
 /**
- * The template for displaying comments
+ * The template for displaying comments.
  *
- * @package Caards
+ * @package Vaarta
  */
 
 ?>
@@ -26,10 +26,15 @@ if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 	$style = 'cs-entry-comments-simple';
 }
 
-$comments_id = 'cs-entry-comments-simple' === $style ? 'comments' : 'comments-hidden';
+$is_collapsed = 'cs-entry__comments-collapse' === $style;
+$comments_id  = $is_collapsed ? 'comments-hidden' : 'comments';
 ?>
 
-<div class="cs-entry__comments <?php echo esc_attr( $style ); ?>" id="<?php echo esc_attr( $comments_id ); ?>">
+<div
+	class="cs-entry__comments <?php echo esc_attr( $style ); ?>"
+	id="<?php echo esc_attr( $comments_id ); ?>"
+	<?php if ( $is_collapsed ) { ?>aria-hidden="true" tabindex="-1"<?php } ?>
+>
 
 	<?php if ( have_comments() ) { ?>
 
@@ -37,7 +42,7 @@ $comments_id = 'cs-entry-comments-simple' === $style ? 'comments' : 'comments-hi
 		$comments_number = get_comments_number();
 
 		if ( 1 === $comments_number ) {
-			$section_heading = esc_html_e( 'One comment', 'caards' );
+			$section_heading = esc_html__( 'One comment', 'caards' );
 		} else {
 			/* translators: 1: number of comments */
 			$section_heading = esc_html__( 'Comments', 'caards' ) . ' <span>' . esc_html( $comments_number ) . '</span>';
@@ -65,7 +70,7 @@ $comments_id = 'cs-entry-comments-simple' === $style ? 'comments' : 'comments-hi
 	<?php } ?>
 
 	<?php
-	// If comments are closed and there are comments, let's leave a little note, shall we?
+	// If comments are closed and there are comments, leave a short note.
 	if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) {
 		?>
 	<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'caards' ); ?></p>
@@ -82,9 +87,11 @@ $comments_id = 'cs-entry-comments-simple' === $style ? 'comments' : 'comments-hi
 
 </div>
 
-<?php if ( 'cs-entry__comments-collapse' === $style ) : ?>
+<?php if ( $is_collapsed ) : ?>
 	<div class="cs-entry__comments-show" id="comments">
-		<button><?php esc_html_e( 'View Comments', 'caards' ); ?> (<?php echo intval( get_comments_number() ); ?>)</button>
+		<button type="button" aria-expanded="false" aria-controls="comments-hidden">
+			<?php esc_html_e( 'View Comments', 'caards' ); ?> (<?php echo intval( get_comments_number() ); ?>)
+		</button>
 	</div>
 <?php endif; ?>
 
