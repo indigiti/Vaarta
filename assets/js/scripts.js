@@ -233,8 +233,8 @@ function csSetCookie(name, value) {
 /* Vaarta native player controls own legacy Webpack module 15. */
 /* Vaarta native scheme owns legacy Webpack module 16. */
 /* Vaarta native search owns legacy Webpack module 17. */
-__webpack_require__(18);
-__webpack_require__(19);
+/* Vaarta native sticky sidebar owns legacy Webpack module 18. */
+/* Vaarta native video background owns legacy Webpack module 19. */
 /* Vaarta native widget navigation owns legacy Webpack module 20. */
 module.exports = {};
 
