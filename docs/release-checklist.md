@@ -8,6 +8,7 @@ Use this checklist before creating a tagged release.
 - [ ] Validate workflow is green on `main`.
 - [ ] No development-only secrets or local files are present.
 - [ ] `CHANGELOG.md` reflects the target version.
+- [ ] Clean-install accessibility gate is green on every configured WordPress version.
 
 ## Package
 
@@ -46,7 +47,7 @@ Use this checklist before creating a tagged release.
 ## Quality
 
 - [ ] Run visual regression at all configured viewports.
-- [ ] Run `npm run test:a11y`.
+- [ ] Review the automated clean-install accessibility results; run `npm run test:a11y` locally when investigating regressions.
 - [ ] Run Lighthouse audit against representative homepage/article/archive pages.
 - [ ] Check keyboard-only navigation.
 - [ ] Check reduced-motion mode.
