@@ -11,8 +11,8 @@
 	var observers = new WeakMap();
 
 	function decodeAreaSettings( area ) {
-		if ( area.classList.contains( 'cs-posts-area-posts' ) && window.vaartaPagination ) {
-			return window.vaartaPagination;
+		if ( area.classList.contains( 'cs-posts-area-posts' ) ) {
+			return window.vaartaPagination || window.csco_ajax_pagination || null;
 		}
 
 		var encoded = area.getAttribute( 'data-posts-area' );
