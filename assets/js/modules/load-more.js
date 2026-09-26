@@ -100,10 +100,8 @@
 		}
 
 		if ( masonry ) {
-			// Colcade remains a legacy visual dependency for this phase. Keep the
-			// integration adapter isolated here until the masonry module is migrated.
-			if ( window.jQuery && window.jQuery.fn && window.jQuery.fn.colcade ) {
-				window.jQuery( masonry ).colcade( 'append', window.jQuery( elements ) );
+			if ( window.vaartaMasonry && 'function' === typeof window.vaartaMasonry.append ) {
+				window.vaartaMasonry.append( masonry, elements );
 			} else {
 				elements.forEach( function ( element ) {
 					masonry.appendChild( element );
