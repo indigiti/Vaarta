@@ -207,6 +207,14 @@ jobs:
           curl -fsS http://127.0.0.1:8080/coming-soon/ \
             | grep -q 'wp-block-vaarta-newsletter'
 
+      - name: Run browser accessibility gate
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+          VAARTA_BASE_URL=http://127.0.0.1:8080 \
+          VAARTA_A11Y_PATHS='/,/blog/,/contact/,/team/,/coming-soon/' \
+            npm run test:a11y
+
       - name: Verify Vaarta REST routes
         run: |
           curl -fsS 'http://127.0.0.1:8080/wp-json/vaarta/v1/search?q=AI&limit=3' \

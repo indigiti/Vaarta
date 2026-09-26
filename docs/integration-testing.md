@@ -28,6 +28,8 @@ For each WordPress version the workflow:
 - starts a real WordPress HTTP server
 - requests all six demo routes, Blog and editorial utility pages
 - fails if a frontend route renders WordPress's critical-error message
+- runs WCAG 2.0/2.1/2.2 A/AA browser accessibility checks on representative routes
+- verifies the search overlay keyboard open/focus/Escape/return-focus flow
 - queries the Vaarta search REST endpoint
 - confirms invalid Contact Form requests are rejected server-side
 
