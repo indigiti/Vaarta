@@ -108,3 +108,74 @@ function vaarta_sanitize_positive_int( $value, $min = 1, $max = null ) {
 
 	return $value;
 }
+
+/**
+ * Sanitize a checkbox/toggle value.
+ *
+ * @param mixed $value Candidate value.
+ * @return bool
+ */
+function vaarta_customize_sanitize_checkbox( $value ) {
+	return (bool) $value;
+}
+
+/**
+ * Sanitize a numeric Customizer value without forcing dimensions or complex
+ * controls through an integer-only conversion.
+ *
+ * @param mixed $value Candidate value.
+ * @return int|float
+ */
+function vaarta_customize_sanitize_number( $value ) {
+	if ( ! is_numeric( $value ) ) {
+		return 0;
+	}
+
+	return 0 + $value;
+}
+
+/**
+ * Supply safe defaults for primitive legacy Customizer controls that omitted a
+ * sanitize callback. Complex controls (typography, backgrounds, dimensions,
+ * alpha colors, multicheck arrays) are deliberately left to their existing
+ * control-specific sanitizers and will be migrated individually.
+ *
+ * @param array $args Legacy Customizer field definition.
+ * @return array
+ */
+function vaarta_customize_default_sanitizers( $args ) {
+	if ( ! is_array( $args ) || ! empty( $args['sanitize_callback'] ) || empty( $args['type'] ) ) {
+		return $args;
+	}
+
+	switch ( $args['type'] ) {
+		case 'checkbox':
+		case 'toggle':
+			$args['sanitize_callback'] = 'vaarta_customize_sanitize_checkbox';
+			break;
+
+		case 'number':
+			$args['sanitize_callback'] = 'vaarta_customize_sanitize_number';
+			break;
+
+		case 'select':
+		case 'radio':
+			$args['sanitize_callback'] = 'sanitize_key';
+			break;
+
+		case 'text':
+			$args['sanitize_callback'] = 'sanitize_text_field';
+			break;
+
+		case 'textarea':
+			$args['sanitize_callback'] = 'sanitize_textarea_field';
+			break;
+
+		case 'url':
+			$args['sanitize_callback'] = 'esc_url_raw';
+			break;
+	}
+
+	return $args;
+}
+add_filter( 'csco_customizer_field_add_setting_args', 'vaarta_customize_default_sanitizers', 5 );
