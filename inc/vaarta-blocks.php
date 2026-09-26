@@ -40,6 +40,7 @@ add_filter( 'block_categories_all', 'vaarta_register_block_category' );
 function vaarta_register_native_blocks() {
 	$blocks = array(
 		'story-meta',
+		'editorial-query',
 	);
 
 	foreach ( $blocks as $block ) {
