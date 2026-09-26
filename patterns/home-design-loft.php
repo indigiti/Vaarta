@@ -4,44 +4,50 @@
  * Slug: vaarta/home-design-loft
  * Categories: vaarta, featured
  * Inserter: yes
+ *
+ * @package Vaarta
  */
 ?>
-<!-- wp:group {"tagName":"main","layout":{"type":"default"}} -->
-<main class="wp-block-group">
-	<!-- wp:group {"className":"vaarta-shell vaarta-hero","layout":{"type":"constrained"}} -->
-	<div class="wp-block-group vaarta-shell vaarta-hero">
-		<!-- wp:paragraph {"align":"center","fontSize":"sm","textColor":"muted"} -->
-		<p class="has-text-align-center has-muted-color has-text-color has-sm-font-size"><?php echo esc_html__( 'Architecture · Interiors · Design', 'vaarta' ); ?></p>
+<!-- wp:group {"tagName":"main","className":"vaarta-home vaarta-home--design-loft","layout":{"type":"default"}} -->
+<main class="wp-block-group vaarta-home vaarta-home--design-loft">
+	<!-- wp:group {"className":"vaarta-shell vaarta-home-intro","layout":{"type":"default"}} -->
+	<div class="wp-block-group vaarta-shell vaarta-home-intro">
+		<!-- wp:paragraph {"className":"vaarta-eyebrow","fontSize":"xs"} -->
+		<p class="vaarta-eyebrow has-xs-font-size"><?php echo esc_html__( 'Architecture · Interiors · Design', 'vaarta' ); ?></p>
 		<!-- /wp:paragraph -->
-		<!-- wp:heading {"textAlign":"center","level":1,"fontSize":"2xl"} -->
-		<h1 class="wp-block-heading has-text-align-center has-2-xl-font-size"><?php echo esc_html__( 'Ideas for better spaces and thoughtful design.', 'vaarta' ); ?></h1>
+		<!-- wp:heading {"level":1,"className":"vaarta-home-intro__title","fontSize":"3xl"} -->
+		<h1 class="wp-block-heading vaarta-home-intro__title has-3-xl-font-size"><?php echo esc_html__( 'Ideas for better spaces and thoughtful design.', 'vaarta' ); ?></h1>
 		<!-- /wp:heading -->
 	</div>
 	<!-- /wp:group -->
 
-	<!-- wp:group {"className":"vaarta-shell","layout":{"type":"default"}} -->
-	<div class="wp-block-group vaarta-shell">
-		<!-- wp:vaarta/editorial-grid {"layout":"bento","cardStyle":"standard","postsToShow":7,"showExcerpt":false,"showReadingTime":true,"showViews":true,"priorityFirst":true} /-->
+	<!-- wp:group {"className":"vaarta-shell vaarta-home-section vaarta-home-section--lead","layout":{"type":"default"}} -->
+	<div class="wp-block-group vaarta-shell vaarta-home-section vaarta-home-section--lead">
+		<!-- wp:pattern {"slug":"vaarta/query-featured-grid"} /-->
 	</div>
 	<!-- /wp:group -->
 
-	<!-- wp:group {"className":"vaarta-shell vaarta-section","style":{"spacing":{"margin":{"top":"72px"}}},"layout":{"type":"default"}} -->
-	<div class="wp-block-group vaarta-shell vaarta-section">
-		<!-- wp:heading {"level":2,"fontSize":"xl"} -->
-		<h2 class="wp-block-heading has-xl-font-size"><?php echo esc_html__( 'Featured Design', 'vaarta' ); ?></h2>
-		<!-- /wp:heading -->
-		<!-- wp:vaarta/editorial-grid {"layout":"grid","cardStyle":"minimal","postsToShow":6,"showReadingTime":true} /-->
+	<!-- wp:group {"className":"vaarta-shell vaarta-home-section","layout":{"type":"default"}} -->
+	<div class="wp-block-group vaarta-shell vaarta-home-section">
+		<!-- wp:group {"className":"vaarta-module-panel vaarta-module-panel--dark","layout":{"type":"default"}} -->
+		<div class="wp-block-group vaarta-module-panel vaarta-module-panel--dark">
+			<!-- wp:heading {"level":2,"fontSize":"2xl"} -->
+			<h2 class="wp-block-heading has-2-xl-font-size"><?php echo esc_html__( 'Featured Design', 'vaarta' ); ?></h2>
+			<!-- /wp:heading -->
+			<!-- wp:vaarta/editorial-grid {"layout":"grid","cardStyle":"dark","postsToShow":6,"orderBy":"views","showExcerpt":false,"showAuthor":false,"showDate":true,"showReadingTime":true,"showViews":true,"showComments":false} /-->
+		</div>
+		<!-- /wp:group -->
 	</div>
 	<!-- /wp:group -->
 
 	<!-- wp:pattern {"slug":"vaarta/newsletter-callout"} /-->
 
-	<!-- wp:group {"className":"vaarta-shell vaarta-section","style":{"spacing":{"margin":{"top":"72px"}}},"layout":{"type":"default"}} -->
-	<div class="wp-block-group vaarta-shell vaarta-section">
-		<!-- wp:heading {"level":2,"fontSize":"xl"} -->
-		<h2 class="wp-block-heading has-xl-font-size"><?php echo esc_html__( 'Latest Stories', 'vaarta' ); ?></h2>
+	<!-- wp:group {"className":"vaarta-shell vaarta-home-section vaarta-home-section--latest","layout":{"type":"default"}} -->
+	<div class="wp-block-group vaarta-shell vaarta-home-section vaarta-home-section--latest">
+		<!-- wp:heading {"level":2,"fontSize":"2xl"} -->
+		<h2 class="wp-block-heading has-2-xl-font-size"><?php echo esc_html__( 'Latest Stories', 'vaarta' ); ?></h2>
 		<!-- /wp:heading -->
-		<!-- wp:vaarta/editorial-grid {"layout":"list","cardStyle":"compact","postsToShow":6,"showReadingTime":true} /-->
+		<!-- wp:pattern {"slug":"vaarta/query-horizontal-list"} /-->
 	</div>
 	<!-- /wp:group -->
 </main>

@@ -38,7 +38,7 @@
 					null,
 					el(
 						PanelBody,
-						{ title: __( 'Editorial Grid', 'vaarta' ), initialOpen: true },
+						{ title: __( 'Editorial Query', 'vaarta' ), initialOpen: true },
 						el( SelectControl, {
 							label: __( 'Layout', 'vaarta' ),
 							value: attributes.layout,
@@ -91,6 +91,7 @@
 								{ label: __( 'Title', 'vaarta' ), value: 'title' },
 								{ label: __( 'Random', 'vaarta' ), value: 'rand' },
 								{ label: __( 'Most Viewed', 'vaarta' ), value: 'views' },
+								{ label: __( 'Most Discussed', 'vaarta' ), value: 'comment_count' },
 								{ label: __( 'Trending (7 days)', 'vaarta' ), value: 'trending' }
 							],
 							onChange: function( value ) {
@@ -133,8 +134,15 @@
 							}
 						} ),
 						el( ToggleControl, {
+							label: __( 'Show comments', 'vaarta' ),
+							checked: attributes.showComments,
+							onChange: function( value ) {
+								setAttributes( { showComments: value } );
+							}
+						} ),
+						el( ToggleControl, {
 							label: __( 'Prioritize first story image', 'vaarta' ),
-							help: __( 'Use only when this grid is above the fold and its first image is the likely LCP element.', 'vaarta' ),
+							help: __( 'Use only when this collection is above the fold and its first image is the likely LCP element.', 'vaarta' ),
 							checked: attributes.priorityFirst,
 							onChange: function( value ) {
 								setAttributes( { priorityFirst: value } );

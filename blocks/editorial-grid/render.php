@@ -2,6 +2,9 @@
 /**
  * Render the Editorial Grid block.
  *
+ * This block is reserved for editorial queries that Core Query cannot express
+ * cleanly, such as view-count, trending-window and discussion ordering.
+ *
  * @package Vaarta
  */
 
@@ -9,17 +12,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$layout         = isset( $attributes['layout'] ) ? sanitize_key( $attributes['layout'] ) : 'bento';
-$card_style     = isset( $attributes['cardStyle'] ) ? sanitize_key( $attributes['cardStyle'] ) : 'standard';
-$category_id    = isset( $attributes['categoryId'] ) ? absint( $attributes['categoryId'] ) : 0;
-$category_slug  = isset( $attributes['categorySlug'] ) ? sanitize_title( $attributes['categorySlug'] ) : '';
-$posts_to_show  = isset( $attributes['postsToShow'] ) ? absint( $attributes['postsToShow'] ) : 8;
-$order_by       = isset( $attributes['orderBy'] ) ? sanitize_key( $attributes['orderBy'] ) : 'date';
-$show_excerpt   = ! empty( $attributes['showExcerpt'] );
-$show_author    = ! array_key_exists( 'showAuthor', $attributes ) || ! empty( $attributes['showAuthor'] );
+$layout            = isset( $attributes['layout'] ) ? sanitize_key( $attributes['layout'] ) : 'bento';
+$card_style        = isset( $attributes['cardStyle'] ) ? sanitize_key( $attributes['cardStyle'] ) : 'standard';
+$category_id       = isset( $attributes['categoryId'] ) ? absint( $attributes['categoryId'] ) : 0;
+$category_slug     = isset( $attributes['categorySlug'] ) ? sanitize_title( $attributes['categorySlug'] ) : '';
+$posts_to_show     = isset( $attributes['postsToShow'] ) ? absint( $attributes['postsToShow'] ) : 8;
+$order_by          = isset( $attributes['orderBy'] ) ? sanitize_key( $attributes['orderBy'] ) : 'date';
+$show_excerpt      = ! empty( $attributes['showExcerpt'] );
+$show_author       = ! array_key_exists( 'showAuthor', $attributes ) || ! empty( $attributes['showAuthor'] );
 $show_date         = ! array_key_exists( 'showDate', $attributes ) || ! empty( $attributes['showDate'] );
 $show_reading_time = ! array_key_exists( 'showReadingTime', $attributes ) || ! empty( $attributes['showReadingTime'] );
 $show_views        = ! array_key_exists( 'showViews', $attributes ) || ! empty( $attributes['showViews'] );
+$show_comments     = ! empty( $attributes['showComments'] );
 $priority_first    = ! empty( $attributes['priorityFirst'] );
 $story_index       = 0;
 
@@ -33,16 +37,21 @@ if ( ! in_array( $card_style, $allowed_card_styles, true ) ) {
 	$card_style = 'standard';
 }
 
-$allowed_order_by = array( 'date', 'modified', 'title', 'rand', 'views', 'trending' );
+$allowed_order_by = array( 'date', 'modified', 'title', 'rand', 'views', 'comment_count', 'trending' );
 if ( ! in_array( $order_by, $allowed_order_by, true ) ) {
 	$order_by = 'date';
+}
+
+$query_order_by = $order_by;
+if ( in_array( $order_by, array( 'views', 'trending' ), true ) ) {
+	$query_order_by = 'meta_value_num';
 }
 
 $query_args = array(
 	'post_type'           => 'post',
 	'post_status'         => 'publish',
 	'posts_per_page'      => max( 1, min( 16, $posts_to_show ) ),
-	'orderby'             => in_array( $order_by, array( 'views', 'trending' ), true ) ? 'meta_value_num' : $order_by,
+	'orderby'             => $query_order_by,
 	'order'               => 'DESC',
 	'ignore_sticky_posts' => true,
 	'no_found_rows'       => true,
@@ -97,7 +106,7 @@ if ( ! $query->have_posts() ) {
 			<?php if ( has_post_thumbnail() && 'minimal' !== $card_style ) : ?>
 				<a class="vaarta-story__media" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
 					<?php
-						$image_sizes = '(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw';
+					$image_sizes = '(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw';
 
 					if ( 'list' === $layout || 'compact' === $card_style ) {
 						$image_sizes = '(max-width: 640px) 112px, (max-width: 900px) 34vw, 30vw';
@@ -133,7 +142,7 @@ if ( ! $query->have_posts() ) {
 					<div class="vaarta-story__excerpt"><?php the_excerpt(); ?></div>
 				<?php endif; ?>
 
-				<?php if ( $show_author || $show_date || $show_reading_time || $show_views ) : ?>
+				<?php if ( $show_author || $show_date || $show_reading_time || $show_views || $show_comments ) : ?>
 					<div class="vaarta-story__meta">
 						<?php if ( $show_author ) : ?>
 							<span class="vaarta-story__author"><?php the_author_posts_link(); ?></span>
@@ -164,6 +173,19 @@ if ( ! $query->have_posts() ) {
 									/* translators: %s: formatted post view count. */
 									esc_html__( '%s views', 'vaarta' ),
 									esc_html( number_format_i18n( vaarta_get_post_views( get_the_ID() ) ) )
+								);
+								?>
+							</span>
+						<?php endif; ?>
+
+						<?php if ( $show_comments ) : ?>
+							<span class="vaarta-story__comments">
+								<?php
+								$comment_count = get_comments_number();
+								printf(
+									/* translators: %s: formatted comment count. */
+									esc_html( _n( '%s comment', '%s comments', $comment_count, 'vaarta' ) ),
+									esc_html( number_format_i18n( $comment_count ) )
 								);
 								?>
 							</span>

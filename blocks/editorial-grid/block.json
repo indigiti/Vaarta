@@ -2,17 +2,17 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "vaarta/editorial-grid",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "title": "Editorial Grid",
   "category": "vaarta",
   "icon": "grid-view",
-  "description": "Reusable server-rendered editorial story grid for Vaarta.",
+  "description": "Server-rendered story collection reserved for editorial queries that Core Query cannot express cleanly.",
   "keywords": [
     "news",
     "posts",
-    "bento",
-    "magazine",
-    "editorial"
+    "popular",
+    "trending",
+    "discussed"
   ],
   "textdomain": "vaarta",
   "attributes": {
@@ -59,6 +59,10 @@
     "showViews": {
       "type": "boolean",
       "default": true
+    },
+    "showComments": {
+      "type": "boolean",
+      "default": false
     },
     "priorityFirst": {
       "type": "boolean",
