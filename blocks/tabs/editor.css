@@ -1,9 +1,0 @@
-.vaarta-tabs-editor {
-	padding: 14px;
-	border: 1px dashed #949494;
-}
-
-.vaarta-tabs-editor > .block-editor-inner-blocks > .block-editor-block-list__layout {
-	display: grid;
-	gap: 14px;
-}
