@@ -6,7 +6,7 @@
  */
 
 /**
- * Processing data query for load more
+ * Processing data query for load more.
  *
  * @param string $method Processing method $wp_query.
  * @param array  $data Data array.
@@ -15,8 +15,7 @@ function csco_load_more_query_data( $method = 'get', $data = array() ) {
 	global $wp_query;
 
 	$output = array();
-
-	$vars = array(
+	$vars   = array(
 		'in_the_loop',
 		'is_single',
 		'is_page',
@@ -38,14 +37,13 @@ function csco_load_more_query_data( $method = 'get', $data = array() ) {
 		if ( ! isset( $wp_query->$variable ) ) {
 			continue;
 		}
+
 		if ( 'get' === $method ) {
-			$output[ $variable ] = $wp_query->$variable;
+			$output[ $variable ] = (bool) $wp_query->$variable;
 		}
-		if ( ! isset( $data[ $variable ] ) ) {
-			continue;
-		}
-		if ( 'init' === $method ) {
-			$wp_query->$variable = $data[ $variable ];
+
+		if ( isset( $data[ $variable ] ) && 'init' === $method ) {
+			$wp_query->$variable = (bool) $data[ $variable ];
 		}
 	}
 
@@ -57,6 +55,32 @@ function csco_load_more_query_data( $method = 'get', $data = array() ) {
 }
 
 /**
+ * Return the post-area layouts that may be rendered by a public request.
+ *
+ * @return array
+ */
+function csco_load_more_allowed_layouts() {
+	return array(
+		'standard-type-1',
+		'standard-type-2',
+		'standard-type-3',
+		'standard-type-4',
+		'masonry-type-1',
+		'horizontal-type-1',
+		'horizontal-type-2',
+		'horizontal-type-3',
+		'horizontal-type-4',
+		'horizontal-type-5',
+		'tile-type-1',
+		'tile-type-2',
+		'tile-type-3',
+		'tile-type-4',
+		'carousel-type-1',
+		'carousel-type-2',
+	);
+}
+
+/**
  * Get load more args.
  *
  * @param array $data       The data.
@@ -64,12 +88,10 @@ function csco_load_more_query_data( $method = 'get', $data = array() ) {
  * @param array $options    The options.
  */
 function csco_get_load_more_args( $data, $attributes = false, $options = false ) {
-	// Ajax Type.
 	$ajax_type = version_compare( get_bloginfo( 'version' ), '4.7', '>=' ) ? 'ajax_restapi' : 'ajax';
-
 	$ajax_type = apply_filters( 'ajax_load_more_method', $ajax_type );
 
-	$args = array(
+	return array(
 		'type'           => $ajax_type,
 		'nonce'          => wp_create_nonce(),
 		'url'            => admin_url( 'admin-ajax.php' ),
@@ -84,8 +106,6 @@ function csco_get_load_more_args( $data, $attributes = false, $options = false )
 			'loading'   => esc_html__( 'Loading', 'caards' ),
 		),
 	);
-
-	return $args;
 }
 
 /**
@@ -103,11 +123,8 @@ function csco_load_more_js() {
 	$pagination_type = get_theme_mod( csco_get_archive_option( 'pagination_type' ), 'load-more' );
 
 	if ( 'load-more' === $pagination_type || 'infinite' === $pagination_type ) {
+		$wp_query->infinite = 'infinite' === $pagination_type;
 
-		// Pagination type.
-		$wp_query->infinite = 'infinite' === $pagination_type ? true : false;
-
-		// Theme data.
 		$data = array(
 			'first_post_count' => $wp_query->post_count,
 			'infinite_load'    => $wp_query->infinite,
@@ -115,94 +132,142 @@ function csco_load_more_js() {
 		);
 
 		$args = csco_get_load_more_args( $data, false, csco_get_archive_options() );
-
 		wp_localize_script( 'csco-scripts', 'csco_ajax_pagination', $args );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'csco_load_more_js' );
 
 /**
- * Get More Posts
+ * Decode a JSON request field into an array.
+ *
+ * @param mixed $value Raw request value.
+ * @return array
+ */
+function csco_load_more_decode_array( $value ) {
+	if ( is_array( $value ) ) {
+		return $value;
+	}
+
+	if ( ! is_string( $value ) || '' === $value ) {
+		return array();
+	}
+
+	$decoded = json_decode( wp_unslash( $value ), true );
+
+	return is_array( $decoded ) ? $decoded : array();
+}
+
+/**
+ * Normalize query vars received from the public pagination endpoint.
+ *
+ * @param array $query_vars Query variables.
+ * @return array
+ */
+function csco_load_more_sanitize_query_vars( $query_vars ) {
+	$query_vars = is_array( $query_vars ) ? $query_vars : array();
+
+	// Public pagination is only allowed to return published posts. These values
+	// intentionally override anything serialized by the browser.
+	$query_vars['post_type']   = 'post';
+	$query_vars['post_status'] = 'publish';
+	$query_vars['perm']        = 'readable';
+
+	unset(
+		$query_vars['fields'],
+		$query_vars['cache_results'],
+		$query_vars['update_post_meta_cache'],
+		$query_vars['update_post_term_cache']
+	);
+
+	return $query_vars;
+}
+
+/**
+ * Get More Posts.
  */
 function csco_load_more_posts() {
-
 	$posts_end = false;
+	$content   = '';
 
-	// Response default.
 	$response = array(
 		'page'           => 2,
 		'posts_per_page' => 10,
+		'query_data'     => array(),
+		'attributes'     => array(),
+		'options'        => array(),
 	);
 
-	if ( wp_doing_ajax() ) {
-		check_ajax_referer();
+	if ( isset( $_POST['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- verified by transport-specific handlers.
+		$response['page'] = max( 1, absint( wp_unslash( $_POST['page'] ) ) );
 	}
 
-	// Set response values of ajax query.
-	if ( isset( $_POST['page'] ) && $_POST['page'] ) { // Input var ok.
-		$response['page'] = sanitize_key( $_POST['page'] ); // Input var ok; sanitization ok.
-	}
-	if ( isset( $_POST['posts_per_page'] ) && $_POST['posts_per_page'] ) { // Input var ok.
-		$response['posts_per_page'] = sanitize_key( $_POST['posts_per_page'] ); // Input var ok; sanitization ok.
-	}
-	if ( isset( $_POST['query_data'] ) && $_POST['query_data'] ) { // Input var ok.
-		$response['query_data'] = $_POST['query_data']; // Input var ok; sanitization ok.
-	}
-	if ( isset( $_POST['attributes'] ) && $_POST['attributes'] ) { // Input var ok.
-		$response['attributes'] = json_decode( stripslashes( $_POST['attributes'] ), true ); // Input var ok; sanitization ok.
-	}
-	if ( isset( $_POST['options'] ) && $_POST['options'] ) { // Input var ok.
-		$response['options'] = json_decode( stripslashes( $_POST['options'] ), true ); // Input var ok; sanitization ok.
+	if ( isset( $_POST['posts_per_page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- verified by transport-specific handlers.
+		$response['posts_per_page'] = min( 50, max( 1, absint( wp_unslash( $_POST['posts_per_page'] ) ) ) );
 	}
 
-	// Init Data.
-	$query_data = json_decode( stripslashes( $response['query_data'] ), true );
+	if ( isset( $_POST['query_data'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- verified by transport-specific handlers.
+		$response['query_data'] = csco_load_more_decode_array( $_POST['query_data'] );
+	}
 
-	// Set Query Vars.
-	$query_vars = array_merge( (array) $query_data['query_vars'], array(
-		'is_post_query'  => true,
-		'paged'          => (int) $response['page'],
-		'posts_per_page' => (int) $response['posts_per_page'],
-	) );
+	if ( isset( $_POST['attributes'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- verified by transport-specific handlers.
+		$response['attributes'] = csco_load_more_decode_array( $_POST['attributes'] );
+	}
 
-	// Suppress filtering for wp authors.
-	if ( $query_data['is_author'] && $query_vars['author'] ) {
+	if ( isset( $_POST['options'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- verified by transport-specific handlers.
+		$response['options'] = csco_load_more_decode_array( $_POST['options'] );
+	}
+
+	$query_data = $response['query_data'];
+	$query_vars = isset( $query_data['query_vars'] ) ? csco_load_more_sanitize_query_vars( $query_data['query_vars'] ) : array();
+
+	$query_vars = array_merge(
+		$query_vars,
+		array(
+			'is_post_query'  => true,
+			'paged'          => $response['page'],
+			'posts_per_page' => $response['posts_per_page'],
+			'post_type'      => 'post',
+			'post_status'    => 'publish',
+			'perm'           => 'readable',
+		)
+	);
+
+	if ( ! empty( $query_data['is_author'] ) && ! empty( $query_vars['author'] ) ) {
 		$query_vars['suppress_filters'] = true;
 	}
 
-	// Output only publish entries.
-	$query_vars['post_status'] = 'publish';
-
-	// Get Posts.
 	$the_query = new WP_Query( $query_vars );
-
-	$global_name = 'wp_query';
-
-	$GLOBALS[ $global_name ] = $the_query;
+	$GLOBALS['wp_query'] = $the_query;
 
 	csco_load_more_query_data( 'init', $query_data );
 
-	if ( $the_query->have_posts() ) :
-
-		// Set query vars, so that we can get them across all templates.
+	if ( $the_query->have_posts() ) {
 		set_query_var( 'csco_query', $query_data );
 
-		// Get total number of posts.
-		$total = $the_query->post_count;
-
-		// Get options.
 		$attributes = $response['attributes'];
 		$options    = $response['options'];
+
+		if ( $attributes ) {
+			$layout = isset( $attributes['layout'] ) ? sanitize_key( $attributes['layout'] ) : '';
+
+			if ( ! in_array( $layout, csco_load_more_allowed_layouts(), true ) ) {
+				wp_reset_postdata();
+				return array(
+					'posts_end' => true,
+					'content'   => '',
+				);
+			}
+
+			$attributes['layout'] = $layout;
+		}
 
 		ob_start();
 
 		while ( $the_query->have_posts() ) {
 			$the_query->the_post();
 
-			// Start counting posts.
 			$current = $the_query->current_post + 1 + $query_vars['posts_per_page'] * $query_vars['paged'] - $query_vars['posts_per_page'];
 
-			// Check End of posts.
 			if ( $the_query->found_posts - $current <= 0 ) {
 				$posts_end = true;
 			}
@@ -225,41 +290,36 @@ function csco_load_more_posts() {
 					?>
 					</div>
 					<?php
-				}
-
-				if ( 'masonry-type-1' === $attributes['layout'] ) {
 					csco_the_widget_postarea_loop( $current );
 				}
 			} else {
 				set_query_var( 'options', $options );
 
-				if ( 'masonry' === $options['layout'] ) {
+				$archive_layout = isset( $options['layout'] ) ? sanitize_key( $options['layout'] ) : '';
+
+				if ( 'masonry' === $archive_layout ) {
 					?>
 					<div class="cs-posts-area-card">
 					<?php
 				}
 
-				if ( 'full' === $options['layout'] ) {
+				if ( 'full' === $archive_layout ) {
 					get_template_part( 'template-parts/archive/content-full' );
 				} else {
 					get_template_part( 'template-parts/archive/content' );
 				}
 
-				if ( 'masonry' === $options['layout'] ) {
+				if ( 'masonry' === $archive_layout ) {
 					?>
 					</div>
 					<?php
-				}
-
-				if ( 'masonry' === $options['layout'] ) {
 					csco_the_widget_archive_loop( $current );
 				}
 			}
 		}
 
 		$content = ob_get_clean();
-
-	endif;
+	}
 
 	wp_reset_postdata();
 
@@ -267,63 +327,82 @@ function csco_load_more_posts() {
 		$posts_end = true;
 	}
 
-	// Return Result.
-	$result = array(
+	return array(
 		'posts_end' => $posts_end,
 		'content'   => $content,
 	);
-
-	return $result;
 }
 
 /**
- * AJAX Load More
+ * AJAX Load More.
  */
 function csco_ajax_load_more() {
-
-	// Check Nonce.
 	check_ajax_referer();
 
-	// Get Posts.
-	$data = csco_load_more_posts();
-
-	// Return Result.
-	wp_send_json_success( $data );
-
+	wp_send_json_success( csco_load_more_posts() );
 }
 add_action( 'wp_ajax_csco_ajax_load_more', 'csco_ajax_load_more' );
 add_action( 'wp_ajax_nopriv_csco_ajax_load_more', 'csco_ajax_load_more' );
 
-
 /**
- * More Posts API Response
+ * Validate REST load-more requests.
  *
- * @param array $request REST API Request.
+ * @param WP_REST_Request $request REST request.
+ * @return bool
  */
-function csco_more_posts_restapi( $request ) {
+function csco_load_more_rest_permission( $request ) {
+	$nonce = $request->get_param( 'nonce' );
 
-	// Get Data.
-	$data = array(
-		'success' => true,
-		'data'    => csco_load_more_posts(),
-	);
-
-	// Return Result.
-	return rest_ensure_response( $data );
+	return is_string( $nonce ) && (bool) wp_verify_nonce( $nonce, -1 );
 }
 
 /**
- * Register REST More Posts Routes
+ * More Posts API Response.
+ *
+ * @param WP_REST_Request $request REST API Request.
+ */
+function csco_more_posts_restapi( $request ) {
+	$params = $request->get_params();
+
+	foreach ( array( 'page', 'posts_per_page', 'query_data', 'attributes', 'options' ) as $key ) {
+		if ( isset( $params[ $key ] ) ) {
+			$_POST[ $key ] = $params[ $key ];
+		}
+	}
+
+	return rest_ensure_response(
+		array(
+			'success' => true,
+			'data'    => csco_load_more_posts(),
+		)
+	);
+}
+
+/**
+ * Register REST More Posts Routes.
  */
 function csco_register_more_posts_route() {
-
 	register_rest_route(
-		'csco/v1', '/more-posts', array(
+		'csco/v1',
+		'/more-posts',
+		array(
 			'methods'             => WP_REST_Server::CREATABLE,
 			'callback'            => 'csco_more_posts_restapi',
-			'permission_callback' => function() {
-				return true;
-			},
+			'permission_callback' => 'csco_load_more_rest_permission',
+			'args'                => array(
+				'nonce' => array(
+					'required'          => true,
+					'sanitize_callback' => 'sanitize_text_field',
+				),
+				'page' => array(
+					'default'           => 2,
+					'sanitize_callback' => 'absint',
+				),
+				'posts_per_page' => array(
+					'default'           => 10,
+					'sanitize_callback' => 'absint',
+				),
+			),
 		)
 	);
 }
